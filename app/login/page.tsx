@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import Messages from './messages'
+import Link from "next/link";
+import Messages from "./messages";
+import { Button } from "@/components/ui/button";
 
 export default function Login() {
   return (
@@ -21,7 +22,7 @@ export default function Login() {
           className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
         >
           <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
+        </svg>{" "}
         Back
       </Link>
 
@@ -49,17 +50,17 @@ export default function Login() {
           placeholder="••••••••"
           required
         />
-        <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+        <Button className="bg-green-700 rounded-md px-4 py-2 text-white mb-2">
           Sign In
-        </button>
-        <button
+        </Button>
+        <Button
           formAction="/auth/sign-up"
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+          className="bg-white border border-foreground/20 rounded-md px-4 py-2 text-black mb-2 hover:text-white"
         >
           Sign Up
-        </button>
+        </Button>
         <Messages />
       </form>
     </div>
-  )
+  );
 }
