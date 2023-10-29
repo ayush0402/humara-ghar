@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 
 import OnboardingForm from "@/components/custom/onboarding/form";
 export const metadata: Metadata = {
