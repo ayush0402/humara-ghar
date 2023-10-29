@@ -1,20 +1,20 @@
-import AuthButton from '../components/AuthButton'
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+import AuthButton from "../components/AuthButton";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 export default async function Index() {
-  const cookieStore = cookies()
+  const cookieStore = cookies();
 
   const canInitSupabaseClient = () => {
     try {
-      createClient(cookieStore)
-      return true
+      createClient(cookieStore);
+      return true;
     } catch (e) {
-      return false
+      return false;
     }
-  }
+  };
 
-  const isSupabaseConnected = canInitSupabaseClient()
+  const isSupabaseConnected = canInitSupabaseClient();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -25,8 +25,7 @@ export default async function Index() {
         </div>
       </nav>
 
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-      </div>
+      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3"></div>
     </div>
-  )
+  );
 }
