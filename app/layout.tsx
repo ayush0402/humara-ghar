@@ -1,22 +1,21 @@
-import './globals.css'
+import "./globals.css";
 
 export const metadata = {
-  title: 'HumaraGhar',
-  description: 'Rent properties and find suitable roommates',
-}
+  title: "HumaraGhar",
+  description: "Rent properties and find suitable roommates",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      {/* <body className="bg-background text-foreground"> */}
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
-      {/* </body> */}
+      {/* check if these flex properties are needed */}
+      <main className="min-h-screen flex flex-col items-center">
+        {children}
+      </main>
     </html>
-  )
+  );
 }
