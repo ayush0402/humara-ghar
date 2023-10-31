@@ -1,22 +1,26 @@
-import './globals.css'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-export const metadata = {
-  title: 'HumaraGhar',
-  description: 'Rent properties and find suitable roommates',
-}
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "HumaraGhar",
+  description: "Rent properties and find suitable roommates",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      {/* <body className="bg-background text-foreground"> */}
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
-      {/* </body> */}
+      <body
+        className={`${inter.className} min-h-screen flex flex-col items-center`}
+      >
+        {children}
+      </body>
     </html>
-  )
+  );
 }
