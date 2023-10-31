@@ -1,21 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { FaMale, FaFemale } from "react-icons/fa";
+import { CalendarIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
 import {
   Form,
   FormControl,
@@ -31,19 +25,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
-
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
-] as const;
 
 const onboardingFormSchema = z.object({
   name: z
@@ -57,8 +40,70 @@ const onboardingFormSchema = z.object({
   dob: z.date({
     required_error: "A date of birth is required.",
   }),
-  language: z.string({
-    required_error: "Please select a language.",
+  location: z.enum(
+    [
+      "mumbai",
+      "delhi",
+      "bangalore",
+      "hyderabad",
+      "ahmedabad",
+      "chennai",
+      "kolkata",
+      "surat",
+      "pune",
+      "jaipur",
+      "lucknow",
+      "kanpur",
+      "nagpur",
+      "indore",
+      "thane",
+      "bhopal",
+      "visakhapatnam",
+      "pimpri-chinchwad",
+      "patna",
+      "vadodara",
+      "ghaziabad",
+      "ludhiana",
+      "coimbatore",
+      "agra",
+      "madurai",
+      "nashik",
+      "faridabad",
+      "meerut",
+      "rajkot",
+      "kalyan-dombivli",
+      "vasai-virar",
+      "varanasi",
+      "srinagar",
+      "aurangabad",
+      "dhanbad",
+      "amritsar",
+      "navi mumbai",
+      "allahabad",
+      "ranchi",
+      "howrah",
+      "jabalpur",
+      "gwalior",
+      "vijayawada",
+      "jodhpur",
+      "raipur",
+      "kota",
+      "guwahati",
+      "chandigarh",
+      "thiruvananthapuram",
+      "solapur",
+    ],
+    {
+      invalid_type_error: "Select a city",
+      required_error: "Please select a city.",
+    }
+  ),
+  gender: z.enum(["male", "female"], {
+    required_error: "Please select a gender.",
+  }),
+  user_type: z.enum(["renter", "owner"], {
+    invalid_type_error: "Select the reason for signing up.",
+    required_error: "Please select the reason for signing up.",
   }),
 });
 
@@ -76,16 +121,25 @@ export default function OnboardingForm() {
     defaultValues,
   });
 
-  function onSubmit(data: OnboardingFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
+  const onSubmit = async (data: OnboardingFormValues) => {
+    try {
+      const response = await fetch("/api/onboarding", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // handle response data here...
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -153,66 +207,155 @@ export default function OnboardingForm() {
         />
         <FormField
           control={form.control}
-          name="language"
+          name="location"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Language</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-[200px] justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value
-                        ? languages.find(
-                            (language) => language.value === field.value
-                          )?.label
-                        : "Select language"}
-                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search language..." />
-                    <CommandEmpty>No language found.</CommandEmpty>
-                    <CommandGroup>
-                      {languages.map((language) => (
-                        <CommandItem
-                          value={language.label}
-                          key={language.value}
-                          onSelect={() => {
-                            form.setValue("language", language.value);
-                          }}
-                        >
-                          <CheckIcon
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              language.value === field.value
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {language.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <FormDescription>
-                This is the language that will be used in the dashboard.
-              </FormDescription>
+            <FormItem>
+              <FormLabel>Location</FormLabel>
+              <div className="relative w-max">
+                <FormControl>
+                  <select
+                    className={cn(
+                      buttonVariants({ variant: "outline" }),
+                      "w-[200px] appearance-none bg-transparent font-normal"
+                    )}
+                    {...field}
+                  >
+                    <option value="mumbai">Mumbai</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="bangalore">Bangalore</option>
+                    <option value="hyderabad">Hyderabad</option>
+                    <option value="ahmedabad">Ahmedabad</option>
+                    <option value="chennai">Chennai</option>
+                    <option value="kolkata">Kolkata</option>
+                    <option value="surat">Surat</option>
+                    <option value="pune">Pune</option>
+                    <option value="jaipur">Jaipur</option>
+                    <option value="lucknow">Lucknow</option>
+                    <option value="kanpur">Kanpur</option>
+                    <option value="nagpur">Nagpur</option>
+                    <option value="indore">Indore</option>
+                    <option value="thane">Thane</option>
+                    <option value="bhopal">Bhopal</option>
+                    <option value="visakhapatnam">Visakhapatnam</option>
+                    <option value="pimpri-chinchwad">Pimpri-Chinchwad</option>
+                    <option value="patna">Patna</option>
+                    <option value="vadodara">Vadodara</option>
+                    <option value="ghaziabad">Ghaziabad</option>
+                    <option value="ludhiana">Ludhiana</option>
+                    <option value="coimbatore">Coimbatore</option>
+                    <option value="agra">Agra</option>
+                    <option value="madurai">Madurai</option>
+                    <option value="nashik">Nashik</option>
+                    <option value="faridabad">Faridabad</option>
+                    <option value="meerut">Meerut</option>
+                    <option value="rajkot">Rajkot</option>
+                    <option value="kalyan-dombivli">Kalyan-Dombivli</option>
+                    <option value="vasai-virar">Vasai-Virar</option>
+                    <option value="varanasi">Varanasi</option>
+                    <option value="srinagar">Srinagar</option>
+                    <option value="aurangabad">Aurangabad</option>
+                    <option value="dhanbad">Dhanbad</option>
+                    <option value="amritsar">Amritsar</option>
+                    <option value="navi mumbai">Navi Mumbai</option>
+                    <option value="allahabad">Allahabad</option>
+                    <option value="ranchi">Ranchi</option>
+                    <option value="howrah">Howrah</option>
+                    <option value="jabalpur">Jabalpur</option>
+                    <option value="gwalior">Gwalior</option>
+                    <option value="vijayawada">Vijayawada</option>
+                    <option value="jodhpur">Jodhpur</option>
+                    <option value="raipur">Raipur</option>
+                    <option value="kota">Kota</option>
+                    <option value="guwahati">Guwahati</option>
+                    <option value="chandigarh">Chandigarh</option>
+                    <option value="thiruvananthapuram">
+                      Thiruvananthapuram
+                    </option>
+                    <option value="solapur">Solapur</option>
+                  </select>
+                </FormControl>
+                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Update account</Button>
+        <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => (
+            <FormItem className="space-y-1">
+              <FormLabel>Gender</FormLabel>
+              <FormMessage />
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid max-w-md grid-cols-2 gap-8 pt-2"
+              >
+                <FormItem>
+                  <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
+                    <FormControl>
+                      <RadioGroupItem value="male" className="sr-only" />
+                    </FormControl>
+                    <div className="items-center rounded-md border-2 bg-[#ecedef] border-muted p-1 hover:border-accent flex justify-center items-center">
+                      <div className="space-y-2 rounded-sm p-2 flex justify-center items-center">
+                        <FaMale size={30} />
+                      </div>
+                    </div>
+                    <span className="block w-full p-2 text-center font-normal">
+                      Male
+                    </span>
+                  </FormLabel>
+                </FormItem>
+                <FormItem>
+                  <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
+                    <FormControl>
+                      <RadioGroupItem value="female" className="sr-only" />
+                    </FormControl>
+                    <div className="items-center rounded-md border-2 bg-[#ecedef] border-muted p-1 hover:border-accent flex justify-center items-center">
+                      <div className="space-y-2 rounded-sm p-2 flex justify-center items-center">
+                        <FaFemale size={30} />
+                      </div>
+                    </div>
+                    <span className="block w-full p-2 text-center font-normal">
+                      Female
+                    </span>
+                  </FormLabel>
+                </FormItem>
+              </RadioGroup>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="user_type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Who are you?</FormLabel>
+              <div className="relative w-max">
+                <FormControl>
+                  <select
+                    className={cn(
+                      buttonVariants({ variant: "outline" }),
+                      "w-[320px] appearance-none bg-transparent font-normal"
+                    )}
+                    {...field}
+                  >
+                    <option value="renter">
+                      Renter (Looking for rooms/roommates)
+                    </option>
+                    <option value="owner">
+                      Owner (Looking to rent your place)
+                    </option>
+                  </select>
+                </FormControl>
+                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Continue</Button>
       </form>
     </Form>
   );

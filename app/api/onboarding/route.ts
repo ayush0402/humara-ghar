@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
-  const formData = await request.formData();
+  const formData = await request.json();
   // TODO: Add onboarded user details to the database.
   console.log("Request was called", formData);
 
