@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Messages from "@/components/custom/login/message";
+import Messages from "@/components/custom/message";
 import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
@@ -50,12 +50,11 @@ export default function LoginForm() {
           placeholder="••••••••"
           required
         />
-        <Button className="bg-green-700 rounded-md px-4 py-2 text-white mb-2">
-          Sign In
-        </Button>
+        <Button className="rounded-md px-4 py-2 mb-2">Sign In</Button>
         <Button
           formAction="/auth/sign-up"
-          className="bg-white border border-foreground/20 rounded-md px-4 py-2 text-black mb-2 hover:text-white"
+          variant="secondary"
+          className="border border-foreground/20 rounded-md px-4 py-2 mb-2"
         >
           Sign Up
         </Button>
