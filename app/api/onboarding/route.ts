@@ -8,9 +8,7 @@ export async function POST(request: Request) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const { data: supabaseUser } = await supabase.auth.getUser();
-  console.log("POST /api/onboarding", formData, supabaseUser);
 
-  // TODO: redirects not working, fix it
   if (supabaseUser.user === null) {
     console.log("POST /api/onboarding: user is null");
     return NextResponse.redirect(
@@ -34,8 +32,7 @@ export async function POST(request: Request) {
 
   if (error) {
     return NextResponse.redirect(
-      // TODO: update to redirect to the onboarding page itself
-      `${requestUrl.origin}/login?error=Could not save details to the server`,
+      `${requestUrl.origin}/onboarding?error=Could not save the details`,
       {
         // a 301 status is required to redirect from a POST to a GET route
         status: 301,
@@ -52,7 +49,7 @@ export async function POST(request: Request) {
       }
     );
   }
-
+  console.log("final", requestUrl.origin);
   // URL to redirect to after onboarding process completes
   return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
 }
