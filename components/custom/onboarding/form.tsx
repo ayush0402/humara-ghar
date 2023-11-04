@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaMale, FaFemale } from "react-icons/fa";
 import { CalendarIcon, ChevronDownIcon } from "@radix-ui/react-icons";
@@ -8,6 +9,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { cn } from "@/lib/utils";
+import Messages from "@/components/custom/message";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -120,6 +122,8 @@ export default function OnboardingForm() {
     defaultValues,
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: OnboardingFormValues) => {
     try {
       const response = await fetch("/api/onboarding", {
@@ -134,7 +138,8 @@ export default function OnboardingForm() {
         throw new Error("Network response was not ok");
       }
 
-      // handle response data here...
+      // redirect to the next page
+      router.push(response.url);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -355,6 +360,7 @@ export default function OnboardingForm() {
           )}
         />
         <Button type="submit">Continue</Button>
+        <Messages />
       </form>
     </Form>
   );
