@@ -301,7 +301,7 @@ export default function OnboardingForm() {
                     <FormControl>
                       <RadioGroupItem value="male" className="sr-only" />
                     </FormControl>
-                    <div className="items-center rounded-md border-2 bg-[#ecedef] border-muted p-1 hover:border-accent flex justify-center items-center">
+                    <div className="items-center rounded-md border-2 bg-accent border-muted p-1 hover:border-accent flex justify-center items-center">
                       <div className="space-y-2 rounded-sm p-2 flex justify-center items-center">
                         <FaMale size={30} />
                       </div>
@@ -316,7 +316,7 @@ export default function OnboardingForm() {
                     <FormControl>
                       <RadioGroupItem value="female" className="sr-only" />
                     </FormControl>
-                    <div className="items-center rounded-md border-2 bg-[#ecedef] border-muted p-1 hover:border-accent flex justify-center items-center">
+                    <div className="items-center rounded-md border-2 bg-accent border-muted p-1 hover:border-accent flex justify-center items-center">
                       <div className="space-y-2 rounded-sm p-2 flex justify-center items-center">
                         <FaFemale size={30} />
                       </div>
