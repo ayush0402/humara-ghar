@@ -9,7 +9,31 @@ export async function POST(request: Request) {
   const supabase = createClient(cookieStore);
   const { data: supabaseUser } = await supabase.auth.getUser();
 
-  console.log(formData);
+  if (supabaseUser.user === null) {
+    console.log("POST /api/onboarding: user is null");
+    return NextResponse.redirect(
+      `${requestUrl.origin}/login?error=Could not authenticate user`,
+      {
+        // a 301 status is required to redirect from a POST to a GET route
+        status: 301,
+      }
+    );
+  }
+
+  const { error } = await supabase
+    .from("user_preferences")
+    .insert([{ prefs: formData }]);
+
+  if (error) {
+    return NextResponse.redirect(
+      `${requestUrl.origin}/onboarding/preferences?error=Could not save the details`,
+      {
+        // a 301 status is required to redirect from a POST to a GET route
+        status: 301,
+      }
+    );
+  }
+
   // URL to redirect to after onboarding process completes
   return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
 }

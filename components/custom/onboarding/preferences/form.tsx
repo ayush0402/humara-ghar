@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
 
 import {
   GiNightSleep,
@@ -58,6 +59,8 @@ export default function PreferencesForm() {
     },
   });
 
+  const router = useRouter();
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       const response = await fetch("/api/onboarding/preferences", {
@@ -73,6 +76,7 @@ export default function PreferencesForm() {
       }
 
       // redirect to the next page
+      router.push(response.url);
     } catch (error) {
       console.error("Error:", error);
     }

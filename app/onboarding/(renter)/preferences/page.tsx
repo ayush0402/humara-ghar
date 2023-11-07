@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 import PreferencesForm from "@/components/custom/onboarding/preferences/form";
+import Messages from "@/components/custom/message";
 export const metadata: Metadata = {
   title: "Onboarding",
   description: "Enter all details to complete the onboarding process.",
@@ -21,6 +22,7 @@ export default function PreferencesPage() {
               </p>
             </div>
             <PreferencesForm />
+            <Messages />
           </div>
         </div>
       </div>
