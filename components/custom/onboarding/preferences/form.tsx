@@ -4,8 +4,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { GiNightSleep, GiSunrise } from "react-icons/gi";
-import { FaDumbbell } from "react-icons/fa";
+import {
+  GiNightSleep,
+  GiSunrise,
+  GiPartyPopper,
+  GiPlantRoots,
+  GiMusicalNotes,
+  GiBookshelf,
+  GiEarthAmerica,
+} from "react-icons/gi";
+import { FaDumbbell, FaSmokingBan } from "react-icons/fa";
+import { MdSportsCricket, MdPets, MdNoDrinks } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,21 +23,20 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   nightowl: z.boolean().default(false).optional(),
   earlybird: z.boolean().default(false).optional(),
   fitness: z.boolean().default(false).optional(),
-  abc: z.boolean().default(false).optional(),
-  def: z.boolean().default(false).optional(),
-  ghi: z.boolean().default(false).optional(),
-  jkl: z.boolean().default(false).optional(),
-  mno: z.boolean().default(false).optional(),
-  pqr: z.boolean().default(false).optional(),
-  stu: z.boolean().default(false).optional(),
-  vwx: z.boolean().default(false).optional(),
-  yza: z.boolean().default(false).optional(),
+  studious: z.boolean().default(false).optional(),
+  sporty: z.boolean().default(false).optional(),
+  wanderer: z.boolean().default(false).optional(),
+  partylover: z.boolean().default(false).optional(),
+  petlover: z.boolean().default(false).optional(),
+  vegan: z.boolean().default(false).optional(),
+  nonalcoholic: z.boolean().default(false).optional(),
+  musiclover: z.boolean().default(false).optional(),
+  nonsmoker: z.boolean().default(false).optional(),
 });
 
 export default function PreferencesForm() {
@@ -38,15 +46,15 @@ export default function PreferencesForm() {
       nightowl: false,
       earlybird: false,
       fitness: false,
-      abc: false,
-      def: false,
-      ghi: false,
-      jkl: false,
-      mno: false,
-      pqr: false,
-      stu: false,
-      vwx: false,
-      yza: false,
+      studious: false,
+      sporty: false,
+      wanderer: false,
+      partylover: false,
+      petlover: false,
+      vegan: false,
+      nonalcoholic: false,
+      musiclover: false,
+      nonsmoker: false,
     },
   });
 
@@ -73,43 +81,17 @@ export default function PreferencesForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* 
-        Default shadcn template with checkbox
-        <FormField
-          control={form.control}
-          name="nightowl"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="leading-none p-4 m-2 bg-gray-200 rounded">
-                <FormLabel className="mb-2">
-                  <GiNightSleep size={50} className="mx-auto" />
-                </FormLabel>
-                <FormDescription className="text-center">
-                  Night Owl
-                </FormDescription>
-              </div>
-            </FormItem>
-          )}
-        /> */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-4 gird-cols-1 gap-4 m-1">
           <FormField
             control={form.control}
             name="nightowl"
             render={({ field }) => (
               <FormItem
-                className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+                className={`mx-auto lex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"} `}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiNightSleep size={50} className="mx-auto" />
                   </FormLabel>
@@ -127,12 +109,10 @@ export default function PreferencesForm() {
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"} `}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiSunrise size={50} className="mx-auto" />
                   </FormLabel>
@@ -149,12 +129,10 @@ export default function PreferencesForm() {
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <FaDumbbell size={50} className="mx-auto" />
                   </FormLabel>
@@ -167,21 +145,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="abc"
+            name="sporty"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <MdSportsCricket size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    abc
+                    Sporty
                   </FormDescription>
                 </div>
               </FormItem>
@@ -189,21 +165,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="def"
+            name="wanderer"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <GiEarthAmerica size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    def
+                    Wanderer
                   </FormDescription>
                 </div>
               </FormItem>
@@ -211,21 +185,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="ghi"
+            name="partylover"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <GiPartyPopper size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    ghi
+                    Party Lover
                   </FormDescription>
                 </div>
               </FormItem>
@@ -233,21 +205,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="jkl"
+            name="petlover"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <MdPets size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    jkl
+                    Pet Lover
                   </FormDescription>
                 </div>
               </FormItem>
@@ -255,21 +225,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="mno"
+            name="vegan"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <GiPlantRoots size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    mno
+                    Vegan
                   </FormDescription>
                 </div>
               </FormItem>
@@ -277,21 +245,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="pqr"
+            name="nonalcoholic"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <MdNoDrinks size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    pqr
+                    Non Alcoholic
                   </FormDescription>
                 </div>
               </FormItem>
@@ -299,21 +265,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="stu"
+            name="musiclover"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <GiMusicalNotes size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    stu
+                    Music Lover
                   </FormDescription>
                 </div>
               </FormItem>
@@ -321,21 +285,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="vwx"
+            name="nonsmoker"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <FaSmokingBan size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    vwx
+                    Non Smoker
                   </FormDescription>
                 </div>
               </FormItem>
@@ -343,21 +305,19 @@ export default function PreferencesForm() {
           />
           <FormField
             control={form.control}
-            name="yza"
+            name="studious"
             render={({ field }) => (
               <FormItem
                 className={`mx-auto flex flex-row items-start space-x-3 space-y-0 rounded-md cursor-pointer 
-      ${
-        field.value ? "border-2 border-primary" : "border-2 border-gray-300"
-      } m-4 min-w-fit`}
+      ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded">
+                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
                   <FormLabel className="mb-2">
-                    <GiNightSleep size={50} className="mx-auto" />
+                    <GiBookshelf size={50} className="mx-auto" />
                   </FormLabel>
                   <FormDescription className="text-center mt-2">
-                    yza
+                    Studious
                   </FormDescription>
                 </div>
               </FormItem>
@@ -365,6 +325,9 @@ export default function PreferencesForm() {
           />
         </div>
         <Button type="submit">Submit</Button>
+        <Button className="mx-4" variant="outline">
+          I want to rent individually
+        </Button>
       </form>
     </Form>
   );
