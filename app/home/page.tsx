@@ -1,9 +1,12 @@
 import AuthButton from "../../components/auth-button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { MdLocationOn } from "react-icons/md";
+import { buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import RoommateCard from "@/components/custom/roommate-card";
 
 export default function Home() {
   const cookieStore = cookies();
@@ -38,21 +41,35 @@ export default function Home() {
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
-              <MdLocationOn size={32} />
-              asdsd
+              <MdLocationOn size={30} />
+              <Link
+                href="/profile"
+                className={`${buttonVariants({ variant: "link" })} pl-0`}
+              >
+                Location
+              </Link>
             </div>
           </div>
-          <Tabs defaultValue="overview" className="space-y-4">
+          <Tabs defaultValue="roommates" className="space-y-4">
             <TabsList>
-              <TabsTrigger value="rooms">Rooms</TabsTrigger>
               <TabsTrigger value="roommates">Roommates</TabsTrigger>
+              <TabsTrigger value="rooms">Rooms</TabsTrigger>
               <TabsTrigger value="pg">PG</TabsTrigger>
             </TabsList>
-            <TabsContent value="rooms" className="space-y-4">
-              Rooms
-            </TabsContent>
             <TabsContent value="roommates" className="space-y-4">
               Roommates
+              <RoommateCard
+                imageSrc="https://picsum.photos/200"
+                name="Listing Name"
+                location="Listing Location"
+                rentAmount={10000}
+                lookingForGender="male"
+                lookingForType="roommate"
+                matchPercentage={80}
+              />
+            </TabsContent>
+            <TabsContent value="rooms" className="space-y-4">
+              Rooms
             </TabsContent>
             <TabsContent value="pg" className="space-y-4">
               PG

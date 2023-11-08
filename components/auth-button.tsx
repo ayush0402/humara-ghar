@@ -14,7 +14,10 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4">
-      Hey, {user.email}!
+      <Link href="/profile" className={buttonVariants({ variant: "ghost" })}>
+        Hey, {user.email}!
+      </Link>
+
       <form action="/auth/sign-out" method="post">
         <Button variant="outline">Logout</Button>
       </form>

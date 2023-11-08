@@ -49,7 +49,6 @@ export async function POST(request: Request) {
       }
     );
   }
-  console.log("final", requestUrl.origin);
   // URL to redirect to after onboarding process completes
   return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
 }
