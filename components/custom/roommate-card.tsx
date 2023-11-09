@@ -6,6 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
@@ -29,23 +34,33 @@ export default function RoommateCard({
   lookingForType,
   matchPercentage,
 }: RoommateCardProps) {
+  // TODO: Make responsive for mobile
   return (
-    <Card className="w-[450px]">
+    <Card className="w-full lg:w-[450px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
       <div className="flex flex-row w-full">
-        <img className="w-150 h-150 object-cover" src={imageSrc} alt={name} />
+        <img
+          className="w-1/5 h-1/5 lg:w-2/5 lg:h-2/5 object-cover"
+          src={imageSrc}
+          alt={name}
+        />
         <div>
-          <CardHeader>
-            <CardTitle>{name}</CardTitle>
+          <CardHeader className="pt-2 pl-4 lg:pl-6">
+            <CardTitle className="text-xl lg:text-2xl">{name}</CardTitle>
             <CardDescription className="flex flex-row items-center">
-              <MdLocationOn className="p-0" />
+              <MdLocationOn />
               {location}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col w-full">
-            <span>&#8377; {rentAmount} Rent</span>
+          <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">
+            <span>
+              &#8377; {rentAmount}{" "}
+              <span className="text-muted-foreground">Rent</span>
+            </span>
             <div>
-              <p className="text-sm text-muted-foreground mt-2">Looking for</p>
-              <p className="text-sm">
+              <p className="text-sm text-muted-foreground mt-2 lg:text-md">
+                Looking for
+              </p>
+              <p className="text-sm lg:text-md">
                 {lookingForGender}, {lookingForType}
               </p>
             </div>
@@ -59,9 +74,21 @@ export default function RoommateCard({
             <MdChat />
           </Button>
         </div>
-        <div className="flex flex-row items-center">
-          <FaUserFriends className="mr-2" size={15} />
-          {matchPercentage}% Match
+        <div>
+          <HoverCard>
+            <HoverCardTrigger>
+              <div className="flex flex-row items-center">
+                <FaUserFriends className="mr-2" size={15} />
+                {matchPercentage}% Match
+              </div>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              <p className="text-sm text-muted-foreground">
+                This is a match percentage based on your preferences and the
+                roommate's preferences.
+              </p>
+            </HoverCardContent>
+          </HoverCard>
         </div>
       </CardFooter>
     </Card>

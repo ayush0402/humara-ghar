@@ -3,8 +3,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import { MdLocationOn } from "react-icons/md";
-import { buttonVariants } from "@/components/ui/button";
+import { AiOutlinePlus } from "react-icons/ai";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RoommateCard from "@/components/custom/roommate-card";
 
@@ -36,21 +36,20 @@ export default function Home() {
         </div>
       </nav>
 
-      <div className="hidden container flex-col md:flex">
+      <div className="container flex-col md:flex">
         <div className="flex-1 space-y-4 p-8 pt-6">
-          <div className="flex items-center justify-between space-y-2">
+          <div className="flex items-center justify-between space-y-2 px-8">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
-              <MdLocationOn size={30} />
               <Link
-                href="/profile"
-                className={`${buttonVariants({ variant: "link" })} pl-0`}
+                href="/listing"
+                className={buttonVariants({ variant: "default" })}
               >
-                Location
+                <AiOutlinePlus className="pr-2" size={20} /> Add Listing
               </Link>
             </div>
           </div>
-          <Tabs defaultValue="roommates" className="space-y-4">
+          <Tabs defaultValue="roommates" className="space-y-4 p-8">
             <TabsList>
               <TabsTrigger value="roommates">Roommates</TabsTrigger>
               <TabsTrigger value="rooms">Rooms</TabsTrigger>
