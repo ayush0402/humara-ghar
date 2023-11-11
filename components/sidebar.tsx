@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from '@/lib/utils';
-import {Home , Plus, Settings,Rocket, Folder, Bookmark, GitFork, Trash2, Info, Building2, Building, Divide} from 'lucide-react'
+import {Home , Plus, Settings,Rocket, Folder, Bookmark, GitFork, Trash2, Info, Building2, Building, Divide, Contact2, PlusIcon} from 'lucide-react'
 import { Poppins } from 'next/font/google';
 import Link from 'next/link';
 import { usePathname , useRouter} from 'next/navigation';
@@ -31,9 +31,21 @@ export const Sidebar = () =>{
         },
         {
             icon: Building,
-            href: "/home",
-            label: "All properties",
+            href: "/room",
+            label: "Find a room",
             pro:false
+        },
+        {
+            icon: Contact2,
+            href: "/roommate",
+            label: "Find a roommate",
+            pro:false
+        },
+        {
+            icon: PlusIcon,
+            href: "/owner/create",
+            label: "List a property",
+            pro: false,
         },
         {
             icon: Settings,
@@ -80,7 +92,7 @@ export const Sidebar = () =>{
                         </div>
                     ))}
                 </div>
-                <div className='ml-5 mt-[350px]'>
+                <div className='ml-5 mt-[300px]'>
                     <Button>Log out</Button>
                 </div>
             </div>
