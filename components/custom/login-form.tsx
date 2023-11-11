@@ -28,7 +28,7 @@ export default function LoginForm() {
 
       <form
         className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
-        action="/auth/sign-in"
+        action="/api/auth/sign-in"
         method="post"
       >
         <label className="text-md" htmlFor="email">
@@ -52,7 +52,7 @@ export default function LoginForm() {
         />
         <Button className="rounded-md px-4 py-2 mb-2">Sign In</Button>
         <Button
-          formAction="/auth/sign-up"
+          formAction="/api/auth/sign-up"
           variant="secondary"
           className="border border-foreground/20 rounded-md px-4 py-2 mb-2"
         >

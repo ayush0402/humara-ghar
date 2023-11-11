@@ -10,7 +10,6 @@ export async function POST(request: Request) {
   const { data: supabaseUser } = await supabase.auth.getUser();
 
   if (supabaseUser.user === null) {
-    console.log("POST /api/onboarding: user is null");
     return NextResponse.redirect(
       `${requestUrl.origin}/login?error=Could not authenticate user`,
       {

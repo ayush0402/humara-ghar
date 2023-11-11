@@ -1,6 +1,6 @@
 import { Metadata } from "next";
+import OnboardingForm from "@/components/custom/onboarding-form";
 
-import OnboardingForm from "@/components/custom/onboarding/form";
 export const metadata: Metadata = {
   title: "Onboarding",
   description: "Enter all details to complete the onboarding process.",

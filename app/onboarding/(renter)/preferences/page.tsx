@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import PreferencesForm from "@/components/custom/onboarding/preferences/form";
+import PreferencesForm from "@/components/custom/preferences-form";
 import Messages from "@/components/custom/message";
 export const metadata: Metadata = {
   title: "Onboarding",
