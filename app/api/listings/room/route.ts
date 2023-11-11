@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
+// Add listing for a shared room required.
+
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
   const formData = await request.json();
@@ -19,19 +21,23 @@ export async function POST(request: Request) {
     );
   }
 
-  const { error } = await supabase.from("user_profiles").insert([
+  const { error } = await supabase.from("room_required_listings").insert([
     {
-      name: formData.name,
-      email_id: supabaseUser.user.email,
-      user_type: formData.user_type,
-      gender: formData.gender,
-      dob: formData.dob,
+      location: formData.location,
+      looking_for_gender: formData.gender,
+      occupancy: formData.occupancy,
+      contact_number: formData.mobile,
+      date_available: formData.available_date,
+      allow_teams: formData.allow_teams,
+      allow_pg: formData.allow_pg,
+      description: formData.description,
+      approx_rent: formData.rent,
     },
   ]);
 
   if (error) {
     return NextResponse.redirect(
-      `${requestUrl.origin}/onboarding?error=Could not save the details`,
+      `${requestUrl.origin}/listing?error=Could not save the details`,
       {
         // a 301 status is required to redirect from a POST to a GET route
         status: 301,
@@ -39,24 +45,6 @@ export async function POST(request: Request) {
     );
   }
 
-  if (formData.user_type === "renter") {
-    return NextResponse.redirect(
-      `${requestUrl.origin}/onboarding/preferences`,
-      {
-        // a 301 status is required to redirect from a POST to a GET route
-        status: 301,
-      }
-    );
-  }
-  else if(formData.user_type === "owner"){
-    return NextResponse.redirect(
-      `${requestUrl.origin}/owner/dashboard`,
-      {
-        status: 301,
-      }
-    )
-  }
-  console.log("final", requestUrl.origin);
   // URL to redirect to after onboarding process completes
   return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
 }

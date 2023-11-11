@@ -95,7 +95,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"} `}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiNightSleep size={50} className="mx-auto" />
                   </FormLabel>
@@ -116,7 +116,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"} `}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiSunrise size={50} className="mx-auto" />
                   </FormLabel>
@@ -136,7 +136,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <FaDumbbell size={50} className="mx-auto" />
                   </FormLabel>
@@ -156,7 +156,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <MdSportsCricket size={50} className="mx-auto" />
                   </FormLabel>
@@ -176,7 +176,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiEarthAmerica size={50} className="mx-auto" />
                   </FormLabel>
@@ -196,7 +196,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiPartyPopper size={50} className="mx-auto" />
                   </FormLabel>
@@ -216,7 +216,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <MdPets size={50} className="mx-auto" />
                   </FormLabel>
@@ -236,7 +236,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiPlantRoots size={50} className="mx-auto" />
                   </FormLabel>
@@ -256,7 +256,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <MdNoDrinks size={50} className="mx-auto" />
                   </FormLabel>
@@ -276,7 +276,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiMusicalNotes size={50} className="mx-auto" />
                   </FormLabel>
@@ -296,7 +296,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <FaSmokingBan size={50} className="mx-auto" />
                   </FormLabel>
@@ -316,7 +316,7 @@ export default function PreferencesForm() {
       ${field.value ? "border-2 border-primary" : "border-2 border-gray-300"}`}
                 onClick={() => field.onChange(!field.value)}
               >
-                <div className="leading-none p-4 m-1 bg-gray-200 rounded min-w-[150px]">
+                <div className="leading-none p-4 m-1 bg-accent rounded min-w-[150px]">
                   <FormLabel className="mb-2">
                     <GiBookshelf size={50} className="mx-auto" />
                   </FormLabel>
