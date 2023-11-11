@@ -168,7 +168,7 @@ const roommateRequiredFormSchema = z.object({
       "Only these types are allowed .jpg, .jpeg, .png and .webp"
     ),
   allow_teams: z.boolean().default(false),
-  ameneties: z.array(z.string()).refine((value) => value.some((item) => item), {
+  amenities: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "You have to select at least one item.",
   }),
   description: z
@@ -187,7 +187,7 @@ type RoommateRequiredFormValues = z.infer<typeof roommateRequiredFormSchema>;
 const defaultValues: Partial<RoommateRequiredFormValues> = {
   // name: "Your name",
   // dob: new Date("2023-01-23"),
-  ameneties: ["extra"],
+  amenities: ["extra"],
 };
 
 export default function RoommateRequiredForm() {
@@ -199,12 +199,30 @@ export default function RoommateRequiredForm() {
   const router = useRouter();
 
   const onSubmit = async (data: RoommateRequiredFormValues) => {
-    console.log("RoommateRequiredFormValues", data);
+    try {
+      const response = await fetch("/api/listings/roommate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // redirect to the next page
+      router.push(response.url);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <Messages />
         <div className="grid grid-cols-1 md:grid-cols-2">
           <FormField
             control={form.control}
@@ -520,7 +538,7 @@ export default function RoommateRequiredForm() {
         />
         <FormField
           control={form.control}
-          name="ameneties"
+          name="amenities"
           render={() => (
             <FormItem>
               <div className="mb-4">
@@ -534,7 +552,7 @@ export default function RoommateRequiredForm() {
                   <FormField
                     key={amenity.id}
                     control={form.control}
-                    name="ameneties"
+                    name="amenities"
                     render={({ field }) => {
                       return (
                         <FormItem
@@ -567,7 +585,7 @@ export default function RoommateRequiredForm() {
                 <FormField
                   key="extra"
                   control={form.control}
-                  name="ameneties"
+                  name="amenities"
                   render={({ field }) => {
                     return (
                       <FormItem
@@ -618,7 +636,6 @@ export default function RoommateRequiredForm() {
         />
 
         <Button type="submit">Submit</Button>
-        <Messages />
       </form>
     </Form>
   );

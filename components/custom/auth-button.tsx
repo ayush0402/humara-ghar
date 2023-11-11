@@ -18,7 +18,7 @@ export default async function AuthButton() {
         Hey, {user.email}!
       </Link>
 
-      <form action="/auth/sign-out" method="post">
+      <form action="/api/auth/sign-out" method="post">
         <Button variant="outline">Logout</Button>
       </form>
     </div>

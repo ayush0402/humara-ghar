@@ -9,7 +9,6 @@ import * as z from "zod";
 
 import { cn } from "@/lib/utils";
 import Messages from "@/components/custom/message";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -132,14 +131,31 @@ export default function RoomRequiredForm() {
   });
 
   const router = useRouter();
-
   const onSubmit = async (data: RoomRequiredFormValues) => {
-    console.log("RoomRequiredFormValues", data);
+    try {
+      const response = await fetch("/api/listings/room", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // redirect to the next page
+      router.push(response.url);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <Messages />
         <div className="grid grid-cols-1 md:grid-cols-2">
           <FormField
             control={form.control}
@@ -434,7 +450,6 @@ export default function RoomRequiredForm() {
           )}
         />
         <Button type="submit">Submit</Button>
-        <Messages />
       </form>
     </Form>
   );
