@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       }
     );
   }
-  console.log(formData);
+
   const { error } = await supabase.from("room_required_listings").insert([
     {
       location: formData.location,
@@ -36,7 +36,6 @@ export async function POST(request: Request) {
   ]);
 
   if (error) {
-    console.log(error);
     return NextResponse.redirect(
       `${requestUrl.origin}/listing?error=Could not save the details`,
       {
