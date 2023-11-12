@@ -48,6 +48,15 @@ export async function POST(request: Request) {
       }
     );
   }
+  else if(formData.user_type === "owner"){
+    return NextResponse.redirect(
+      `${requestUrl.origin}/owner/dashboard`,
+      {
+        status: 301,
+      }
+    )
+  }
+  console.log("final", requestUrl.origin);
   // URL to redirect to after onboarding process completes
   return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
 }

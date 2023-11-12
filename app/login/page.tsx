@@ -1,12 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
+import { Poppins } from 'next/font/google';
 import LoginForm from "@/components/custom/login-form";
+import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
 };
-
+const font = Poppins({
+  weight: '600',
+  subsets: ['latin'],
+});
 export default function AuthenticationPage() {
   return (
     <>
@@ -26,7 +31,16 @@ export default function AuthenticationPage() {
             >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
-            Humara Ghar
+            <Link href='/'>
+            <div
+              className={cn(
+                'hidden  md:block text-xl md:text-xl font-bold ',
+                font.className
+              )}>
+              <span className='inline-block text-primary'>humara</span>
+              <span className='inline-block '>ghar</span>
+            </div>
+          </Link>
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">

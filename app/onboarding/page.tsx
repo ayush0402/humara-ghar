@@ -1,12 +1,31 @@
 import { Metadata } from "next";
 import OnboardingForm from "@/components/custom/onboarding-form";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Poppins } from 'next/font/google';
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
 export const metadata: Metadata = {
   title: "Onboarding",
   description: "Enter all details to complete the onboarding process.",
 };
 
-export default function OnboardingPage() {
+const font = Poppins({
+  weight: '600',
+  subsets: ['latin'],
+});
+
+export default async function OnboardingPage() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log(user);
+
   return (
     <>
       <div className="container grid relative min-h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -14,7 +33,7 @@ export default function OnboardingPage() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Welcome to HumaraGhar!
+                Welcome 
               </h1>
               <p className="text-sm text-muted-foreground">
                 Please enter your details before you can start browsing
@@ -39,7 +58,16 @@ export default function OnboardingPage() {
             >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
-            Humara Ghar
+            <Link href='/'>
+            <div
+              className={cn(
+                'hidden  md:block text-xl md:text-xl font-bold ',
+                font.className
+              )}>
+              <span className='inline-block text-primary'>humara</span>
+              <span className='inline-block '>ghar</span>
+            </div>
+          </Link>
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
