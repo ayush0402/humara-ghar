@@ -25,7 +25,7 @@ export const Sidebar = () =>{
         },
         {
             icon: Building2,
-            href: "/owner/dashboard",
+            href: "/property/dashboard",
             label: "My Properties",
             pro: true
         },
@@ -43,7 +43,7 @@ export const Sidebar = () =>{
         },
         {
             icon: PlusIcon,
-            href: "/owner/create",
+            href: "/property/create",
             label: "List a property",
             pro: false,
         },
@@ -62,14 +62,21 @@ export const Sidebar = () =>{
     
 
     return (
-        <div className="space-y-4 flex-none w-[250px] flex-col h-full text-primary bg-secondary">
+        <div className="space-y-4 flex-none w-[240px] h-full flex-col  bg-secondary">
             <div >
-                <div className='ml-5 mt-5 mb-7'>
-                <Link href="/">
+                <div className='ml-5 mt-5 mb-7 flex'>
+                <Link href="/home">
                     <h1 className={cn("hidden md:block text-xl md:text-3xl font-bold text-primary", 
                     font.className
                     )}>
-                        humaraghar
+                        humara
+                    </h1>
+                </Link>
+                <Link href="/home">
+                    <h1 className={cn("hidden md:block text-xl md:text-3xl font-bold ", 
+                    font.className
+                    )}>
+                        ghar
                     </h1>
                 </Link>
                 </div>
@@ -91,9 +98,6 @@ export const Sidebar = () =>{
                             </div>
                         </div>
                     ))}
-                </div>
-                <div className='ml-5 mt-[300px]'>
-                    <Button>Log out</Button>
                 </div>
             </div>
         </div>

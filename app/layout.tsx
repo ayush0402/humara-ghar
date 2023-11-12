@@ -7,7 +7,7 @@ import { Sidebar } from "@/components/sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HumaraGhar",
+  title: "humaraghar",
   description: "Rent properties and find suitable roommates",
 };
 

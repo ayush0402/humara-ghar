@@ -220,10 +220,11 @@ export default function RoommateRequiredForm() {
   };
 
   return (
+    <div className="h-full">
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="">
         <Messages />
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2  ">
           <FormField
             control={form.control}
             name="location"
@@ -465,9 +466,9 @@ export default function RoommateRequiredForm() {
           render={({ field: { onChange }, ...field }) => {
             return (
               <FormItem>
-                <FormLabel>Images</FormLabel>
+                <FormLabel className=" ">Images</FormLabel>
                 <FormControl>
-                  <div className="flex items-center justify-center w-full">
+                  <div className="flex items-center justify-center w-full  ">
                     <label
                       htmlFor="dropzone-file"
                       className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -516,10 +517,10 @@ export default function RoommateRequiredForm() {
         />
         <FormField
           control={form.control}
-          name="allow_teams"
+          name="allow_teams" 
           render={({ field }) => (
             <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 ">
                 <FormLabel className="text-base">Allow teams?</FormLabel>
                 <FormDescription>
                   Let other people send you requests to join your team and find
@@ -541,13 +542,13 @@ export default function RoommateRequiredForm() {
           name="amenities"
           render={() => (
             <FormItem>
-              <div className="mb-4">
+              <div className="mb-4  ">
                 <FormLabel className="text-base">Ameneties</FormLabel>
                 <FormDescription>
                   Select the amenities included with your room.
                 </FormDescription>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="grid grid-cols-1 md:grid-cols-2  ">
                 {ameneties.map((amenity) => (
                   <FormField
                     key={amenity.id}
@@ -623,9 +624,10 @@ export default function RoommateRequiredForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel className=" ">Description</FormLabel>
               <FormControl>
                 <Textarea
+                className=" "
                   placeholder="I am looking for a roommate for my room."
                   {...field}
                 />
@@ -635,8 +637,9 @@ export default function RoommateRequiredForm() {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className=" ">Submit</Button>
       </form>
     </Form>
+    </div>
   );
 }

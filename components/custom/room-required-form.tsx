@@ -153,10 +153,11 @@ export default function RoomRequiredForm() {
   };
 
   return (
+    <div className="space-y-5 bg-secondary">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <Messages />
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 ">
           <FormField
             control={form.control}
             name="location"
@@ -438,9 +439,10 @@ export default function RoomRequiredForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel className="">Description</FormLabel>
               <FormControl>
-                <Textarea
+                <Textarea 
+                className=""
                   placeholder="I am looking for a roommate for my room."
                   {...field}
                 />
@@ -449,8 +451,9 @@ export default function RoomRequiredForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="">Submit</Button>
       </form>
     </Form>
+    </div>
   );
 }
