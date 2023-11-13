@@ -12,16 +12,10 @@ const font = Poppins({
 
 const DashboardHome = () => {
   return (
-    <div className="w-full h-full ">
-      <div className={cn("text-2xl", font.className)}>
-        Welcome to humaraghar!
-      </div>
-      <div className={cn("text-2xl my-2", font.className)}>
-        let's get started
-      </div>
+    <div className="w-full h-full">
       <div className="flex flex-wrap mt-[100px] mx-2">
         <div>
-          <Link href="/room">
+          <Link href="/listings/room">
             <Button
               variant="outline"
               className={cn(
@@ -30,12 +24,15 @@ const DashboardHome = () => {
               )}
             >
               <Building className="h-10 w-10" />
-              Find a room
+              Need Room
+              <p className="text-sm text-muted-foreground">
+                looking for a shared flat.
+              </p>
             </Button>
           </Link>
         </div>
         <div>
-          <Link href="/roommate">
+          <Link href="/listings/roommate">
             <Button
               variant="secondary"
               className={cn(
@@ -44,12 +41,15 @@ const DashboardHome = () => {
               )}
             >
               <Contact2 className="h-10 w-10" />
-              Find a roommate
+              Need Roommate
+              <p className="text-sm text-muted-foreground">
+                have a flat & looking for a roommate.
+              </p>
             </Button>
           </Link>
         </div>
         <div>
-          <Link href="/property/create">
+          <Link href="/listings/property">
             <Button
               variant="secondary"
               className={cn(
@@ -59,6 +59,9 @@ const DashboardHome = () => {
             >
               <PlusIcon className="h-10 w-10" />
               List a property
+              <p className="text-sm text-muted-foreground">
+                Muted description here.
+              </p>
             </Button>
           </Link>
         </div>
