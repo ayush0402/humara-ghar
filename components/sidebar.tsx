@@ -29,7 +29,7 @@ export const Sidebar = () => {
     },
     {
       icon: Building2,
-      href: "/property/dashboard",
+      href: "/property",
       label: "My Properties",
       pro: true,
     },
@@ -47,7 +47,7 @@ export const Sidebar = () => {
     },
     {
       icon: PlusIcon,
-      href: "/property/create",
+      href: "/listings",
       label: "Add Listing",
       pro: false,
     },
