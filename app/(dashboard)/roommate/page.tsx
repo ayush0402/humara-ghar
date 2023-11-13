@@ -17,17 +17,17 @@ const RoommatesPage = async () => {
     <div className="flex h-full w-full">
       <div className="flex flex-wrap">
         {!rooms ? (
-          <div>No rooms found.</div>
+          <div>No roommates found.</div>
         ) : (
           rooms.map((room) => (
             <RoommateCard
-              key={room.id} // assuming each room has a unique id
+              key={room.listing_id} // assuming each room has a unique id
               imageSrc="https://picsum.photos/200"
-              name="Listing Name"
+              name={room.creator_name}
               location={room.location}
               rentAmount={room.approx_rent}
               lookingForGender={room.looking_for_gender}
-              lookingForType="roommate"
+              lookingForType="room"
               matchPercentage={80}
             />
           ))

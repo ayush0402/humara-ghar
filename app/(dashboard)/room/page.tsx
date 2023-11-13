@@ -25,9 +25,9 @@ const RoomsPage = async () => {
         ) : (
           rooms.map((room) => (
             <RoommateCard
-              key={room.id} // assuming each room has a unique id
+              key={room.listing_id} // assuming each room has a unique id
               imageSrc="https://picsum.photos/200"
-              name="Listing Name"
+              name={room.creator_name}
               location={room.location}
               rentAmount={room.approx_rent}
               lookingForGender={room.looking_for_gender}
