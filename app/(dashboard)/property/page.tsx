@@ -6,7 +6,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="flex space-x-4 space-y-2">
+    <div className="space-x-4 space-y-2">
       <div className="flex flex-wrap">
         <RoommateCard
           imageSrc="https://picsum.photos/200"
@@ -44,14 +44,6 @@ const page = () => {
           lookingForType="roommate"
           matchPercentage={80}
         />
-      </div>
-      <div className="mr-[40px]">
-        <Link href="/property/create">
-          <Button variant="default" className="mr-[40px]">
-            <PlusIcon className="h-5 w-5" />
-            Add a property
-          </Button>
-        </Link>
       </div>
     </div>
   );
