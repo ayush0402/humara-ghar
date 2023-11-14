@@ -18,7 +18,7 @@ const RoomsPage = async () => {
     .from("roommate_required_listings")
     .select("*");
   return (
-    <div className="flex h-full w-full">
+    <div className="h-full w-full">
       <div className="flex flex-wrap">
         {!rooms ? (
           <div>No rooms found.</div>
@@ -36,14 +36,6 @@ const RoomsPage = async () => {
             />
           ))
         )}
-      </div>
-      <div className="mx-2 mr-[30px] my-2">
-        <Link
-          href="/room/listing"
-          className={buttonVariants({ variant: "default" })}
-        >
-          <AiOutlinePlus className="pr-2" size={20} /> Add Listing
-        </Link>
       </div>
     </div>
   );
