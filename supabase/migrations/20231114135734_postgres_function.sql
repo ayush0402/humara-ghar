@@ -1,13 +1,7 @@
-alter table "public"."room_required_listings" add column "creator_name" text default get_user_name_v2();
-
-alter table "public"."roommate_required_listings" add column "creator_name" text default get_user_name_v2();
-
-set check_function_bodies = off;
-
 CREATE OR REPLACE FUNCTION public.get_user_name(input_user_id uuid)
  RETURNS text
  LANGUAGE plpgsql
-AS $function$
+AS $function$ 
 DECLARE
     user_name TEXT;
 BEGIN
@@ -28,4 +22,8 @@ BEGIN
 END; $function$
 ;
 
+alter table "public"."room_required_listings" add column "creator_name" text default get_user_name_v2();
 
+alter table "public"."roommate_required_listings" add column "creator_name" text default get_user_name_v2();
+
+set check_function_bodies = off;
