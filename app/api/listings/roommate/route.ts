@@ -21,19 +21,22 @@ export async function POST(request: Request) {
     );
   }
 
-  const { error } = await supabase.from("roommate_required_listings").insert([
-    {
-      location: formData.location,
-      looking_for_gender: formData.gender,
-      occupancy: formData.occupancy,
-      contact_number: formData.mobile,
-      date_available: formData.available_date,
-      allow_teams: formData.allow_teams,
-      amenities: formData.amenities,
-      description: formData.description,
-      approx_rent: formData.rent,
-    },
-  ]);
+  const { data, error } = await supabase
+    .from("roommate_required_listings")
+    .insert([
+      {
+        location: formData.location,
+        looking_for_gender: formData.gender,
+        occupancy: formData.occupancy,
+        contact_number: formData.mobile,
+        date_available: formData.available_date,
+        allow_teams: formData.allow_teams,
+        amenities: formData.amenities,
+        description: formData.description,
+        approx_rent: formData.rent,
+      },
+    ])
+    .select();
 
   if (error) {
     return NextResponse.redirect(
@@ -46,5 +49,8 @@ export async function POST(request: Request) {
   }
 
   // URL to redirect to after onboarding process completes
-  return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
+  return NextResponse.json(data, {
+    status: 200,
+  });
+  // return NextResponse.redirect(`${requestUrl.origin}/home`, { status: 301 });
 }
