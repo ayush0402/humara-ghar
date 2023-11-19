@@ -48,7 +48,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // URL to redirect to after onboarding process completes
   return NextResponse.json(data, {
     status: 200,
   });
