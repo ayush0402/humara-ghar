@@ -12,14 +12,14 @@ const font = Poppins({
 
 const DashboardHome = () => {
   return (
-    <div className="w-full h-full ">
-      <div className={cn("text-2xl", font.className)}>
+    <div className="w-full h-full  ">
+      <div className={cn("text-2xl ml-[20px]", font.className)}>
         Welcome to humaraghar!
       </div>
-      <div className={cn("text-2xl my-2", font.className)}>
+      <div className={cn("text-2xl my-2 ml-[20px]", font.className)}>
         let's get started
       </div>
-      <div className="flex flex-wrap mt-[100px] mx-2">
+      <div className="flex flex-wrap mt-[100px] mx-2 ml-[20px]">
         <div>
           <Link href="/room">
             <Button

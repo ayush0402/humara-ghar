@@ -18,7 +18,7 @@ const RoomsPage = async () => {
     .from("roommate_required_listings")
     .select("*");
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full bg-secondary ">
       <div className="flex flex-wrap">
         {!rooms ? (
           <div>No rooms found.</div>

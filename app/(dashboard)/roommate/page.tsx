@@ -10,9 +10,24 @@ const RoommatesPage = async () => {
   // == listings of roommates.
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const email=user?.email;
+
+  const { data : userInfo} = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq('email_id',email);
+   
   const { data: rooms } = await supabase
     .from("room_required_listings")
     .select("*");
+
+    const currentUser = userInfo[0].user_id ;
+
   return (
     <div className="h-full w-full">
       <div className="flex flex-wrap">
@@ -29,6 +44,8 @@ const RoommatesPage = async () => {
               lookingForGender={room.looking_for_gender}
               lookingForType="room"
               matchPercentage={80}
+              userId = {room.created_by}
+              currentUserId= {currentUser}
             />
           ))
         )}

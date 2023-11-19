@@ -2,12 +2,25 @@ import { Metadata } from "next";
 
 import PreferencesForm from "@/components/custom/preferences-form";
 import Messages from "@/components/custom/message";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Onboarding",
   description: "Enter all details to complete the onboarding process.",
 };
 
-export default function PreferencesPage() {
+export default async function PreferencesPage() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if(!user){
+    redirect("/login");
+  }
   return (
     <>
       <div className="container grid relative min-h-screen flex-col items-center justify-center">

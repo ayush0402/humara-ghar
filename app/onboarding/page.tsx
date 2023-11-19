@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Poppins } from 'next/font/google';
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Onboarding",
@@ -24,7 +25,9 @@ export default async function OnboardingPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
+  if(!user){
+    redirect("/login");
+  }
 
   return (
     <>
