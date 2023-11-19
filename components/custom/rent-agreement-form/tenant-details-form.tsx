@@ -37,7 +37,7 @@ const TenantDetailsForm = ({
           )}
         </div>
         <div className="flex flex-col gap-2">
-          <Label htmlFor="tenant_address">Tenant Address</Label>
+          <Label htmlFor="tenant_address">Tenant's Address</Label>
           <Input
             type="text"
             name="tenant_address"

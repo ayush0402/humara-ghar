@@ -20,7 +20,8 @@ export async function POST(request: Request) {
       }
     );
   }
-  const { error } = await supabase.from("rent_agreements").insert([
+
+  const { data, error } = await supabase.from("rent_agreements").insert([
     {
       owner_name: formData.owner_name,
       owner_address: formData.owner_address,
@@ -35,8 +36,19 @@ export async function POST(request: Request) {
       property_pincode: formData.property_pincode,
       property_address: formData.property_address,
       annexure_details: formData.annexure_details,
+      monthly_rent: formData.monthly_rent,
+      security_deposit: formData.security_deposit,
+      lock_in_period: formData.lock_in_period,
+      notice_period: formData.notice_period,
+      agreement_validity: formData.agreement_validity,
+      agreement_start_date: formData.agreement_start_date,
+      created_by: formData.created_by,
     },
   ]);
+
+  if (error) {
+    console.log(error);
+  }
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }

@@ -13,8 +13,6 @@ import SuccessMessage from "@/components/custom/rent-agreement-form/success-mess
 import SideBar from "@/components/custom/rent-agreement-form/form-sidebar";
 import AgreementDetailsForm from "@/components/custom/rent-agreement-form/agreement-details-form";
 import RentAgreement from "@/components/custom/rent-agreement-form/rent-agreement-template";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import consentsvg from "@/public/Consent.svg";
 
 export type FormItems = {
   owner_name: string;
@@ -98,7 +96,7 @@ export default function Home() {
         ...prevState,
         owner_name: "Name should be at least 3 characters long",
       }));
-    } else if (owner_name && owner_name.trim().length > 15) {
+    } else if (owner_name && owner_name.trim().length > 50) {
       setErrors((prevState) => ({
         ...prevState,
         owner_name: "Name should be no longer than 15 characters",
@@ -115,7 +113,7 @@ export default function Home() {
         ...prevState,
         tenant_name: "Name should be at least 3 characters long",
       }));
-    } else if (tenant_name && tenant_name.trim().length > 15) {
+    } else if (tenant_name && tenant_name.trim().length > 50) {
       setErrors((prevState) => ({
         ...prevState,
         tenant_name: "Name should be no longer than 15 characters",
