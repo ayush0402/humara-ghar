@@ -14,10 +14,14 @@ import AuthButton from "./custom/auth-button";
 
 
 
-export const Navbar = () => {
+export const Navbar = async () => {
 
     const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
     const canInitSupabaseClient = () => {
       try {
         createClient(cookieStore);
@@ -28,10 +32,11 @@ export const Navbar = () => {
     };
   
     const isSupabaseConnected = canInitSupabaseClient();
+    if(user?.email!=="lit2020016@iiitl.ac.in" && user?.email!== "ayushkumar0402@gmail.com"){
     return (
         <div className="fixed ml-[250px] w-10/12 z-50 flex justify-between items-center py-2 px-4  bg-secondary h-16 mt-2">
-            <div className="mr-[850px]">
-                <SearchInput/>
+            <div className="mr-[800px]">
+                
             </div>
             <div className="flex">
                 <div>
@@ -40,5 +45,23 @@ export const Navbar = () => {
                 <ModeToggle/>
             </div>
         </div>
+    )}
+    else {
+      return (
+        <div className="fixed ml-[250px] w-10/12 z-50 flex justify-between items-center py-2 px-4  bg-secondary h-16 mt-2">
+            <div className="mr-[780px]">
+                
+            </div>
+            <div className="flex">
+                <div>
+                  <Link href="/admin"><Button className="bg-primary/40">Admin</Button></Link>
+                </div>
+                <div>
+                <AuthButton/>
+                </div>
+                <ModeToggle/>
+            </div>
+        </div>
     )
+    }
 }

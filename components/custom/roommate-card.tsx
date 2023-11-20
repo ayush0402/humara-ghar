@@ -1,3 +1,4 @@
+"use client"
 import {
   Card,
   CardContent,
@@ -14,6 +15,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
+import Link from "next/link";
+import { NextResponse } from "next/server";
 
 type RoommateCardProps = {
   imageSrc: string;
@@ -23,6 +26,8 @@ type RoommateCardProps = {
   lookingForGender: string;
   lookingForType: string;
   matchPercentage: number;
+  userId : string,
+  currentUserId: string ,
 };
 
 export default function RoommateCard({
@@ -33,9 +38,19 @@ export default function RoommateCard({
   lookingForGender,
   lookingForType,
   matchPercentage,
+  userId,
+  currentUserId,
 }: RoommateCardProps) {
   // TODO: Make responsive for mobile
+  
+  // console.log(currentUserId);
+  // console.log(userId);
+  const chatRoomId = "/chat/" + currentUserId+"--"+userId;
+  
+  //chatRoom.concat(chatRoomId);
+  //console.log(chatRoomId);
   return (
+    <Link href="/">
     <Card className="w-full mx-2 my-2 lg:w-[450px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
       <div className="flex flex-row w-full">
         <img
@@ -71,7 +86,7 @@ export default function RoommateCard({
       <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
         <div>
           <Button variant="secondary" className="rounded-full">
-            <MdChat />
+            <Link href={chatRoomId}><Button variant="link"><MdChat/></Button></Link>
           </Button>
         </div>
         <div>
@@ -92,5 +107,6 @@ export default function RoommateCard({
         </div>
       </CardFooter>
     </Card>
+    </Link>
   );
 }

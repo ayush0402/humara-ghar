@@ -10,13 +10,15 @@ export async function POST(request: Request) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
+  
+
   const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       emailRedirectTo: `${requestUrl.origin}/api/auth/callback`,
     },
-  });
+  },);
 
   if (error) {
     return NextResponse.redirect(

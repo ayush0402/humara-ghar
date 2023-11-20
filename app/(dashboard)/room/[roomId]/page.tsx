@@ -2,8 +2,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='ml-[20px]'>
-      Settings
+    <div className='ml-[10px]'>
+      Hello World
     </div>
   )
 }

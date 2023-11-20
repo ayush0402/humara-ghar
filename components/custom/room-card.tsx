@@ -17,12 +17,9 @@ import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import Link from "next/link";
 import { NextResponse } from "next/server";
-import { Building, Check, Phone, PhoneCall, X } from "lucide-react";
-import WaitingButton from "./waiting-button";
-import RejectedButton from "./rejected-button";
-import ApprovedButton from "./approved-button";
+import { Phone, PhoneCall } from "lucide-react";
 
-type PropertyCardProps = {
+type RoomCardProps = {
   imageSrc: string;
   name: string;
   location: string;
@@ -31,10 +28,9 @@ type PropertyCardProps = {
   bhk: string;
   bathroom: string;
   listing_id:string;
-  status: string;
 };
 
-export default function PropertyCard({
+export default function RoomCard({
   imageSrc,
   name,
   location,
@@ -43,20 +39,12 @@ export default function PropertyCard({
   bhk,
   bathroom,
   listing_id,
-  status,
 
-}: PropertyCardProps) {
+}: RoomCardProps) {
   // TODO: Make responsive for mobile
-  const propertyId = "/property/" + listing_id;
+  const propertyId = "/room/" + listing_id;
   return (
-    <Link href={
-      {
-        pathname: `/property/${listing_id}`,
-        query: {
-          id: listing_id,
-        }
-      }
-    } as={`/property/${listing_id}`}>
+    <Link href={propertyId}>
     <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
       <div className="flex flex-row w-full">
         <img
@@ -93,18 +81,10 @@ export default function PropertyCard({
       </div>
       <div className="border-t"></div>
       <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
-      <div>
+        <div>
           <Button variant="secondary" className="rounded-full" >
             <MdChat className="h-[15px] w-[15px]"/>
           </Button>
-        </div>
-        <div className="flex ml-[200px]">
-        <div className="mx-2 mt-[10px]">
-          Status:
-        </div>
-        <div>
-        {status === "0" ? <WaitingButton /> : (status === "-1" ? <RejectedButton /> : <ApprovedButton />)}
-        </div>
         </div>
         <div>
         </div>
