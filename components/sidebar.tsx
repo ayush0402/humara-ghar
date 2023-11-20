@@ -52,6 +52,12 @@ export const Sidebar = () => {
       pro: false,
     },
     {
+      icon: PlusIcon,
+      href: "/team",
+      label: "Teams",
+      pro: false,
+    },
+    {
       icon: Settings,
       href: "/settings",
       label: "Settings",
