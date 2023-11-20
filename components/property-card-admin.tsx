@@ -45,12 +45,19 @@ export default function AdminPropertyCard({
   // TODO: Make responsive for mobile
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAction = async (action: string) => {
+  const handleAction = async (action:string,id:string ) => {
     try {
       setIsSubmitting(true);
 
       // Send a request to your server to update the property status
-      const response = await fetch(`/api/update-property-status?id=${listing_id}&action=${action}`);
+      const response = await fetch(
+        `/api/update-property-status?id=${listing_id}&action=${action}`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({"action":action,"id":id})
+        });
 
       if (response.ok) {
         // Property status updated successfully
@@ -119,7 +126,7 @@ export default function AdminPropertyCard({
         <HoverCard>
             <HoverCardTrigger>
           <Button className="rounded-full" 
-          onClick={() => handleAction('approve')}
+          onClick={() => handleAction('approve',listing_id)}
           disabled={isSubmitting}
           >
             <Check className="h-[15px] w-[15px]"/>
@@ -132,7 +139,7 @@ export default function AdminPropertyCard({
         <HoverCard>
             <HoverCardTrigger>
           <Button variant="destructive" className="rounded-full" 
-          onClick={() => handleAction('reject')}
+          onClick={() => handleAction('reject',listing_id)}
           disabled={isSubmitting}
           >
             <X className="h-[15px] w-[15px]"/>

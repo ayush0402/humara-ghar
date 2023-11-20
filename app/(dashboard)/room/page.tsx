@@ -17,7 +17,7 @@ const page = async () => {
   .select("*")
   .eq('status','1');
   //console.log(properties);
-
+  
   return (
     <div className="space-x-4 space-y-2">
       <div className="flex flex-wrap">

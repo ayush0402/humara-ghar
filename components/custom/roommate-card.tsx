@@ -48,7 +48,7 @@ export default function RoommateCard({
   const chatRoomId = "/chat/" + currentUserId+"--"+userId;
   
   //chatRoom.concat(chatRoomId);
-  console.log(chatRoomId);
+  //console.log(chatRoomId);
   return (
     <Link href="/">
     <Card className="w-full mx-2 my-2 lg:w-[450px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
