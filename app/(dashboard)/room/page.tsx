@@ -1,44 +1,42 @@
-import RoommateCard from "@/components/custom/roommate-card";
-import { buttonVariants } from "@/components/ui/button";
+import PropertyCard from "@/components/property-card";
+import RoomCard from "@/components/custom/room-card";
+import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/server";
+import { PlusIcon } from "@radix-ui/react-icons";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import { AiOutlinePlus } from "react-icons/ai";
 
-// revalidates the page after every
-export const revalidate = 60;
+const page = async () => {
 
-const RoomsPage = async () => {
-  // contains listings under roommate-requiered table.
-  // == listings of shared rooms.
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-  const { data: rooms } = await supabase
-    .from("roommate_required_listings")
-    .select("*");
+
+  const {data: properties} = await supabase
+  .from("property_listings")
+  .select("*")
+  .eq('status','1');
+  //console.log(properties);
+
   return (
-    <div className="h-full w-full bg-secondary ">
+    <div className="space-x-4 space-y-2">
       <div className="flex flex-wrap">
-        {!rooms ? (
-          <div>No rooms found.</div>
-        ) : (
-          rooms.map((room) => (
-            <RoommateCard
-              key={room.listing_id} // assuming each room has a unique id
-              imageSrc="https://picsum.photos/200"
-              name={room.creator_name}
-              location={room.location}
-              rentAmount={room.approx_rent}
-              lookingForGender={room.looking_for_gender}
-              lookingForType="roommate"
-              matchPercentage={80}
-            />
-          ))
-        )}
+        {properties&&properties.map((property)=>(
+          <RoomCard
+          imageSrc= "https://picsum.photos/200"
+          name={property.locality}
+          location={property.location}
+          rentAmount={property.approx_rent}
+          area={property.area}
+          bhk={property.bhk}
+          bathroom={property.bathroom}
+          listing_id={property.listing_id}
+        />
+        ))}
+        
       </div>
     </div>
   );
 };
 
-export default RoomsPage;
+export default page;

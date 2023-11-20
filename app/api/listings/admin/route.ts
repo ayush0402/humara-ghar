@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   }
 
   const { data, error } = await supabase
-    .from("property_listings")
+    .from("property_listings_admin")
     .insert([
       {
         address: formData.address,
@@ -38,12 +38,9 @@ export async function POST(request: Request) {
         amenities: formData.amenities,
         description: formData.description,
         approx_rent: formData.rent,
-        status:"0",
       },
     ])
     .select();
-
-    console.log(error);
 
   if (error) {
     console.log(error);

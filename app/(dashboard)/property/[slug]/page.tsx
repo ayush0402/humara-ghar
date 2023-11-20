@@ -1,26 +1,39 @@
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-import React from 'react'
+import { FC } from 'react';
+import { notFound } from 'next/navigation';
+import { useEffect, useState, useRef } from 'react';
+import ChatHeader from '@/components/custom/chat-header';
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
+import PropertyDisplay from '@/components/custom/property-display';
 
-const page = () => {
+
+
+const Page = async ({params}) => {
+  
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const propertyId =  params.slug;
+
+  const {data: properties} = await supabase
+  .from("property_listings")
+  .select("*")
+  .eq('listing_id',propertyId)
+  
   return (
-    <div className='min-h-screen bg-secondary text-muted-foreground ml-[10px]'>
-    <div className="flex">
-      {/* <div className='bg-primary h-[500px] w-[700px] text-black'>Images</div> */}
-      <img src="https://picsum.photos/200" alt="" className='h-[500px] w-[700px]'/>
-      <div className='flex-col ml-[20px]'>
-      <div className='my-2'>Address</div>
-      <div className='my-2'>Amenities</div>
-      <div className='my-2'>Desc</div>
-      <div className='my-2'>Type</div>
-      <div className='my-2'>Rent</div>
-      </div>
-    </div>
-      <div className='my-2'>
-          <Button>Price Prediction</Button>
-      </div>
+    <div className='ml-[10px]'>
+      <PropertyDisplay 
+         imageSrc="https://picsum.photos/200"
+         location={properties[0].location}
+         locality={properties[0].locality}
+         area={properties[0].area}
+         bhk={properties[0].bhk}
+         bathroom={properties[0].bathroom}
+         rentAmount={properties[0].approx_rent}
+         address={properties[0].address}
+         />
     </div>
   )
-}
+};
 
-export default page
+export default Page;

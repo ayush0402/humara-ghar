@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -31,6 +31,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { AlertDialogHeader, AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogTrigger, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
+import { ScrollArea } from "../ui/scroll-area";
 
 const MAX_IMAGE_SIZE = 5242880; // 5 MB
 const ALLOWED_IMAGE_TYPES = [
@@ -399,7 +401,7 @@ export default function PropertyRequiredForm() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
+    
       const listingId = (await response.json())[0].listing_id;
       const responseUrl = new URL(response.url);
       const supabase = createClient();
@@ -416,6 +418,7 @@ export default function PropertyRequiredForm() {
       }
 
       // redirect to the next page
+      redirect("/property");
       router.push(`${responseUrl.origin}/home`);
     } catch (error) {
       console.error("Error:", error);
@@ -423,31 +426,31 @@ export default function PropertyRequiredForm() {
   };
 
   return (
-    <div className="h-full">
+    <div className="h-full ml-[5px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <Messages />
           <div className="grid grid-cols-1 md:grid-cols-2  ">
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=" ">Address</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className=" "
-                    placeholder="Address of your property"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
             <FormField
               control={form.control}
-              name="location"
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className=" ">Address</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className=" "
+                      placeholder="Address of your property"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="locality"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Locality</FormLabel>
@@ -633,7 +636,7 @@ export default function PropertyRequiredForm() {
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               control={form.control}
               name="location"
               render={({ field }) => (
@@ -744,7 +747,7 @@ export default function PropertyRequiredForm() {
                         <option value="4">4</option>
                         <option value="5">5</option>
                         <option value="6">6</option>
-                        
+
                       </select>
                     </FormControl>
                     <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
@@ -1061,11 +1064,75 @@ export default function PropertyRequiredForm() {
               </FormItem>
             )}
           />
+          <div className="h-[200px] w-[350px] rounded-md border overflow-auto my-2">
+          <AlertDialog >
+            <AlertDialogTrigger asChild><Button variant="outline">Terms&Conditions</Button></AlertDialogTrigger>
+            <AlertDialogContent className={"lg:max-w-screen-lg max-h-screen"}>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Terms and Conditions for Property Listings</AlertDialogTitle>
+                <AlertDialogDescription>
+                  <div className="overflow-auto">
+                  <div>
+                    <p>
+                      These terms and conditions ("Terms") govern the use of our property listing services ("Services") provided by [Your Company Name] ("we," "us," or "our"). By using our Services, you agree to comply with and be bound by these Terms. If you do not agree to these Terms, please do not use our Services.
+                    </p>
+                  </div>
+                  <div>
+                    <h2>1. Property Listing</h2>
+                    <p>1.1. By submitting a property listing, you represent and warrant that all information provided is accurate, complete, and up-to-date.</p>
+                    <p>1.2. We reserve the right to review and verify the information provided in property listings. If we determine, in our sole discretion, that a property listing is not valid, we may take actions as outlined in Section 2.</p>
+                  </div>
 
-          <Button type="submit" className=" ">
-            Submit
-          </Button>
-          <Button className="mx-2">Price Prediction</Button>
+                  <div>
+                    <h2>2. Actions Against Invalid Listings</h2>
+                    <p>2.1. If we find that a property listing is not valid for any reason, including but not limited to false information, misleading details, or violation of applicable laws, we may take the following actions:</p>
+                    <ul>
+                      <li>a. Listing Removal: We may remove the invalid property listing from our platform.</li>
+                      <li>b. Account Suspension: We may suspend the account of the user who submitted the invalid property listing.</li>
+                      <li>c. Legal Action: In cases of serious violations, we reserve the right to take legal action against the user, seeking damages or injunctive relief.</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h2>3. User Responsibilities</h2>
+                    <p>3.1. Users are responsible for ensuring the accuracy and validity of the information provided in property listings.</p>
+                    <p>3.2. Users agree not to submit listings that violate any applicable laws, regulations, or third-party rights.</p>
+                  </div>
+
+                  <div>
+                    <h2>4. Dispute Resolution</h2>
+                    <p>4.1. Any disputes arising from the interpretation or enforcement of these Terms shall be resolved through negotiation in good faith.</p>
+                    <p>4.2. If a dispute cannot be resolved through negotiation, it shall be submitted to binding arbitration in accordance with the rules of [Arbitration Organization] before resorting to litigation.</p>
+                  </div>
+
+                  <div>
+                    <h2>5. Changes to Terms</h2>
+                    <p>5.1. We reserve the right to modify these Terms at any time. Users will be notified of any changes, and continued use of the Services after such notification constitutes acceptance of the modified Terms.</p>
+                  </div>
+
+                  <div>
+                    <h2>6. Governing Law</h2>
+                    <p>6.1. These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
+                  </div>
+
+                  <div>
+                    <h2>7. Contact Information</h2>
+                    <p>7.1. For questions or concerns regarding these Terms, please contact us at [Your Contact Information].</p>
+                  </div>
+                  </div>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+            <Button type="submit" className="mx-2">
+                  Submit
+            </Button>
+          </div>
+          
         </form>
       </Form>
 

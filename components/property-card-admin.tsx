@@ -17,10 +17,8 @@ import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import Link from "next/link";
 import { NextResponse } from "next/server";
-import { Building, Check, Phone, PhoneCall, X } from "lucide-react";
-import WaitingButton from "./waiting-button";
-import RejectedButton from "./rejected-button";
-import ApprovedButton from "./approved-button";
+import { Check, Phone, PhoneCall, X } from "lucide-react";
+import { useState } from "react";
 
 type PropertyCardProps = {
   imageSrc: string;
@@ -31,10 +29,9 @@ type PropertyCardProps = {
   bhk: string;
   bathroom: string;
   listing_id:string;
-  status: string;
 };
 
-export default function PropertyCard({
+export default function AdminPropertyCard({
   imageSrc,
   name,
   location,
@@ -43,20 +40,39 @@ export default function PropertyCard({
   bhk,
   bathroom,
   listing_id,
-  status,
 
 }: PropertyCardProps) {
   // TODO: Make responsive for mobile
-  const propertyId = "/property/" + listing_id;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAction = async (action: string) => {
+    try {
+      setIsSubmitting(true);
+
+      // Send a request to your server to update the property status
+      const response = await fetch(`/api/update-property-status?id=${listing_id}&action=${action}`);
+
+      if (response.ok) {
+        // Property status updated successfully
+        // You can also update the UI or perform additional actions if needed
+      } else {
+        // Handle error cases
+        console.error('Failed to update property status');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  const propertyId = "/room/" + listing_id;
   return (
     <Link href={
       {
-        pathname: `/property/${listing_id}`,
+        pathname: `/room/${listing_id}`,
         query: {
           id: listing_id,
         }
       }
-    } as={`/property/${listing_id}`}>
+    } as={`/room/${listing_id}`}>
     <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
       <div className="flex flex-row w-full">
         <img
@@ -93,17 +109,37 @@ export default function PropertyCard({
       </div>
       <div className="border-t"></div>
       <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
-      <div>
+        <div>
           <Button variant="secondary" className="rounded-full" >
             <MdChat className="h-[15px] w-[15px]"/>
           </Button>
         </div>
-        <div className="flex ml-[200px]">
-        <div className="mx-2 mt-[10px]">
-          Status:
+        <div className="flex ml-[290px]">
+        <div className="mx-2 ">
+        <HoverCard>
+            <HoverCardTrigger>
+          <Button className="rounded-full" 
+          onClick={() => handleAction('approve')}
+          disabled={isSubmitting}
+          >
+            <Check className="h-[15px] w-[15px]"/>
+          </Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-50">Approve Property</HoverCardContent>
+          </HoverCard>
         </div>
         <div>
-        {status === "0" ? <WaitingButton /> : (status === "-1" ? <RejectedButton /> : <ApprovedButton />)}
+        <HoverCard>
+            <HoverCardTrigger>
+          <Button variant="destructive" className="rounded-full" 
+          onClick={() => handleAction('reject')}
+          disabled={isSubmitting}
+          >
+            <X className="h-[15px] w-[15px]"/>
+          </Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-50">Reject Property</HoverCardContent>
+          </HoverCard>
         </div>
         </div>
         <div>

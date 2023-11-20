@@ -1,4 +1,4 @@
-import PropertyRequiredForm from "@/components/custom/property-required-form";
+import PropertyRequiredForm from "@/components/custom/property-listing-form";
 
 export default function PropertyListing() {
   return (
