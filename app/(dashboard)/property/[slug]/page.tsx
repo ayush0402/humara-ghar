@@ -16,7 +16,6 @@ const Page = async ({ params }) => {
     .from("property_listings")
     .select("*")
     .eq("listing_id", propertyId);
-
   return (
     <div className="ml-[10px]">
       <PropertyDisplay
@@ -28,6 +27,9 @@ const Page = async ({ params }) => {
         bathroom={properties && properties[0].bathroom}
         rentAmount={properties && properties[0].approx_rent}
         address={properties && properties[0].address}
+        userId={properties && properties[0].created_by}
+        occupancy={properties && properties[0].occupancy}
+        amenities={properties && properties[0].amenities}
       />
     </div>
   );

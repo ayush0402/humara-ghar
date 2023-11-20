@@ -26,7 +26,7 @@ const RoommatesPage = async () => {
     .from("room_required_listings")
     .select("*");
 
-    const currentUser = userInfo[0].user_id ;
+    const currentUser = userInfo&&userInfo[0].user_id ;
 
   return (
     <div className="h-full w-full">

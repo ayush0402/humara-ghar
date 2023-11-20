@@ -94,10 +94,12 @@ export default function PropertyCard({
           />
           <div>
             <CardHeader className="pt-2 pl-4 lg:pl-6">
-              <CardTitle className="text-xl lg:text-2xl">{name}</CardTitle>
+              <CardTitle className="text-xl lg:text-2xl">
+                {name[0].toUpperCase() + name.substring(1)}
+              </CardTitle>
               <CardDescription className="flex flex-row items-center">
                 <MdLocationOn />
-                {location}
+                {location[0].toUpperCase() + location.substring(1)}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">

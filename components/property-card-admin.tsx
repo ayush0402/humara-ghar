@@ -71,16 +71,16 @@ export default function AdminPropertyCard({
       setIsSubmitting(false);
     }
   };
-  const propertyId = "/room/" + listing_id;
+  const propertyId = "/property/" + listing_id;
   return (
     <Link
       href={{
-        pathname: `/room/${listing_id}`,
+        pathname: `/property/${listing_id}`,
         query: {
           id: listing_id,
         },
       }}
-      as={`/room/${listing_id}`}
+      as={`/property/${listing_id}`}
     >
       <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
         <div className="flex flex-row w-full">
