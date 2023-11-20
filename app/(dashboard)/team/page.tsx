@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import teamWorkSVG from "../../../public/teamwork.svg";
 import Image from "next/image";
 import TeamDetails from "@/components/custom/team-details";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import CreateTeamDialog from "@/components/custom/create-team-dialog";
 
 const revalidate = 60;
 
@@ -59,9 +61,13 @@ export default async function TeamsPage() {
                 If you are unable to find a pre-occupied flat for yourself, you
                 can make a team with other user and find flat together.
               </p>
-              <Button variant="default" className="p-2">
-                Create Team Now
-              </Button>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="default">Create Team Now</Button>
+                </DialogTrigger>
+                <CreateTeamDialog />
+              </Dialog>
             </div>
           )}
         </TabsContent>
