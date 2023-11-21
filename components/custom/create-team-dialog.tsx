@@ -19,7 +19,15 @@ export default async function CreateTeamDialog() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const currentUser = user?.id || "";
+  const currentUserId = user?.id || "";
+
+  const { data: userData, error: userError } = await supabase
+    .from("user_profiles")
+    .select("name")
+    .eq("user_id", currentUserId)
+    .single();
+
+  const currentUserName = userData?.name || "";
 
   return (
     <DialogContent className="sm:max-w-[700px] overflow-y-scroll max-h-[600px]">
@@ -33,7 +41,7 @@ export default async function CreateTeamDialog() {
         {roommates &&
           roommates.map((roommate) => {
             // replace with TeamInviteCard
-            if (roommate.created_by === currentUser) return null;
+            if (roommate.created_by === currentUserId) return null;
             return (
               <TeamInviteCard
                 key={roommate.listing_id} // assuming each room has a unique id
@@ -45,7 +53,8 @@ export default async function CreateTeamDialog() {
                 lookingForType="room"
                 matchPercentage={80}
                 userId={roommate.created_by}
-                currentUserId={currentUser}
+                currentUserId={currentUserId}
+                currentUserName={currentUserName}
               />
             );
           })}

@@ -46,7 +46,15 @@ export default async function TeamsPage() {
           className="container w-full w-[600px] mt-8"
         >
           {teamData ? (
-            <TeamDetails />
+            <>
+              <TeamDetails />
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="default">Create Team Now</Button>
+                </DialogTrigger>
+                <CreateTeamDialog />
+              </Dialog>
+            </>
           ) : (
             <div className="flex flex-col justify-between items-center p-10 gap-5">
               <Image
@@ -73,7 +81,7 @@ export default async function TeamsPage() {
           )}
         </TabsContent>
         <TabsContent value="requests" className="container">
-          <WaitingTeamInvites />
+          <WaitingTeamInvites userId={userId} />
         </TabsContent>
       </Tabs>
     </>

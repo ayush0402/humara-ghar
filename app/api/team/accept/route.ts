@@ -10,6 +10,7 @@ export async function POST(request: Request) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
+  // placeholder formdata keys for now
   const { data, error } = await supabase
     .from("team_join_invitations")
     .update({ status: "accepted" })

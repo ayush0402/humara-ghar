@@ -19,6 +19,7 @@ type TeamInviteCardProps = {
   matchPercentage: number;
   userId: string;
   currentUserId: string;
+  currentUserName: string;
 };
 
 export default function TeamInviteCard({
@@ -31,6 +32,7 @@ export default function TeamInviteCard({
   matchPercentage,
   userId,
   currentUserId,
+  currentUserName,
 }: TeamInviteCardProps) {
   const handleOnClick = async () => {
     try {
@@ -42,6 +44,8 @@ export default function TeamInviteCard({
         body: JSON.stringify({
           userId: userId,
           currentUserId: currentUserId,
+          invitee_name: name,
+          inviter_name: currentUserName,
         }),
       });
 
