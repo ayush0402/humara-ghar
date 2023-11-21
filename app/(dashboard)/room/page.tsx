@@ -1,7 +1,6 @@
 import RoomCard from "@/components/custom/room-card";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import React from "react";
 
 const page = async () => {
   const cookieStore = cookies();
@@ -14,18 +13,6 @@ const page = async () => {
 
   return (
     <div className="space-x-4 space-y-2 bg-secondary">
-      <div>
-        <Select>
-          <SelectTrigger className="ml-[25px] w-[180px]">
-            <SelectValue placeholder="Filter" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="room">Room</SelectItem>
-            <SelectItem value="roommate">Roommate</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
       <div className="flex flex-wrap">
         {properties &&
           properties.map((property) => (

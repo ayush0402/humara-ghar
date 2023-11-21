@@ -29,8 +29,6 @@ type RoommateCardProps = {
   matchPercentage: number;
   userId: string;
   currentUserId: string;
-  userId: string;
-  currentUserId: string;
 };
 
 export default function RoommateCard({
@@ -46,10 +44,8 @@ export default function RoommateCard({
 }: RoommateCardProps) {
   // TODO: Make responsive for mobile
 
-
   // console.log(currentUserId);
   // console.log(userId);
-  const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
   const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
