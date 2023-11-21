@@ -2,7 +2,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -33,9 +32,27 @@ export default function TeamInviteCard({
   userId,
   currentUserId,
 }: TeamInviteCardProps) {
-  const handleOnClick = () => {
-    console.log("userId: " + userId, "currentUserId: " + currentUserId);
+  const handleOnClick = async () => {
+    try {
+      const response = await fetch("/api/team/create-invite", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          currentUserId: currentUserId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
   return (
     <>
       <Card className="flex flex-row p-3 max-h-[250px] w-full mx-2 my-2 cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
@@ -82,7 +99,7 @@ export default function TeamInviteCard({
         </a>
         <CardFooter className="m-0 p-0 flex flex-col justify-end">
           <Button className="default m-2" onClick={handleOnClick}>
-            Join Team
+            Invite
           </Button>
         </CardFooter>
       </Card>

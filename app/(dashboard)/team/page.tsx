@@ -7,6 +7,7 @@ import Image from "next/image";
 import TeamDetails from "@/components/custom/team-details";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CreateTeamDialog from "@/components/custom/create-team-dialog";
+import WaitingTeamInvites from "@/components/custom/waiting-team-invites";
 
 const revalidate = 60;
 
@@ -72,7 +73,7 @@ export default async function TeamsPage() {
           )}
         </TabsContent>
         <TabsContent value="requests" className="container">
-          Pending Requests
+          <WaitingTeamInvites />
         </TabsContent>
       </Tabs>
     </>

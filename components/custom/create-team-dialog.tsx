@@ -31,21 +31,24 @@ export default async function CreateTeamDialog() {
       </DialogHeader>
       <div className="flex flex-col gap-4 p-5">
         {roommates &&
-          roommates.map((roommate) => (
+          roommates.map((roommate) => {
             // replace with TeamInviteCard
-            <TeamInviteCard
-              key={roommate.listing_id} // assuming each room has a unique id
-              imageSrc="https://picsum.photos/200"
-              name={roommate.creator_name}
-              location={roommate.location}
-              rentAmount={roommate.approx_rent}
-              lookingForGender={roommate.looking_for_gender}
-              lookingForType="room"
-              matchPercentage={80}
-              userId={roommate.created_by}
-              currentUserId={currentUser}
-            />
-          ))}
+            if (roommate.created_by === currentUser) return null;
+            return (
+              <TeamInviteCard
+                key={roommate.listing_id} // assuming each room has a unique id
+                imageSrc="https://picsum.photos/200"
+                name={roommate.creator_name}
+                location={roommate.location}
+                rentAmount={roommate.approx_rent}
+                lookingForGender={roommate.looking_for_gender}
+                lookingForType="room"
+                matchPercentage={80}
+                userId={roommate.created_by}
+                currentUserId={currentUser}
+              />
+            );
+          })}
       </div>
     </DialogContent>
   );
