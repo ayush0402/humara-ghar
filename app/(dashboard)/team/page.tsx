@@ -31,6 +31,17 @@ export default async function TeamsPage() {
     .eq("user_id", userId)
     .single();
 
+  let teamMembers = [];
+
+  if (teamData) {
+    const { data, error } = await supabase
+      .from("team_members")
+      .select("*")
+      .eq("team_id", teamData.team_id);
+
+    if (data) teamMembers = data;
+  }
+
   return (
     <>
       <Tabs
@@ -39,13 +50,13 @@ export default async function TeamsPage() {
       >
         <TabsList>
           <TabsTrigger value="my-team">My Team</TabsTrigger>
-          <TabsTrigger value="requests">Requests</TabsTrigger>
+          <TabsTrigger value="invites">Invites</TabsTrigger>
         </TabsList>
         <TabsContent
           value="my-team"
           className="container w-full w-[600px] mt-8"
         >
-          {teamData ? (
+          {teamMembers.length > 1 ? (
             <>
               <TeamDetails />
               <Dialog>
@@ -80,7 +91,7 @@ export default async function TeamsPage() {
             </div>
           )}
         </TabsContent>
-        <TabsContent value="requests" className="container">
+        <TabsContent value="invites" className="container">
           <WaitingTeamInvites userId={userId} />
         </TabsContent>
       </Tabs>
