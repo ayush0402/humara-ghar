@@ -84,11 +84,7 @@ export default function RoommateCard({
                   Looking for
                 </p>
                 <p className="text-sm lg:text-md">
-                  {lookingForGender[0].toUpperCase() +
-                    lookingForGender.substring(1)}
-                  ,{" "}
-                  {lookingForType[0].toUpperCase() +
-                    lookingForType.substring(1)}
+                  {lookingForGender} {lookingForType}
                 </p>
               </div>
             </CardContent>
@@ -97,7 +93,7 @@ export default function RoommateCard({
         <div className="border-t"></div>
         <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
           <div>
-            <Button variant="secondary" className="rounded-full">
+            <Button variant="ghost" className="rounded-full">
               <Link href={chatRoomId}>
                 <Button variant="link">
                   <MdChat />

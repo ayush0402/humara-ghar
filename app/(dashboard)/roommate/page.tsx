@@ -15,18 +15,18 @@ const RoommatesPage = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const email=user?.email;
+  const email = user?.email;
 
-  const { data : userInfo} = await supabase
+  const { data: userInfo } = await supabase
     .from("user_profiles")
     .select("*")
-    .eq('email_id',email);
-   
+    .eq("email_id", email);
+
   const { data: rooms } = await supabase
     .from("room_required_listings")
     .select("*");
 
-    const currentUser = userInfo&&userInfo[0].user_id ;
+  const currentUser = userInfo && userInfo[0].user_id;
 
   return (
     <div className="h-full w-full">
@@ -44,8 +44,8 @@ const RoommatesPage = async () => {
               lookingForGender={room.looking_for_gender}
               lookingForType="room"
               matchPercentage={80}
-              userId = {room.created_by}
-              currentUserId= {currentUser}
+              userId={room.created_by}
+              currentUserId={currentUser}
             />
           ))
         )}
