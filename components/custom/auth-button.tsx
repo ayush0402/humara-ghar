@@ -12,10 +12,15 @@ export default async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const { data } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("user_id", user?.id);
+
   return user ? (
     <div className="flex items-center gap-4">
       <Link href="/profile" className={buttonVariants({ variant: "ghost" })}>
-        Hey, {user.email}!
+        Hey, {data && data[0].name} !
       </Link>
 
       <form action="/api/auth/sign-out" method="post">

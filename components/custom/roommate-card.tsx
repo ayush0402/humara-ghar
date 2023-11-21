@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import {
   Card,
   CardContent,
@@ -28,6 +29,8 @@ type RoommateCardProps = {
   matchPercentage: number;
   userId: string;
   currentUserId: string;
+  userId: string;
+  currentUserId: string;
 };
 
 export default function RoommateCard({
@@ -43,14 +46,25 @@ export default function RoommateCard({
 }: RoommateCardProps) {
   // TODO: Make responsive for mobile
 
+
   // console.log(currentUserId);
   // console.log(userId);
+  const chatRoomId = "/chat/" + currentUserId + "--" + userId;
+
   const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
   //chatRoom.concat(chatRoomId);
   //console.log(chatRoomId);
   return (
-    <Link href="/">
+    <Link
+      href={{
+        pathname: `/roommate/${userId}`,
+        query: {
+          id: userId,
+        },
+      }}
+      as={`/roommate/${userId}`}
+    >
       <Card className="w-full mx-2 my-2 lg:w-[450px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
         <div className="flex flex-row w-full">
           <img
@@ -63,7 +77,7 @@ export default function RoommateCard({
               <CardTitle className="text-xl lg:text-2xl">{name}</CardTitle>
               <CardDescription className="flex flex-row items-center">
                 <MdLocationOn />
-                {location}
+                {location[0].toUpperCase() + location.substring(1)}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">
@@ -76,7 +90,7 @@ export default function RoommateCard({
                   Looking for
                 </p>
                 <p className="text-sm lg:text-md">
-                  {lookingForGender}, {lookingForType}
+                  {lookingForGender} {lookingForType}
                 </p>
               </div>
             </CardContent>
@@ -85,7 +99,7 @@ export default function RoommateCard({
         <div className="border-t"></div>
         <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
           <div>
-            <Button variant="secondary" className="rounded-full">
+            <Button variant="ghost" className="rounded-full">
               <Link href={chatRoomId}>
                 <Button variant="link">
                   <MdChat />
