@@ -8,6 +8,7 @@ import {
   Building,
   Contact2,
   PlusIcon,
+  BookOpenCheck,
 } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
@@ -52,6 +53,12 @@ export const Sidebar = () => {
       pro: false,
     },
     {
+      icon: BookOpenCheck,
+      href: "/rent-agreement",
+      label: "Rent-Agreement",
+      pro: false,
+    },
+    {
       icon: Settings,
       href: "/settings",
       label: "Settings",
@@ -64,7 +71,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="space-y-4 flex-none w-[240px] h-full flex-col  bg-secondary">
+    <div className="space-y-4 flex w-[240px] h-full flex-col  bg-secondary justify-between">
       <div>
         <div className="ml-5 mt-5 mb-7 flex">
           <Link href="/home">

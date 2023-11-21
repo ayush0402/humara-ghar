@@ -16,7 +16,7 @@ import {
 } from "react-icons/gi";
 import { FaDumbbell, FaSmokingBan } from "react-icons/fa";
 import { MdSportsCricket, MdPets, MdNoDrinks } from "react-icons/md";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; 
 import {
   Form,
   FormDescription,
