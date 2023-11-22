@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import {
   Card,
   CardContent,
@@ -45,6 +46,7 @@ export default function RoommateCard({
 
   // console.log(currentUserId);
   // console.log(userId);
+
   const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
   //chatRoom.concat(chatRoomId);

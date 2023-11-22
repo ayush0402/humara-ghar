@@ -10,6 +10,7 @@ import {
   PlusIcon,
   BookOpenCheck,
 } from "lucide-react";
+import { RiTeamLine } from "react-icons/ri";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -50,6 +51,12 @@ export const Sidebar = () => {
       icon: PlusIcon,
       href: "/listings",
       label: "Add Listing",
+      pro: false,
+    },
+    {
+      icon: RiTeamLine,
+      href: "/team",
+      label: "Teams",
       pro: false,
     },
     {

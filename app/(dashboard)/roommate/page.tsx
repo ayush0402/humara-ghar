@@ -15,36 +15,29 @@ const RoommatesPage = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const email = user?.email;
-
-  const { data: userInfo } = await supabase
-    .from("user_profiles")
-    .select("*")
-    .eq("email_id", email);
-
-  const { data: rooms } = await supabase
+  const { data: roommates } = await supabase
     .from("room_required_listings")
     .select("*");
 
-  const currentUser = userInfo && userInfo[0].user_id;
+  const currentUser = user?.id || "";
 
   return (
     <div className="h-full w-full">
       <div className="flex flex-wrap">
-        {!rooms ? (
+        {!roommates ? (
           <div>No roommates found.</div>
         ) : (
-          rooms.map((room) => (
+          roommates.map((roommate) => (
             <RoommateCard
-              key={room.listing_id} // assuming each room has a unique id
+              key={roommate.listing_id} // assuming each room has a unique id
               imageSrc="https://picsum.photos/200"
-              name={room.creator_name}
-              location={room.location}
-              rentAmount={room.approx_rent}
-              lookingForGender={room.looking_for_gender}
+              name={roommate.creator_name}
+              location={roommate.location}
+              rentAmount={roommate.approx_rent}
+              lookingForGender={roommate.looking_for_gender}
               lookingForType="room"
               matchPercentage={80}
-              userId={room.created_by}
+              userId={roommate.created_by}
               currentUserId={currentUser}
             />
           ))
