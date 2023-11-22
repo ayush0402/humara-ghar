@@ -9,8 +9,6 @@ export default async function WaitingTeamInvites({
 }: {
   userId: string;
 }) {
-  
-
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -26,7 +24,6 @@ export default async function WaitingTeamInvites({
     .eq("inviter_user_id", userId)
     .eq("status", "waiting");
 
-  // continue here
   return (
     <div className="flex flex-col gap-4 m-5">
       <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-primary">

@@ -11,21 +11,21 @@ export async function POST(request: Request) {
   const supabase = createClient(cookieStore);
 
   console.log("/decline", formData);
-  // const { data, error } = await supabase
-  //   .from("team_join_invitations")
-  //   .update({ status: "rejected" })
-  //   .eq("invitee_user_id", formData.inviteeUserId)
-  //   .eq("inviter_user_id", formData.inviterUserId)
-  //   .eq("team_id", formData.teamId)
-  //   .select();
+  const { data, error } = await supabase
+    .from("team_join_invitations")
+    .update({ status: "rejected" })
+    .eq("invitee_user_id", formData.inviteeUserId)
+    .eq("inviter_user_id", formData.inviterUserId)
+    .eq("team_id", formData.teamId)
+    .select();
 
-  // if (error) {
-  //   console.error("Error rejecting the invite", error);
-  //   return NextResponse.json(
-  //     { message: "Error rejecting the invite." },
-  //     { status: 400 }
-  //   );
-  // }
+  if (error) {
+    console.error("Error rejecting the invite", error);
+    return NextResponse.json(
+      { message: "Error rejecting the invite." },
+      { status: 400 }
+    );
+  }
 
   return NextResponse.json(
     { message: "declined the team invitation." },
