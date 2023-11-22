@@ -36,12 +36,13 @@ export default async function TeamsPage() {
   if (teamData) {
     const { data, error } = await supabase
       .from("team_members")
-      .select("*")
+      .select("*, user_profiles(name, gender)")
       .eq("team_id", teamData.team_id);
 
     if (data) teamMembers = data;
   }
 
+  console.log("teamMembersXuserProfiles", teamMembers);
   return (
     <>
       <Tabs
@@ -52,19 +53,22 @@ export default async function TeamsPage() {
           <TabsTrigger value="my-team">My Team</TabsTrigger>
           <TabsTrigger value="invites">Invites</TabsTrigger>
         </TabsList>
-        <TabsContent
-          value="my-team"
-          className="container w-full w-[600px] mt-8"
-        >
+        <TabsContent value="my-team" className="container mt-8">
           {teamMembers.length > 1 ? (
             <>
-              <TeamDetails />
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="default">Create Team Now</Button>
-                </DialogTrigger>
-                <CreateTeamDialog />
-              </Dialog>
+              <div className="flex flex-row justify-around gap-4 border-2 border-black w-full">
+                <div className="flex flex-col justify-start border-2">
+                  {teamMembers.map((teamMember, index) => (
+                    <TeamDetails key={index} {...teamMember} />
+                  ))}
+                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="default">Create Team Now</Button>
+                  </DialogTrigger>
+                  <CreateTeamDialog />
+                </Dialog>
+              </div>
             </>
           ) : (
             <div className="flex flex-col justify-between items-center p-10 gap-5">
