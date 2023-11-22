@@ -10,21 +10,22 @@ export async function POST(request: Request) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  // placeholder formdata keys for now
-  const { data, error } = await supabase
-    .from("team_join_invitations")
-    .update({ status: "accepted" })
-    .eq("invitee_user_id", formData.currentUserId)
-    .eq("inviter_user_id", formData.inviterUserId)
-    .select();
+  console.log("/accept", formData);
+  // const { data, error } = await supabase
+  //   .from("team_join_invitations")
+  //   .update({ status: "accepted" })
+  //   .eq("invitee_user_id", formData.inviteeUserId)
+  //   .eq("inviter_user_id", formData.inviterUserId)
+  //   .eq("team_id", formData.teamId)
+  //   .select();
 
-  if (error) {
-    console.error("Error accepting the invite", error);
-    return NextResponse.json(
-      { message: "Error accepting the invite." },
-      { status: 400 }
-    );
-  }
+  // if (error) {
+  //   console.error("Error accepting the invite", error);
+  //   return NextResponse.json(
+  //     { message: "Error accepting the invite." },
+  //     { status: 400 }
+  //   );
+  // }
 
   return NextResponse.json(
     { message: "Accepted the team invite." },
