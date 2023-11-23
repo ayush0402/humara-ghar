@@ -56,7 +56,7 @@ export default async function TeamsPage() {
         <TabsContent value="my-team" className="container mt-8">
           {teamMembers.length > 1 ? (
             <>
-              <div className="flex flex-row justify-around gap-4 border-2 border-black w-full">
+              <div className="flex flex-row justify-around gap-4 w-full">
                 <div className="flex flex-col justify-start border-2">
                   {teamMembers.map((teamMember, index) => (
                     <TeamDetails key={index} {...teamMember} />
