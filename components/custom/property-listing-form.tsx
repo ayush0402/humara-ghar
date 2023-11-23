@@ -41,13 +41,8 @@ import {
   AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
-} from "../ui/alert-dialog";
-import { ScrollArea } from "../ui/scroll-area";
+} from "@/components/ui/alert-dialog";
 import { useState } from "react";
-import { toast } from "../ui/use-toast";
-import { ToastAction } from "../ui/toast";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Terminal } from "lucide-react";
 
 const MAX_IMAGE_SIZE = 5242880; // 5 MB
 const ALLOWED_IMAGE_TYPES = [
@@ -96,7 +91,7 @@ const ameneties = [
   },
 ] as const;
 
-const propertyRequiredFormSchema = z.object({
+const propertyListingFormSchema = z.object({
   available_date: z.date({
     required_error: "A date is required.",
   }),
@@ -365,33 +360,33 @@ const propertyRequiredFormSchema = z.object({
   description: z
     .string()
     .min(10, {
-      message: "Bio must be at least 10 characters.",
+      message: "Description must be at least 10 characters.",
     })
     .max(160, {
-      message: "Bio must not be longer than 30 characters.",
+      message: "Description must not be longer than 30 characters.",
     }),
   area: z.string(),
   bathroom: z.string(),
   bhk: z.enum(["1", "2", "3", "4", "5", "6"]),
 });
 
-type PropertyRequiredFormValues = z.infer<typeof propertyRequiredFormSchema>;
+type PropertyListingFormValues = z.infer<typeof propertyListingFormSchema>;
 
 // This can come from your database or API.
-const defaultValues: Partial<PropertyRequiredFormValues> = {
+const defaultValues: Partial<PropertyListingFormValues> = {
   // name: "Your name",
   // dob: new Date("2023-01-23"),
   amenities: ["extra"],
 };
 
-export default function PropertyRequiredForm() {
-  const [location, setLocation] = useState("");
-  const [sqft, setArea] = useState("");
-  const [bhk, setBhk] = useState("");
-  const [bath, setBath] = useState("");
+export default function PropertyListingForm() {
   const [estimatedPrice, setEstimatedPrice] = useState(null);
+  const form = useForm<PropertyListingFormValues>({
+    resolver: zodResolver(propertyListingFormSchema),
+    defaultValues,
+  });
 
-  const handlePredictPrice = async () => {
+  const handlePredictPrice = async (data: PropertyListingFormValues) => {
     try {
       const response = await fetch("http://127.0.0.1:5000/predict_rent_price", {
         method: "POST",
@@ -399,34 +394,28 @@ export default function PropertyRequiredForm() {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
-          sqft: sqft,
-          location: location,
-          bhk: bhk,
-          bath: bath,
+          sqft: data.area,
+          location: data.locality,
+          bhk: data.bhk,
+          bath: data.bathroom,
         }),
       });
-
       if (!response.ok) {
         throw new Error("Failed to fetch");
       }
-
-      const data = await response.json();
+      const responseData = await response.json();
       //console.log(data)
-      setEstimatedPrice(data.estimated_price);
+      setEstimatedPrice(responseData.estimated_price);
       console.log(estimatedPrice);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const form = useForm<PropertyRequiredFormValues>({
-    resolver: zodResolver(propertyRequiredFormSchema),
-    defaultValues,
-  });
-
   const router = useRouter();
 
-  const onSubmit = async (data: PropertyRequiredFormValues) => {
+  const onSubmit = async (data: PropertyListingFormValues) => {
+    console.log("PropertyListingForm/onSubmit Called", data);
     try {
       const response = await fetch("/api/listings/property", {
         method: "POST",
@@ -435,36 +424,31 @@ export default function PropertyRequiredForm() {
         },
         body: JSON.stringify(data),
       });
-
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
       const listingId = (await response.json())[0].listing_id;
       const responseUrl = new URL(response.url);
       const supabase = createClient();
-
       const imagesArray = Array.from(data.images);
       for (const image of imagesArray) {
         const { error } = await supabase.storage
           .from("listing-images-bucket")
           .upload(`${listingId}/${image.name}`, image);
-
         if (error) {
           console.error(error);
         }
       }
-
       // redirect to the next page
-      redirect("/property");
-      router.push(`${responseUrl.origin}/home`);
+      // redirect("/property");
+      router.push(`${responseUrl.origin}/property`);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <div className="h-full ml-[5px]">
+    <div className="h-full ml-[5px] pb-5">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <Messages />
@@ -500,7 +484,6 @@ export default function PropertyRequiredForm() {
                           "w-[200px] appearance-none bg-transparent font-normal"
                         )}
                         {...field}
-                        onChange={(e) => setLocation(e.target.value)}
                       >
                         <option value="adambakkam">Adambakkam</option>
                         <option value="adyar, sardar patel road">
@@ -850,11 +833,7 @@ export default function PropertyRequiredForm() {
                 <FormItem className="w-max mt-5">
                   <FormLabel>Area in sqft</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter"
-                      {...field}
-                      onChange={(e) => setArea(e.target.value)}
-                    />
+                    <Input placeholder="e.g. 1250" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -874,7 +853,6 @@ export default function PropertyRequiredForm() {
                           "w-[200px] appearance-none bg-transparent font-normal"
                         )}
                         {...field}
-                        onChange={(e) => setBhk(e.target.value)}
                       >
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -897,11 +875,7 @@ export default function PropertyRequiredForm() {
                 <FormItem className="w-max mt-5">
                   <FormLabel>Number of Bathrooms</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter"
-                      {...field}
-                      onChange={(e) => setBath(e.target.value)}
-                    />
+                    <Input placeholder="e.g. 2" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -914,7 +888,7 @@ export default function PropertyRequiredForm() {
                 <FormItem className="w-max mt-5">
                   <FormLabel>Approx Rent</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter" {...field} />
+                    <Input placeholder="e.g. 10000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -1027,7 +1001,7 @@ export default function PropertyRequiredForm() {
             render={({ field: { onChange }, ...field }) => {
               return (
                 <FormItem>
-                  <FormLabel className=" ">Images</FormLabel>
+                  <FormLabel>Images</FormLabel>
                   <FormControl>
                     <div className="flex items-center justify-center w-full  ">
                       <label
@@ -1335,7 +1309,9 @@ export default function PropertyRequiredForm() {
             <div>
               <AlertDialog>
                 <AlertDialogTrigger>
-                  <Button onClick={handlePredictPrice}>Predict Price</Button>
+                  <Button onClick={form.handleSubmit(handlePredictPrice)}>
+                    Predict Price
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
