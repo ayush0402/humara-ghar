@@ -156,27 +156,26 @@ export default async function RoommateDisplay({
 
           <div className="flex flex-wrap justify-center">
             {pref.map((preference, index) => (
-              <HoverCard>
-                <HoverCardTrigger>
-                  <div
-                    key={index}
-                    className="mx-4 my-4  flex items-center justify-center"
-                  >
-                    {preference.stat && (
-                      <div className="bg-secondary h-[75px] w-[75px] rounded-[15px] flex items-center justify-center">
-                        {<preference.icon className="h-[50px] w-[50px]" />}
-                      </div>
-                    )}
-                  </div>
-                </HoverCardTrigger>
-                {preference.stat && (
-                  <HoverCardContent
-                    className={cn("rounded-[15px] w-full", font.className)}
-                  >
-                    {preference.label}
-                  </HoverCardContent>
-                )}
-              </HoverCard>
+              <div key={index}>
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <div className="mx-4 my-4  flex items-center justify-center">
+                      {preference.stat && (
+                        <div className="bg-secondary h-[75px] w-[75px] rounded-[15px] flex items-center justify-center">
+                          {<preference.icon className="h-[50px] w-[50px]" />}
+                        </div>
+                      )}
+                    </div>
+                  </HoverCardTrigger>
+                  {preference.stat && (
+                    <HoverCardContent
+                      className={cn("rounded-[15px] w-full", font.className)}
+                    >
+                      {preference.label}
+                    </HoverCardContent>
+                  )}
+                </HoverCard>
+              </div>
             ))}
           </div>
         </div>

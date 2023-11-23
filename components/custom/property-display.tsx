@@ -47,7 +47,7 @@ type PropertyDisplayProps = {
   locality: string;
   userId: string;
   occupancy: string;
-  amenities: [];
+  amenities: string[];
 };
 
 const font = Poppins({
