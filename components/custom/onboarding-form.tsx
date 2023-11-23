@@ -7,6 +7,7 @@ import { CalendarIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { createClient } from "@/utils/supabase/client";
 
 import { cn } from "@/lib/utils";
 import Messages from "@/components/custom/message";
@@ -28,6 +29,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+const MAX_IMAGE_SIZE = 5242880; // 5 MB
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/jpg",
+];
 
 const onboardingFormSchema = z.object({
   name: z
@@ -106,6 +115,21 @@ const onboardingFormSchema = z.object({
     invalid_type_error: "Select the reason for signing up.",
     required_error: "Please select the reason for signing up.",
   }),
+  image: z
+    .custom<FileList>((val) => val instanceof FileList, "Required")
+    .refine((files) => files.length > 0, `Required`)
+    .refine((files) => files.length <= 1, `Maximum of 1 image is allowed.`)
+    .refine(
+      (files) => Array.from(files).every((file) => file.size <= MAX_IMAGE_SIZE),
+      `Each file size should be less than 5 MB.`
+    )
+    .refine(
+      (files) =>
+        Array.from(files).every((file) =>
+          ALLOWED_IMAGE_TYPES.includes(file.type)
+        ),
+      "Only these types are allowed .jpg, .jpeg, .png and .webp"
+    ),
 });
 
 type OnboardingFormValues = z.infer<typeof onboardingFormSchema>;
@@ -125,6 +149,7 @@ export default function OnboardingForm() {
   const router = useRouter();
 
   const onSubmit = async (data: OnboardingFormValues) => {
+    const supabase = createClient();
     try {
       const response = await fetch("/api/onboarding", {
         method: "POST",
@@ -136,6 +161,18 @@ export default function OnboardingForm() {
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
+      }
+
+      const { data: supabaseUser } = await supabase.auth.getUser();
+
+      if (supabaseUser && supabaseUser.user) {
+        const { error } = await supabase.storage
+          .from("avatar-images")
+          .upload(`${supabaseUser.user.id}`, data.image[0]);
+
+        if (error) {
+          console.error(error);
+        }
       }
 
       // redirect to the next page
@@ -164,6 +201,28 @@ export default function OnboardingForm() {
               <FormMessage />
             </FormItem>
           )}
+        />
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field: { onChange }, ...field }) => {
+            return (
+              <FormItem>
+                <FormLabel className=" ">Profile Avatar</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    multiple={false}
+                    disabled={form.formState.isSubmitting}
+                    {...field}
+                    onChange={(event) => onChange(event.target.files)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <FormField
           control={form.control}
