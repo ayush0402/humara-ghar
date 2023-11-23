@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import PropertyDisplay from "@/components/custom/property-display";
 
-const Page = async ({ params }) => {
+const Page = async ({ params }: { params: { slug: string } }) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
