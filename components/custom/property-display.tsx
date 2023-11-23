@@ -196,7 +196,7 @@ export default async function PropertyDisplay({
       <div>
         <div className="bg-primary/10 min-h-screen w-[350px] rounded-[20px]">
           <div className="flex flex-col items-center justify-start">
-            <div className="my-2">
+            <div className="my-2 z-0">
               {info && info[0].gender === "female" ? (
                 <FemaleAvatar />
               ) : (

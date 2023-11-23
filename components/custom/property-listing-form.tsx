@@ -31,8 +31,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { AlertDialogHeader, AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogTrigger, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
+import {
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTrigger,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "../ui/alert-dialog";
 import { ScrollArea } from "../ui/scroll-area";
+import { useState } from "react";
+import { toast } from "../ui/use-toast";
+import { ToastAction } from "../ui/toast";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Terminal } from "lucide-react";
 
 const MAX_IMAGE_SIZE = 5242880; // 5 MB
 const ALLOWED_IMAGE_TYPES = [
@@ -89,7 +104,7 @@ const propertyRequiredFormSchema = z.object({
     required_error: "Please enter your rent.",
   }),
   address: z.string({
-    required_error: "Address is required"
+    required_error: "Address is required",
   }),
   locality: z.enum(
     [
@@ -256,7 +271,7 @@ const propertyRequiredFormSchema = z.object({
       "worli",
       "yelahanka",
       "yeshwantpur",
-      "whitefield"
+      "whitefield",
     ],
     {
       invalid_type_error: "Select a city",
@@ -355,20 +370,9 @@ const propertyRequiredFormSchema = z.object({
     .max(160, {
       message: "Bio must not be longer than 30 characters.",
     }),
-  area: z
-    .string(),
-  bathroom: z
-    .string(),
-  bhk: z.enum([
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6'
-  ])
-
-
+  area: z.string(),
+  bathroom: z.string(),
+  bhk: z.enum(["1", "2", "3", "4", "5", "6"]),
 });
 
 type PropertyRequiredFormValues = z.infer<typeof propertyRequiredFormSchema>;
@@ -381,6 +385,40 @@ const defaultValues: Partial<PropertyRequiredFormValues> = {
 };
 
 export default function PropertyRequiredForm() {
+  const [location, setLocation] = useState("");
+  const [sqft, setArea] = useState("");
+  const [bhk, setBhk] = useState("");
+  const [bath, setBath] = useState("");
+  const [estimatedPrice, setEstimatedPrice] = useState(null);
+
+  const handlePredictPrice = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/predict_rent_price", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          sqft: sqft,
+          location: location,
+          bhk: bhk,
+          bath: bath,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch");
+      }
+
+      const data = await response.json();
+      //console.log(data)
+      setEstimatedPrice(data.estimated_price);
+      console.log(estimatedPrice);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const form = useForm<PropertyRequiredFormValues>({
     resolver: zodResolver(propertyRequiredFormSchema),
     defaultValues,
@@ -401,7 +439,7 @@ export default function PropertyRequiredForm() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-    
+
       const listingId = (await response.json())[0].listing_id;
       const responseUrl = new URL(response.url);
       const supabase = createClient();
@@ -462,35 +500,54 @@ export default function PropertyRequiredForm() {
                           "w-[200px] appearance-none bg-transparent font-normal"
                         )}
                         {...field}
+                        onChange={(e) => setLocation(e.target.value)}
                       >
                         <option value="adambakkam">Adambakkam</option>
-                        <option value="adyar, sardar patel road">Adyar, Sardar Patel Road</option>
-                        <option value="ajmera bhakti park, bhakti park">Ajmera Bhakti Park, Bhakti Park</option>
+                        <option value="adyar, sardar patel road">
+                          Adyar, Sardar Patel Road
+                        </option>
+                        <option value="ajmera bhakti park, bhakti park">
+                          Ajmera Bhakti Park, Bhakti Park
+                        </option>
                         <option value="ambattur">Ambattur</option>
                         <option value="amberpet">Amberpet</option>
                         <option value="anakaputhur">Anakaputhur</option>
                         <option value="andheri east">Andheri East</option>
                         <option value="andheri west">Andheri West</option>
                         <option value="anna nagar">Anna Nagar</option>
-                        <option value="arjun nagar, safdarjung enclave">Arjun Nagar, Safdarjung Enclave</option>
+                        <option value="arjun nagar, safdarjung enclave">
+                          Arjun Nagar, Safdarjung Enclave
+                        </option>
                         <option value="arumbakkam">Arumbakkam</option>
                         <option value="ashok nagar">Ashok Nagar</option>
                         <option value="attapur">Attapur</option>
-                        <option value="auris serenity, kanch pada">Auris Serenity, Kanch Pada</option>
+                        <option value="auris serenity, kanch pada">
+                          Auris Serenity, Kanch Pada
+                        </option>
                         <option value="baghajatin">Baghajatin</option>
                         <option value="baguiati">Baguiati</option>
                         <option value="banaswadi">Banaswadi</option>
-                        <option value="bandlaguda jagir">Bandlaguda Jagir</option>
+                        <option value="bandlaguda jagir">
+                          Bandlaguda Jagir
+                        </option>
                         <option value="bandra west">Bandra West</option>
-                        <option value="banjara hills, nh 9">Banjara Hills, NH 9</option>
+                        <option value="banjara hills, nh 9">
+                          Banjara Hills, NH 9
+                        </option>
                         <option value="bansdroni">Bansdroni</option>
                         <option value="baranagar">Baranagar</option>
-                        <option value="beeramguda, ramachandra puram, nh 9">Beeramguda, Ramachandra Puram, NH 9</option>
+                        <option value="beeramguda, ramachandra puram, nh 9">
+                          Beeramguda, Ramachandra Puram, NH 9
+                        </option>
                         <option value="begumpet">Begumpet</option>
                         <option value="behala">Behala</option>
                         <option value="birati">Birati</option>
-                        <option value="boduppal, nh 2 2">Boduppal, NH 2 2</option>
-                        <option value="bolarum, medchal road">Bolarum, Medchal Road</option>
+                        <option value="boduppal, nh 2 2">
+                          Boduppal, NH 2 2
+                        </option>
+                        <option value="bolarum, medchal road">
+                          Bolarum, Medchal Road
+                        </option>
                         <option value="bommanahalli">Bommanahalli</option>
                         <option value="btm layout">BTM Layout</option>
                         <option value="c v raman nagar">C V Raman Nagar</option>
@@ -498,42 +555,62 @@ export default function PropertyRequiredForm() {
                         <option value="chandivali">Chandivali</option>
                         <option value="chembur">Chembur</option>
                         <option value="chhattarpur">Chhattarpur</option>
-                        <option value="chhattarpur enclave">Chhattarpur Enclave</option>
+                        <option value="chhattarpur enclave">
+                          Chhattarpur Enclave
+                        </option>
                         <option value="choolaimedu">Choolaimedu</option>
-                        <option value="chromepet, gst road">Chromepet, GST Road</option>
+                        <option value="chromepet, gst road">
+                          Chromepet, GST Road
+                        </option>
                         <option value="defence colony">Defence Colony</option>
                         <option value="dum dum">Dum Dum</option>
                         <option value="dum dum metro">Dum Dum Metro</option>
                         <option value="electronic city">Electronic City</option>
-                        <option value="electronic city phase 2, electronic city">Electronic City Phase 2, Electronic City</option>
-                        <option value="electronics city phase 1, electronic city">Electronics City Phase 1, Electronic City</option>
+                        <option value="electronic city phase 2, electronic city">
+                          Electronic City Phase 2, Electronic City
+                        </option>
+                        <option value="electronics city phase 1, electronic city">
+                          Electronics City Phase 1, Electronic City
+                        </option>
                         <option value="gachibowli">Gachibowli</option>
                         <option value="garia">Garia</option>
-                        <option value="garia station, garia">Garia Station, Garia</option>
+                        <option value="garia station, garia">
+                          Garia Station, Garia
+                        </option>
                         <option value="ghatkopar west">Ghatkopar West</option>
                         <option value="goregaon west">Goregaon West</option>
                         <option value="gottigere">Gottigere</option>
                         <option value="hafeezpet, nh 9">Hafeezpet, NH 9</option>
-                        <option value="hayathnagar, nh 9">Hayathnagar, NH 9</option>
+                        <option value="hayathnagar, nh 9">
+                          Hayathnagar, NH 9
+                        </option>
                         <option value="hebbal">Hebbal</option>
-                        <option value="himayath nagar, nh 7">Himayath Nagar, NH 7</option>
+                        <option value="himayath nagar, nh 7">
+                          Himayath Nagar, NH 7
+                        </option>
                         <option value="horamavu">Horamavu</option>
                         <option value="iyyappanthangal">Iyyappanthangal</option>
                         <option value="j p nagar">J P Nagar</option>
                         <option value="jvpd scheme">JVPD Scheme</option>
                         <option value="jadavpur">Jadavpur</option>
                         <option value="janakpuri">Janakpuri</option>
-                        <option value="jp nagar phase 7, j p nagar">JP Nagar Phase 7, J P Nagar</option>
+                        <option value="jp nagar phase 7, j p nagar">
+                          JP Nagar Phase 7, J P Nagar
+                        </option>
                         <option value="jubilee hills">Jubilee Hills</option>
                         <option value="k r puram">K R Puram</option>
-                        <option value="kaggadasapura, indira nagar">Kaggadasapura, Indira Nagar</option>
+                        <option value="kaggadasapura, indira nagar">
+                          Kaggadasapura, Indira Nagar
+                        </option>
                         <option value="kaikhali">Kaikhali</option>
                         <option value="kalkaji">Kalkaji</option>
                         <option value="kanakapura road">Kanakapura Road</option>
                         <option value="kandivali west">Kandivali West</option>
                         <option value="kapra">Kapra</option>
                         <option value="kasba">Kasba</option>
-                        <option value="kelambakkam, old mahabalipuram road">Kelambakkam, Old Mahabalipuram Road</option>
+                        <option value="kelambakkam, old mahabalipuram road">
+                          Kelambakkam, Old Mahabalipuram Road
+                        </option>
                         <option value="keshtopur">Keshtopur</option>
                         <option value="khar west">Khar West</option>
                         <option value="kodambakkam">Kodambakkam</option>
@@ -541,10 +618,16 @@ export default function PropertyRequiredForm() {
                         <option value="kompally">Kompally</option>
                         <option value="kondapur">Kondapur</option>
                         <option value="koramangala">Koramangala</option>
-                        <option value="korattur, jawaharlal nehru road">Korattur, Jawaharlal Nehru Road</option>
+                        <option value="korattur, jawaharlal nehru road">
+                          Korattur, Jawaharlal Nehru Road
+                        </option>
                         <option value="kothapet">Kothapet</option>
-                        <option value="kukatpally, nh 9">Kukatpally, NH 9</option>
-                        <option value="l&t emerald isle, powai">L&T Emerald Isle, Powai</option>
+                        <option value="kukatpally, nh 9">
+                          Kukatpally, NH 9
+                        </option>
+                        <option value="l&t emerald isle, powai">
+                          L&T Emerald Isle, Powai
+                        </option>
                         <option value="lb nagar, nh 9">LB Nagar, NH 9</option>
                         <option value="lajpat nagar">Lajpat Nagar</option>
                         <option value="lajpat nagar 4">Lajpat Nagar 4</option>
@@ -553,11 +636,15 @@ export default function PropertyRequiredForm() {
                         <option value="madhapur">Madhapur</option>
                         <option value="madipakkam">Madipakkam</option>
                         <option value="mahadevapura">Mahadevapura</option>
-                        <option value="mahindra world city">Mahindra World City</option>
+                        <option value="mahindra world city">
+                          Mahindra World City
+                        </option>
                         <option value="malviya nagar">Malviya Nagar</option>
                         <option value="mambalam west">Mambalam West</option>
                         <option value="mangadu">Mangadu</option>
-                        <option value="manikonda, outer ring road">Manikonda, Outer Ring Road</option>
+                        <option value="manikonda, outer ring road">
+                          Manikonda, Outer Ring Road
+                        </option>
                         <option value="mathikere">Mathikere</option>
                         <option value="medavakkam">Medavakkam</option>
                         <option value="mehdipatnam">Mehdipatnam</option>
@@ -565,60 +652,104 @@ export default function PropertyRequiredForm() {
                         <option value="miyapur, nh 9">Miyapur, NH 9</option>
                         <option value="mugalivakkam">Mugalivakkam</option>
                         <option value="mulund west">Mulund West</option>
-                        <option value="murugeshpalya, airport road">Murugeshpalya, Airport Road</option>
+                        <option value="murugeshpalya, airport road">
+                          Murugeshpalya, Airport Road
+                        </option>
                         <option value="mylapore">Mylapore</option>
                         <option value="nagole">Nagole</option>
                         <option value="najafgarh">Najafgarh</option>
-                        <option value="nallagandla, serilingampally">Nallagandla, Serilingampally</option>
-                        <option value="narsingi, outer ring road">Narsingi, Outer Ring Road</option>
+                        <option value="nallagandla, serilingampally">
+                          Nallagandla, Serilingampally
+                        </option>
+                        <option value="narsingi, outer ring road">
+                          Narsingi, Outer Ring Road
+                        </option>
                         <option value="nizampet">Nizampet</option>
                         <option value="old bowenpally">Old Bowenpally</option>
-                        <option value="old mahabalipuram road">Old Mahabalipuram Road</option>
-                        <option value="padmanabha nagar">Padmanabha Nagar</option>
-                        <option value="padur, old mahabalipuram road">Padur, Old Mahabalipuram Road</option>
+                        <option value="old mahabalipuram road">
+                          Old Mahabalipuram Road
+                        </option>
+                        <option value="padmanabha nagar">
+                          Padmanabha Nagar
+                        </option>
+                        <option value="padur, old mahabalipuram road">
+                          Padur, Old Mahabalipuram Road
+                        </option>
                         <option value="pallikaranai">Pallikaranai</option>
                         <option value="pammal">Pammal</option>
                         <option value="paschim vihar">Paschim Vihar</option>
                         <option value="perambur">Perambur</option>
                         <option value="perumbakkam">Perumbakkam</option>
-                        <option value="perungalathur, chennai bypass road">Perungalathur, Chennai Bypass Road</option>
+                        <option value="perungalathur, chennai bypass road">
+                          Perungalathur, Chennai Bypass Road
+                        </option>
                         <option value="pitampura">Pitampura</option>
                         <option value="porur">Porur</option>
-                        <option value="pragathi nagar, kukatpally">Pragathi Nagar, Kukatpally</option>
-                        <option value="purasawalkam, ph road">Purasawalkam, PH Road</option>
+                        <option value="pragathi nagar, kukatpally">
+                          Pragathi Nagar, Kukatpally
+                        </option>
+                        <option value="purasawalkam, ph road">
+                          Purasawalkam, PH Road
+                        </option>
                         <option value="rajajinagar">Rajajinagar</option>
-                        <option value="rajendra nagar, outer ring road">Rajendra Nagar, Outer Ring Road</option>
+                        <option value="rajendra nagar, outer ring road">
+                          Rajendra Nagar, Outer Ring Road
+                        </option>
                         <option value="rajouri garden">Rajouri Garden</option>
-                        <option value="ramamurthy nagar">Ramamurthy Nagar</option>
+                        <option value="ramamurthy nagar">
+                          Ramamurthy Nagar
+                        </option>
                         <option value="rampally">Rampally</option>
-                        <option value="rohini sector 24">Rohini Sector 24</option>
-                        <option value="safdarjung enclave">Safdarjung Enclave</option>
+                        <option value="rohini sector 24">
+                          Rohini Sector 24
+                        </option>
+                        <option value="safdarjung enclave">
+                          Safdarjung Enclave
+                        </option>
                         <option value="sainikpuri">Sainikpuri</option>
                         <option value="saket">Saket</option>
                         <option value="salt lake city">Salt Lake City</option>
-                        <option value="salt lake city sector 1">Salt Lake City Sector 1</option>
-                        <option value="salt lake city sector 2">Salt Lake City Sector 2</option>
-                        <option value="salt lake city sector 5">Salt Lake City Sector 5</option>
+                        <option value="salt lake city sector 1">
+                          Salt Lake City Sector 1
+                        </option>
+                        <option value="salt lake city sector 2">
+                          Salt Lake City Sector 2
+                        </option>
+                        <option value="salt lake city sector 5">
+                          Salt Lake City Sector 5
+                        </option>
                         <option value="santacruz west">Santacruz West</option>
                         <option value="santoshpur">Santoshpur</option>
                         <option value="selaiyur">Selaiyur</option>
                         <option value="seven bungalows">Seven Bungalows</option>
-                        <option value="shapoorji pallonji vicinia, chandivali">Shapoorji Pallonji Vicinia, Chandivali</option>
+                        <option value="shapoorji pallonji vicinia, chandivali">
+                          Shapoorji Pallonji Vicinia, Chandivali
+                        </option>
                         <option value="sholinganallur">Sholinganallur</option>
                         <option value="sodepur">Sodepur</option>
-                        <option value="somajiguda, nh 9">Somajiguda, NH 9</option>
+                        <option value="somajiguda, nh 9">
+                          Somajiguda, NH 9
+                        </option>
                         <option value="t nagar">T Nagar</option>
-                        <option value="tambaram, gst road">Tambaram, GST Road</option>
+                        <option value="tambaram, gst road">
+                          Tambaram, GST Road
+                        </option>
                         <option value="thakurpukur">Thakurpukur</option>
                         <option value="thiruvanmiyur">Thiruvanmiyur</option>
                         <option value="thoraipakkam">Thoraipakkam</option>
                         <option value="toli chowki">Toli Chowki</option>
                         <option value="uppal, nh 2 2">Uppal, NH 2 2</option>
-                        <option value="urapakkam, vandalur r.f, gst road">Urapakkam, Vandalur R.F, GST Road</option>
+                        <option value="urapakkam, vandalur r.f, gst road">
+                          Urapakkam, Vandalur R.F, GST Road
+                        </option>
                         <option value="uttam nagar">Uttam Nagar</option>
                         <option value="vadapalani">Vadapalani</option>
-                        <option value="valasaravakkam, arcot road">Valasaravakkam, Arcot Road</option>
-                        <option value="vanasthalipuram, nh 9">Vanasthalipuram, NH 9</option>
+                        <option value="valasaravakkam, arcot road">
+                          Valasaravakkam, Arcot Road
+                        </option>
+                        <option value="vanasthalipuram, nh 9">
+                          Vanasthalipuram, NH 9
+                        </option>
                         <option value="vasant kunj">Vasant Kunj</option>
                         <option value="velachery">Velachery</option>
                         <option value="vijayanagar">Vijayanagar</option>
@@ -627,7 +758,6 @@ export default function PropertyRequiredForm() {
                         <option value="yelahanka">Yelahanka</option>
                         <option value="yeshwantpur">Yeshwantpur</option>
                         <option value="whitefield">Whitefield</option>
-
                       </select>
                     </FormControl>
                     <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
@@ -720,7 +850,11 @@ export default function PropertyRequiredForm() {
                 <FormItem className="w-max mt-5">
                   <FormLabel>Area in sqft</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter" {...field} />
+                    <Input
+                      placeholder="Enter"
+                      {...field}
+                      onChange={(e) => setArea(e.target.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -740,6 +874,7 @@ export default function PropertyRequiredForm() {
                           "w-[200px] appearance-none bg-transparent font-normal"
                         )}
                         {...field}
+                        onChange={(e) => setBhk(e.target.value)}
                       >
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -747,7 +882,6 @@ export default function PropertyRequiredForm() {
                         <option value="4">4</option>
                         <option value="5">5</option>
                         <option value="6">6</option>
-
                       </select>
                     </FormControl>
                     <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
@@ -763,7 +897,11 @@ export default function PropertyRequiredForm() {
                 <FormItem className="w-max mt-5">
                   <FormLabel>Number of Bathrooms</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter" {...field} />
+                    <Input
+                      placeholder="Enter"
+                      {...field}
+                      onChange={(e) => setBath(e.target.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -991,14 +1129,14 @@ export default function PropertyRequiredForm() {
                                 onCheckedChange={(checked) => {
                                   return checked
                                     ? field.onChange([
-                                      ...field.value,
-                                      amenity.id,
-                                    ])
+                                        ...field.value,
+                                        amenity.id,
+                                      ])
                                     : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== amenity.id
-                                      )
-                                    );
+                                        field.value?.filter(
+                                          (value) => value !== amenity.id
+                                        )
+                                      );
                                 }}
                               />
                             </FormControl>
@@ -1028,10 +1166,10 @@ export default function PropertyRequiredForm() {
                                 return checked
                                   ? field.onChange([...field.value, "extra"])
                                   : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== "extra"
-                                    )
-                                  );
+                                      field.value?.filter(
+                                        (value) => value !== "extra"
+                                      )
+                                    );
                               }}
                             />
                           </FormControl>
@@ -1064,78 +1202,159 @@ export default function PropertyRequiredForm() {
               </FormItem>
             )}
           />
-          <div className="h-[200px] w-[350px] rounded-md border overflow-auto my-2">
-          <AlertDialog >
-            <AlertDialogTrigger asChild><Button variant="outline">Terms&Conditions</Button></AlertDialogTrigger>
-            <AlertDialogContent className={"lg:max-w-screen-lg max-h-screen"}>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Terms and Conditions for Property Listings</AlertDialogTitle>
-                <AlertDialogDescription>
-                  <div className="overflow-auto">
-                  <div>
-                    <p>
-                      These terms and conditions ("Terms") govern the use of our property listing services ("Services") provided by [Your Company Name] ("we," "us," or "our"). By using our Services, you agree to comply with and be bound by these Terms. If you do not agree to these Terms, please do not use our Services.
-                    </p>
-                  </div>
-                  <div>
-                    <h2>1. Property Listing</h2>
-                    <p>1.1. By submitting a property listing, you represent and warrant that all information provided is accurate, complete, and up-to-date.</p>
-                    <p>1.2. We reserve the right to review and verify the information provided in property listings. If we determine, in our sole discretion, that a property listing is not valid, we may take actions as outlined in Section 2.</p>
-                  </div>
+          <div className="h-full mb-[20px] w-full rounded-md border overflow-auto my-2 flex">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">Terms&Conditions</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className={"lg:max-w-screen-lg max-h-screen"}>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Terms and Conditions for Property Listings
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <div className="overflow-auto">
+                      <div>
+                        <p>
+                          These terms and conditions ("Terms") govern the use of
+                          our property listing services ("Services") provided by
+                          [Your Company Name] ("we," "us," or "our"). By using
+                          our Services, you agree to comply with and be bound by
+                          these Terms. If you do not agree to these Terms,
+                          please do not use our Services.
+                        </p>
+                      </div>
+                      <div>
+                        <h2>1. Property Listing</h2>
+                        <p>
+                          1.1. By submitting a property listing, you represent
+                          and warrant that all information provided is accurate,
+                          complete, and up-to-date.
+                        </p>
+                        <p>
+                          1.2. We reserve the right to review and verify the
+                          information provided in property listings. If we
+                          determine, in our sole discretion, that a property
+                          listing is not valid, we may take actions as outlined
+                          in Section 2.
+                        </p>
+                      </div>
 
-                  <div>
-                    <h2>2. Actions Against Invalid Listings</h2>
-                    <p>2.1. If we find that a property listing is not valid for any reason, including but not limited to false information, misleading details, or violation of applicable laws, we may take the following actions:</p>
-                    <ul>
-                      <li>a. Listing Removal: We may remove the invalid property listing from our platform.</li>
-                      <li>b. Account Suspension: We may suspend the account of the user who submitted the invalid property listing.</li>
-                      <li>c. Legal Action: In cases of serious violations, we reserve the right to take legal action against the user, seeking damages or injunctive relief.</li>
-                    </ul>
-                  </div>
+                      <div>
+                        <h2>2. Actions Against Invalid Listings</h2>
+                        <p>
+                          2.1. If we find that a property listing is not valid
+                          for any reason, including but not limited to false
+                          information, misleading details, or violation of
+                          applicable laws, we may take the following actions:
+                        </p>
+                        <ul>
+                          <li>
+                            a. Listing Removal: We may remove the invalid
+                            property listing from our platform.
+                          </li>
+                          <li>
+                            b. Account Suspension: We may suspend the account of
+                            the user who submitted the invalid property listing.
+                          </li>
+                          <li>
+                            c. Legal Action: In cases of serious violations, we
+                            reserve the right to take legal action against the
+                            user, seeking damages or injunctive relief.
+                          </li>
+                        </ul>
+                      </div>
 
-                  <div>
-                    <h2>3. User Responsibilities</h2>
-                    <p>3.1. Users are responsible for ensuring the accuracy and validity of the information provided in property listings.</p>
-                    <p>3.2. Users agree not to submit listings that violate any applicable laws, regulations, or third-party rights.</p>
-                  </div>
+                      <div>
+                        <h2>3. User Responsibilities</h2>
+                        <p>
+                          3.1. Users are responsible for ensuring the accuracy
+                          and validity of the information provided in property
+                          listings.
+                        </p>
+                        <p>
+                          3.2. Users agree not to submit listings that violate
+                          any applicable laws, regulations, or third-party
+                          rights.
+                        </p>
+                      </div>
 
-                  <div>
-                    <h2>4. Dispute Resolution</h2>
-                    <p>4.1. Any disputes arising from the interpretation or enforcement of these Terms shall be resolved through negotiation in good faith.</p>
-                    <p>4.2. If a dispute cannot be resolved through negotiation, it shall be submitted to binding arbitration in accordance with the rules of [Arbitration Organization] before resorting to litigation.</p>
-                  </div>
+                      <div>
+                        <h2>4. Dispute Resolution</h2>
+                        <p>
+                          4.1. Any disputes arising from the interpretation or
+                          enforcement of these Terms shall be resolved through
+                          negotiation in good faith.
+                        </p>
+                        <p>
+                          4.2. If a dispute cannot be resolved through
+                          negotiation, it shall be submitted to binding
+                          arbitration in accordance with the rules of
+                          [Arbitration Organization] before resorting to
+                          litigation.
+                        </p>
+                      </div>
 
-                  <div>
-                    <h2>5. Changes to Terms</h2>
-                    <p>5.1. We reserve the right to modify these Terms at any time. Users will be notified of any changes, and continued use of the Services after such notification constitutes acceptance of the modified Terms.</p>
-                  </div>
+                      <div>
+                        <h2>5. Changes to Terms</h2>
+                        <p>
+                          5.1. We reserve the right to modify these Terms at any
+                          time. Users will be notified of any changes, and
+                          continued use of the Services after such notification
+                          constitutes acceptance of the modified Terms.
+                        </p>
+                      </div>
 
-                  <div>
-                    <h2>6. Governing Law</h2>
-                    <p>6.1. These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
-                  </div>
+                      <div>
+                        <h2>6. Governing Law</h2>
+                        <p>
+                          6.1. These Terms shall be governed by and construed in
+                          accordance with the laws of [Your Jurisdiction].
+                        </p>
+                      </div>
 
-                  <div>
-                    <h2>7. Contact Information</h2>
-                    <p>7.1. For questions or concerns regarding these Terms, please contact us at [Your Contact Information].</p>
-                  </div>
-                  </div>
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                      <div>
+                        <h2>7. Contact Information</h2>
+                        <p>
+                          7.1. For questions or concerns regarding these Terms,
+                          please contact us at [Your Contact Information].
+                        </p>
+                      </div>
+                    </div>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>Continue</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             <Button type="submit" className="mx-2">
-                  Submit
+              Submit
             </Button>
+            <div>
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button onClick={handlePredictPrice}>Predict Price</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Predicted Price of your property
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Rs. {estimatedPrice}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogAction>Continue</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
-          
         </form>
       </Form>
-
     </div>
   );
 }

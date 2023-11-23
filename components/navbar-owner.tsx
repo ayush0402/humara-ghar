@@ -32,7 +32,7 @@ export const Navbar = async () => {
     user?.email !== "ayushkumar0402@gmail.com"
   ) {
     return (
-      <div className="fixed ml-[250px] w-10/12 z-50 flex justify-between items-center py-2 px-4  bg-secondary h-16 mt-2">
+      <div className="fixed ml-[240px] w-10/12 z-100 flex justify-between items-center py-2 px-4  bg-secondary h-16 mt-0">
         <div className="mr-[800px]"></div>
         <div className="flex mx-2">
           <div>
@@ -44,7 +44,7 @@ export const Navbar = async () => {
     );
   } else {
     return (
-      <div className="fixed ml-[250px] w-10/12 z-50 flex justify-between items-center py-2 px-4  bg-secondary h-16 mt-2">
+      <div className="fixed ml-[240px] w-10/12 z-100 flex justify-between items-center py-2 px-4  bg-secondary h-16 mt-0">
         <div className="mr-[780px]"></div>
         <div className="flex mx-2">
           <div>
