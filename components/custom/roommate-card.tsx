@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import {
   Card,
   CardContent,
@@ -17,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import Link from "next/link";
-import { NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/client";
 
 type RoommateCardProps = {
   imageSrc: string;
@@ -46,11 +45,15 @@ export default function RoommateCard({
 
   // console.log(currentUserId);
   // console.log(userId);
-
+  const supabase = createClient();
   const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
   //chatRoom.concat(chatRoomId);
   //console.log(chatRoomId);
+  const { data: publicAvatarImageUrl } = supabase.storage
+    .from("avatar-images")
+    .getPublicUrl(userId);
+
   return (
     <Link
       href={{
@@ -65,7 +68,7 @@ export default function RoommateCard({
         <div className="flex flex-row w-full">
           <img
             className="w-1/5 h-1/5 lg:w-2/5 lg:h-2/5 object-cover"
-            src={imageSrc}
+            src={publicAvatarImageUrl.publicUrl}
             alt={name}
           />
           <div>
@@ -86,7 +89,7 @@ export default function RoommateCard({
                   Looking for
                 </p>
                 <p className="text-sm lg:text-md">
-                  {lookingForGender} {lookingForType}
+                  {lookingForGender}, {lookingForType}
                 </p>
               </div>
             </CardContent>

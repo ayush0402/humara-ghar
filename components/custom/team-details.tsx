@@ -5,6 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 interface UserProfile {
   name: string;
@@ -22,11 +24,22 @@ export default function TeamDetails({
   team_id,
   user_profiles,
 }: TeamDetailsProps) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: publicAvatarImageUrl } = supabase.storage
+    .from("avatar-images")
+    .getPublicUrl(user_id);
+
   return (
     <Card className="flex flex-row p-3 max-h-[200px] w-full mx-2 my-2 cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
       <CardHeader className="border-2 p-0 m-0">
         <CardTitle>
-          <img src="https://picsum.photos/200" height="200px" width="200px" />
+          <img
+            src={publicAvatarImageUrl.publicUrl}
+            height="200px"
+            width="200px"
+          />
         </CardTitle>
       </CardHeader>
       <a
