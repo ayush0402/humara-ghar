@@ -26,6 +26,7 @@ export async function POST(request: Request) {
       user_type: formData.user_type,
       gender: formData.gender,
       dob: formData.dob,
+      location_city: formData.location,
     },
   ]);
 
@@ -47,14 +48,10 @@ export async function POST(request: Request) {
         status: 301,
       }
     );
-  }
-  else if(formData.user_type === "owner"){
-    return NextResponse.redirect(
-      `${requestUrl.origin}/owner/dashboard`,
-      {
-        status: 301,
-      }
-    )
+  } else if (formData.user_type === "owner") {
+    return NextResponse.redirect(`${requestUrl.origin}/owner/dashboard`, {
+      status: 301,
+    });
   }
   console.log("final", requestUrl.origin);
   // URL to redirect to after onboarding process completes
