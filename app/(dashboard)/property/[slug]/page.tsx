@@ -8,7 +8,7 @@ import PropertyDisplay from "@/components/custom/property-display";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const Page = async ({ params }) => {
+const Page = async ({ params }: { params: { slug: string } }) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 

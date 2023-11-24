@@ -7,7 +7,7 @@ import { createClient } from "@/utils/supabase/server";
 import PropertyDisplay from "@/components/custom/property-display";
 import RoommateDisplay from "@/components/custom/roommate-display";
 
-const Page = async ({params}) => {
+const Page = async ({ params }: { params: { roommateId: string } }) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -20,8 +20,7 @@ const Page = async ({params}) => {
 
   return (
     <div className="ml-[10px]">
-      <RoommateDisplay 
-        userId = {user_id}/>
+      <RoommateDisplay userId={user_id} />
     </div>
   );
 };
