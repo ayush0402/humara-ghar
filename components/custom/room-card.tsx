@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Card,
   CardContent,
@@ -18,6 +18,15 @@ import { FaUserFriends } from "react-icons/fa";
 import Link from "next/link";
 import { NextResponse } from "next/server";
 import { Phone, PhoneCall } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { useEffect, useState } from "react";
 
 type RoomCardProps = {
   imageSrc: string;
@@ -27,7 +36,7 @@ type RoomCardProps = {
   area: string;
   bhk: string;
   bathroom: string;
-  listing_id:string;
+  listing_id: string;
 };
 
 export default function RoomCard({
@@ -39,10 +48,16 @@ export default function RoomCard({
   bhk,
   bathroom,
   listing_id,
-
 }: RoomCardProps) {
   // TODO: Make responsive for mobile
+  const [interestType, setInterestType] = useState("");
   const propertyId = "/property/" + listing_id;
+  const handleInterestSelect = (selectedType: string) => {
+    setInterestType(selectedType);
+  };
+  useEffect(() => {
+    console.log(interestType);
+  }, [interestType]);
   return (
     <Link
       href={{
@@ -53,51 +68,70 @@ export default function RoomCard({
       }}
       as={`/property/${listing_id}`}
     >
-    <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
-      <div className="flex flex-row w-full">
-        <img
-          className="w-1/5 h-1/5 lg:w-2/5 lg:h-2/5 object-cover"
-          src={imageSrc}
-          alt={name}
-        />
-        <div>
-          <CardHeader className="pt-2 pl-4 lg:pl-6">
-            <CardTitle className="text-xl lg:text-2xl">{name[0].toUpperCase() + name.substring(1)}</CardTitle>
-            <CardDescription className="flex flex-row items-center">
-              <MdLocationOn />
-              {location[0].toUpperCase() + location.substring(1)}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">
-            <span>
-              &#8377; {rentAmount}{" "}
-              <span className="text-muted-foreground">Rent</span>
-            </span>
-            <div className="flex">
-              <p className="text-sm text-muted-foreground mt-2 lg:text-md">
-                Area in sqft : {area}
-              </p>
-              <p className="text-sm text-muted-foreground mt-2 lg:text-md">
-                {bhk} BHK
-              </p>
-              <p className="text-sm text-muted-foreground mt-2 lg:text-md">
-                {bathroom} Bathrooms
-              </p>
-            </div>
-          </CardContent>
+      <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
+        <div className="flex flex-row w-full">
+          <img
+            className="w-1/5 h-1/5 lg:w-2/5 lg:h-2/5 object-cover"
+            src={imageSrc}
+            alt={name}
+          />
+          <div>
+            <CardHeader className="pt-2 pl-4 lg:pl-6">
+              <CardTitle className="text-xl lg:text-2xl">
+                {name[0].toUpperCase() + name.substring(1)}
+              </CardTitle>
+              <CardDescription className="flex flex-row items-center">
+                <MdLocationOn />
+                {location[0].toUpperCase() + location.substring(1)}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">
+              <span>
+                &#8377; {rentAmount}{" "}
+                <span className="text-muted-foreground">Rent</span>
+              </span>
+              <div className="flex">
+                <p className="text-sm text-muted-foreground mt-2 lg:text-md">
+                  Area in sqft : {area}
+                </p>
+                <p className="text-sm text-muted-foreground mt-2 lg:text-md">
+                  {bhk} BHK
+                </p>
+                <p className="text-sm text-muted-foreground mt-2 lg:text-md">
+                  {bathroom} Bathrooms
+                </p>
+              </div>
+            </CardContent>
+          </div>
         </div>
-      </div>
-      <div className="border-t"></div>
-      <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
-        <div>
-          <Button variant="secondary" className="rounded-full" >
-            <MdChat className="h-[15px] w-[15px]"/>
-          </Button>
-        </div>
-        <div>
-        </div>
-      </CardFooter>
-    </Card>
+        <div className="border-t"></div>
+        <CardFooter className="text-sm p-1 px-5 flex flex-row justify-between">
+          <div>
+            <Button variant="secondary" className="rounded-full">
+              <MdChat className="h-[15px] w-[15px]" />
+            </Button>
+          </div>
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button>Interested</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>
+                  Select if you are interested as a team or solo
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleInterestSelect("Solo")}>
+                  Solo
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleInterestSelect("Team")}>
+                  Team
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </CardFooter>
+      </Card>
     </Link>
   );
 }
