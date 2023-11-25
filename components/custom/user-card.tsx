@@ -17,27 +17,25 @@ type UserCardProps = {
   Id: string;
   ImageSrc: string;
 };
-const UserCard = async ({
-  Id,
-  ImageSrc,
-}: UserCardProps) => {
+const UserCard = async ({ Id, ImageSrc }: UserCardProps) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const { data: publicAvatarImageUrl } = supabase.storage
     .from("avatar-images")
     .getPublicUrl(Id);
-  
-  const { data: userInfo} = await supabase
-  .from("user_profiles")
-  .select("*")
-  .eq("user_id",Id);
-  const name= userInfo && userInfo[0].name;
+
+  const { data: userInfo } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("user_id", Id);
+
+  const name = userInfo && userInfo[0].name;
   const gender = userInfo && userInfo[0].gender;
   const contact = userInfo && userInfo[0].email_id;
   const location = userInfo && userInfo[0].location_city;
-  
+
   let imageSrc = publicAvatarImageUrl.publicUrl;
-  if(!publicAvatarImageUrl.publicUrl)imageSrc=ImageSrc;
+  if (!publicAvatarImageUrl.publicUrl) imageSrc = ImageSrc;
   return (
     <Link
       href={{
@@ -60,14 +58,13 @@ const UserCard = async ({
               <CardTitle className="text-xl lg:text-2xl">{name}</CardTitle>
               <CardDescription className="flex flex-row items-center">
                 <MdLocationOn />
-                {/* {location[0].toUpperCase() + location.substring(1)} */}
+                {location}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">
-              {/* <span>
-                &#8377; {rentAmount}{" "}
-                <span className="text-muted-foreground">Rent</span>
-              </span> */}
+              <span className="text-muted-foreground">
+                Gender: <span className="text-black">{gender}</span>
+              </span>
               <div>
                 {/* <p className="text-sm text-muted-foreground mt-2 lg:text-md">
                   Looking for

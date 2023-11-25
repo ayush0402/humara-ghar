@@ -13,7 +13,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const supabase = createClient(cookieStore);
 
   const propertyId = params.slug;
-
+  //console.log(propertyId)
   const { data: properties } = await supabase
     .from("property_listings")
     .select("*")
@@ -44,12 +44,12 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div>
         <Link
           href={{
-            pathname: `/property/${propertyId}/requests`,
+            pathname: `/property/requests/${propertyId}`,
             query: {
               id: propertyId,
             },
           }}
-          as={`/property/${propertyId}/requests`}
+          as={`/property/requests/${propertyId}`}
         >
           <Button>Requests</Button>
         </Link>
