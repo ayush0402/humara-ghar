@@ -52,6 +52,7 @@ export default function RoomCard({
   // TODO: Make responsive for mobile
   const [interestType, setInterestType] = useState("");
   const propertyId = "/property/" + listing_id;
+  // test test
   const handleInterestSelect = async (selectedType: string) => {
     try {
       // Make a POST request to your API route with the selected interest type
