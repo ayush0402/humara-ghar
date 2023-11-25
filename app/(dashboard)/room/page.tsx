@@ -44,8 +44,8 @@ const page = async () => {
   //console.log(currentUser)
 
   return (
-    <div className="space-x-4 space-y-2 bg-secondary">
-      <div>
+    <div className="space-x-2 space-y-2 flex flex-wrap bg-secondary">
+      {/* <div>
         <Select>
           <SelectTrigger className="ml-[25px] w-[180px]">
             <SelectValue placeholder="Filter" />
@@ -56,8 +56,8 @@ const page = async () => {
             <SelectItem value="roommate">Roommate</SelectItem>
           </SelectContent>
         </Select>
-      </div>
-      <div className="flex flex-wrap">
+      </div> */}
+      <div className="">
         <div>
           {properties &&
             properties.map((property) => (
@@ -71,7 +71,7 @@ const page = async () => {
                 bathroom={property.bathroom}
                 listing_id={property.listing_id}
               />
-            ))}
+            ))} 
         </div>
         <div>
           {roommates &&

@@ -52,12 +52,33 @@ export default function RoomCard({
   // TODO: Make responsive for mobile
   const [interestType, setInterestType] = useState("");
   const propertyId = "/property/" + listing_id;
-  const handleInterestSelect = (selectedType: string) => {
-    setInterestType(selectedType);
+  const handleInterestSelect = async (selectedType: string) => {
+    try {
+      // Make a POST request to your API route with the selected interest type
+      const response = await fetch("/api/property/interest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          propertyId: listing_id,
+          interestType: selectedType,
+        }),
+      });
+
+      if (response.ok) {
+        // If the request is successful, update the state or perform any other actions
+        setInterestType(selectedType);
+      } else {
+        // Handle error cases
+        console.error("Failed to add interest to the database");
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
   };
-  useEffect(() => {
-    console.log(interestType);
-  }, [interestType]);
+
+  useEffect(() => {}, [interestType]);
   return (
     <Link
       href={{

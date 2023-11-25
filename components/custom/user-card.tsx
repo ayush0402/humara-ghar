@@ -10,23 +10,34 @@ import {
 } from "../ui/card";
 import { MdLocationOn } from "react-icons/md";
 import { Button } from "../ui/button";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
 type UserCardProps = {
   Id: string;
-  name: string;
-  gender: string;
-  contact: string;
   ImageSrc: string;
-  location: string;
 };
-const UserCard = ({
+const UserCard = async ({
   Id,
-  name,
-  gender,
-  contact,
   ImageSrc,
-  location,
 }: UserCardProps) => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { data: publicAvatarImageUrl } = supabase.storage
+    .from("avatar-images")
+    .getPublicUrl(Id);
+  
+  const { data: userInfo} = await supabase
+  .from("user_profiles")
+  .select("*")
+  .eq("user_id",Id);
+  const name= userInfo && userInfo[0].name;
+  const gender = userInfo && userInfo[0].gender;
+  const contact = userInfo && userInfo[0].email_id;
+  const location = userInfo && userInfo[0].location_city;
+  
+  let imageSrc = publicAvatarImageUrl.publicUrl;
+  if(!publicAvatarImageUrl.publicUrl)imageSrc=ImageSrc;
   return (
     <Link
       href={{
@@ -41,7 +52,7 @@ const UserCard = ({
         <div className="flex flex-row w-full">
           <img
             className="w-1/5 h-1/5 lg:w-2/5 lg:h-2/5 object-cover"
-            src={ImageSrc}
+            src={imageSrc}
             alt={name}
           />
           <div>

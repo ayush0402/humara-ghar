@@ -18,7 +18,13 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     .from("property_listings")
     .select("*")
     .eq("listing_id", propertyId);
-  return (
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const id = user?.id;
+  const id1 = properties && properties[0].created_by;
+
+  return id === id1 ? (
     <div className="ml-[10px] flex justify-between">
       <div>
         <PropertyDisplay
@@ -47,6 +53,24 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         >
           <Button>Requests</Button>
         </Link>
+      </div>
+    </div>
+  ) : (
+    <div className="ml-[10px] flex justify-between">
+      <div>
+        <PropertyDisplay
+          imageSrc="https://picsum.photos/200"
+          location={properties && properties[0].location}
+          locality={properties && properties[0].locality}
+          area={properties && properties[0].area}
+          bhk={properties && properties[0].bhk}
+          bathroom={properties && properties[0].bathroom}
+          rentAmount={properties && properties[0].approx_rent}
+          address={properties && properties[0].address}
+          userId={properties && properties[0].created_by}
+          occupancy={properties && properties[0].occupancy}
+          amenities={properties && properties[0].amenities}
+        />
       </div>
     </div>
   );

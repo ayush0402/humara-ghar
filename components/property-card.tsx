@@ -45,7 +45,7 @@ export default function PropertyCard({
   bathroom,
   listing_id,
   status,
-}: PropertyCardProps) {
+}: PropertyCardProps) { 
   // TODO: Make responsive for mobile
   const [isSubmitting, setIsSubmitting] = useState(false);
 

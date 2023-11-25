@@ -124,7 +124,6 @@ const UserDisplayCard = async ({ Id }: UserDisplayProps) => {
       stat: preferences && preferences[0].prefs.nonsmoker,
     },
   ];
-  console.log(publicAvatarImageUrl)
 
   return (
     <div className="flex">
