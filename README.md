@@ -5,7 +5,6 @@
 
 <p align="center">
   Built with nextjs, tailwindcss, supabase, and love &hearts;.
- 
 </p>
 
 <p align="center">
@@ -15,47 +14,36 @@
 </p>
 <br/>
 
-## Features
-
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
-
-## Deploy to Vercel
-
-Vercel deployment will guide you through creating a Supabase account and project.
-
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This%20starter%20configures%20Supabase%20Auth%20to%20use%20cookies%2C%20making%20the%20user's%20session%20available%20throughout%20the%20entire%20Next.js%20app%20-%20Client%20Components%2C%20Server%20Components%2C%20Route%20Handlers%2C%20Server%20Actions%20and%20Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png&integration-ids=oac_VqOgBHqhEoFTPzGkPd7L0iH6)
-
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
-
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+If you wish to just develop [follow the steps below](#clone-and-run-locally).
 
 ## Clone and run locally
 
 1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
 
-2. Create a Next.js app using the Supabase Starter template npx command
+## Dev Environment Setup
 
-   ```bash
-   npx create-next-app -e with-supabase
-   ```
+### Install Dependencies
 
-3. Use `cd` to change into the app's directory
+- Run `npm i` to install dependencies for your project.
 
-   ```bash
-   cd name-of-new-app
-   ```
+### Supabase Login in Terminal
+
+- If you haven't used Supabase in your terminal before, log in by creating an access token [here](https://app.supabase.com/account/tokens).
+- Copy the access token generated.
+- Run `npx supabase login` in your terminal.
+- When prompted for an access token, paste the token you copied earlier to log in.
+
+### Linking Your Project to Supabase
+
+- Run `npx supabase link --project-ref {projectRef}` in your terminal.
+  - Your project reference is available in the project settings section within the Supabase dashboard.
+- After running the command, you'll be prompted for the database password you saved earlier. Enter it to complete the linking process.
+
+### Pushing Nextbase Magic to Your Supabase Project
+
+- Execute `npx supabase db push .` in your terminal.
+- This command will push all necessary configurations (teams, admin panel, projects, etc.) into your Supabase project.
+- Your Supabase project will now be ready for use.
 
 4. Rename `.env.local.example` to `.env.local` and update the following:
 
@@ -71,7 +59,3 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
    ```bash
    npm run dev
    ```
-
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
