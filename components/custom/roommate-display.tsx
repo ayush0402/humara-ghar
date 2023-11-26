@@ -78,47 +78,47 @@ export default async function RoommateDisplay({
     {
       icon: GiPlantRoots,
       label: "Vegan",
-      stat: preferences && preferences[0] && preferences[0].vegan,
+      stat: preferences && preferences[0] && preferences[0].prefs.vegan,
     },
     {
       icon: GiMusicalNotes,
       label: "Music Lover",
-      stat: preferences && preferences[0] && preferences[0].musiclover,
+      stat: preferences && preferences[0] && preferences[0].prefs.musiclover,
     },
     {
       icon: FaDumbbell,
       label: "Fitness",
-      stat: preferences && preferences[0] && preferences[0].fitness,
+      stat: preferences && preferences[0] && preferences[0].prefs.fitness,
     },
     {
       icon: GiBookshelf,
       label: "Studious",
-      stat: preferences && preferences[0] && preferences[0].studious,
+      stat: preferences && preferences[0] && preferences[0].prefs.studious,
     },
     {
       icon: MdSportsCricket,
       label: "Sporty",
-      stat: preferences && preferences[0] && preferences[0].sporty,
+      stat: preferences && preferences[0] && preferences[0].prefs.sporty,
     },
     {
       icon: GiEarthAmerica,
       label: "Wanderer",
-      stat: preferences && preferences[0] && preferences[0].wanderer,
+      stat: preferences && preferences[0] && preferences[0].prefs.wanderer,
     },
     {
       icon: MdPets,
       label: "Pet Lover",
-      stat: preferences && preferences[0] && preferences[0].petlover,
+      stat: preferences && preferences[0] && preferences[0].prefs.petlover,
     },
     {
       icon: MdNoDrinks,
       label: "Non-Alcoholic",
-      stat: preferences && preferences[0] && preferences[0].nonalcoholic,
+      stat: preferences && preferences[0] && preferences[0].prefs.nonalcoholic,
     },
     {
       icon: FaSmokingBan,
       label: "Non-Smoker",
-      stat: preferences && preferences[0] && preferences[0].nonsmoker,
+      stat: preferences && preferences[0] && preferences[0].prefs.nonsmoker,
     },
   ];
 
