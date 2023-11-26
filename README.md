@@ -33,7 +33,7 @@ If you wish to just develop [follow the steps below](#clone-and-run-locally).
   - Your project reference is available in the project settings section within the Supabase dashboard.
 - After running the command, you'll be prompted for the database password you saved earlier. Enter it to complete the linking process.
 
-### Pushing Nextbase Magic to Your Supabase Project
+### Pushing Migration Files to Supabase Project
 
 - Execute `npx supabase db push .` in your terminal.
 - This command will push all necessary configurations (teams, admin panel, projects, etc.) into your Supabase project.
