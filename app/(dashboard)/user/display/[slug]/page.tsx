@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import React from 'react'
 
-const page = async ({params}) => {
+const page = async ({ params }: { params: { slug: string } }) => {
     const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 

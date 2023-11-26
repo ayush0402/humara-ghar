@@ -347,12 +347,15 @@ export default async function PropertyDisplay({
             Pictures:
           </div>
         </div>
+        
         <div className="my-2">
+          
           <img
-            src="https://picsum.photos/200"
+            src="/bed2.png"
             alt=""
             className="h-[500px] w-[800px]"
           />
+        
         </div>
         <div>
           <div

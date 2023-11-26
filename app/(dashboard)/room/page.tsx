@@ -62,7 +62,7 @@ const page = async () => {
           {properties &&
             properties.map((property) => (
               <RoomCard
-                imageSrc="https://picsum.photos/200"
+                imageSrc="/bed1.png"
                 name={property.locality}
                 location={property.location}
                 rentAmount={property.approx_rent}

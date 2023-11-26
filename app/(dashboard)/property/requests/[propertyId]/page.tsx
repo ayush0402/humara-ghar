@@ -35,7 +35,7 @@ const page = async ({ params }: { params: { propertyId: string } }) => {
       {teamInfo?.map((teams) => (
         <TeamCard
           Id={teams.team_user_id}
-          ImageSrc="https://picsum.photos/200"
+          ImageSrc="/team.jpg"
         />
       ))}
     </div>
