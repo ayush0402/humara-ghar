@@ -6,12 +6,6 @@
 <p align="center">
   Built with nextjs, tailwindcss, supabase, and love &hearts;.
 </p>
-
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-</p>
 <br/>
 
 If you wish to just develop [follow the steps below](#clone-and-run-locally).
