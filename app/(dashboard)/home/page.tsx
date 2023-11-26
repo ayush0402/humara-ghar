@@ -49,7 +49,7 @@ const DashboardHome = () => {
           </Link>
         </div>
         <div>
-          <Link href="/property/create">
+          <Link href="/listings/property">
             <Button
               variant="secondary"
               className={cn(
