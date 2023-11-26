@@ -19,7 +19,15 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4">
-      <Link href="/profile" className={buttonVariants({ variant: "ghost" })}>
+      <Link href={{
+        pathname: `/user/display/${user?.id}`,
+        query: {
+          id: user.id,
+        },
+      }}
+      as={`/user/display/${user.id}`} 
+      
+      className={buttonVariants({ variant: "ghost" })}>
         Hey, {data && data[0].name} !
       </Link>
 
