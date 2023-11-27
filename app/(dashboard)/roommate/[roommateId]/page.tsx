@@ -23,7 +23,7 @@ const Page = async ({ params }: { params: { roommateId: string } }) => {
     .select("*")
     .eq("created_by",user_id);
     
-
+   
   return (
     <div className="ml-[10px]">
       <RoommateDisplay 
@@ -35,7 +35,7 @@ const Page = async ({ params }: { params: { roommateId: string } }) => {
       bathroom= { roommateInfo && roommateInfo[0].bathroom}
       bhk = {roommateInfo && roommateInfo[0].bhk}
       rentAmount= {roommateInfo && roommateInfo[0].approx_rent}
-      amenities={roommateInfo && roommateInfo[0].ameneties}
+      amenities={roommateInfo && roommateInfo[0].amenities}
       address = {roommateInfo && roommateInfo[0].address}
       occupancy= {roommateInfo && roommateInfo[0].occupancy}
       />

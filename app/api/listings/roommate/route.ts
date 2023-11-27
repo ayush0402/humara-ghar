@@ -37,7 +37,8 @@ export async function POST(request: Request) {
         locality: formData.locality,
         area: formData.area,
         bhk: formData.bhk,
-        bathroom: formData.bathroom
+        bathroom: formData.bathroom,
+        address: formData.address,
       },
     ])
     .select();

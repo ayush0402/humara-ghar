@@ -36,7 +36,7 @@ import {
   HoverCardContent,
 } from "../ui/hover-card";
 
-type RoommateDisplayProps = {
+type PropertyDisplayProps = {
   imageSrc: string;
   location: string;
   rentAmount: string;
@@ -54,7 +54,7 @@ const font = Poppins({
   weight: "600",
   subsets: ["latin"],
 });
-export default async function RoommateDisplay({
+export default async function PropertyDisplay({
   imageSrc,
   location,
   rentAmount,
@@ -66,7 +66,7 @@ export default async function RoommateDisplay({
   userId,
   occupancy,
   amenities,
-}: RoommateDisplayProps) {
+}: PropertyDisplayProps) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const { data: info } = await supabase

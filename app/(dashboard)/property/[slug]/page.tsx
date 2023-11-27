@@ -26,7 +26,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   return id === id1 ? (
     <div className="ml-[10px] flex justify-between">
-      <div>
+      <div> 
         <PropertyDisplay
           imageSrc="https://picsum.photos/200"
           location={properties && properties[0].location}
