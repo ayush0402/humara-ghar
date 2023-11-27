@@ -50,13 +50,12 @@ const page = async () => {
               listing_id={property.listing_id}
               status={property.status}
               type="property"
-              userId={userInfo&&userInfo[0].user_id}
+              userId={userInfo && userInfo[0].user_id}
             />
           ))}
-          {
-            roommate_properties &&
-            roommate_properties.map((property)=>(
-              <PropertyCard
+        {roommate_properties &&
+          roommate_properties.map((property) => (
+            <PropertyCard
               imageSrc="/bed1.png"
               name={property.locality}
               location={property.location}
@@ -67,11 +66,9 @@ const page = async () => {
               listing_id={property.listing_id}
               status="1"
               type="roommate_required"
-              userId={userInfo&&userInfo[0].user_id}
+              userId={userInfo && userInfo[0].user_id}
             />
-
-            ))
-          }
+          ))}
       </div>
     </div>
   );

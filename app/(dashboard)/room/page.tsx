@@ -71,24 +71,26 @@ const page = async () => {
                 bathroom={property.bathroom}
                 listing_id={property.listing_id}
                 looking_for="Tenant"
+                looking_for_gender="Any"
                 userId={currentUser}
               />
-            ))} 
+            ))}
         </div>
         <div>
           {roommates &&
             roommates.map((mates) => (
               <RoomCard
-              imageSrc="/bed1.png"
-              name={mates.locality}
-              location={mates.location}
-              rentAmount={mates.approx_rent}
-              area={mates.area}
-              bhk={mates.bhk}
-              bathroom={mates.bathroom}
-              listing_id={mates.listing_id}
-              looking_for="Roommate"
-              userId={mates.created_by}
+                imageSrc="/bed1.png"
+                name={mates.locality}
+                location={mates.location}
+                rentAmount={mates.approx_rent}
+                area={mates.area}
+                bhk={mates.bhk}
+                bathroom={mates.bathroom}
+                listing_id={mates.listing_id}
+                looking_for="Roommate"
+                looking_for_gender={mates.looking_for_gender}
+                userId={mates.created_by}
               />
             ))}
         </div>

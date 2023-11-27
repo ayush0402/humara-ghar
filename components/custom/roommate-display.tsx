@@ -204,6 +204,24 @@ export default async function RoommateDisplay({
     },
   ];
 
+  const { data: publicImagesList, error } = await supabase.storage
+    .from("listing-images-bucket")
+    .list(listingId, { limit: 3 });
+
+  let publicImageUrls: string[] = [];
+  if (publicImagesList) {
+    publicImageUrls = await Promise.all(
+      publicImagesList.map(async (image) => {
+        const {
+          data: { publicUrl },
+        } = await supabase.storage
+          .from("listing-images-bucket")
+          .getPublicUrl(`${listingId}/${image.name}`);
+        return publicUrl;
+      })
+    );
+  }
+
   return (
     <div className="bg-secondary h-full flex">
       <div>
@@ -388,12 +406,11 @@ export default async function RoommateDisplay({
         </div>
 
         <div className="my-2 carousel w-full flex">
-          <div className="carousel-item w-full">
-            <img src="/bed2.png" alt="" className="h-[500px] w-full" />
-          </div>
-          <div className="carousel-item w-full">
-            <img src="/bed2.png" alt="" className="h-[500px] w-full" />
-          </div>
+          {publicImageUrls.map((url, index) => (
+            <div key={index} className="carousel-item w-full">
+              <img src={url} alt="" className="h-[500px] w-full" />
+            </div>
+          ))}
         </div>
         <div>
           <div

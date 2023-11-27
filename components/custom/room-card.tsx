@@ -38,6 +38,7 @@ type RoomCardProps = {
   bathroom: string;
   listing_id: string;
   looking_for: string;
+  looking_for_gender: string;
   userId: string;
 };
 
@@ -51,6 +52,7 @@ export default function RoomCard({
   bathroom,
   listing_id,
   looking_for,
+  looking_for_gender,
   userId,
 }: RoomCardProps) {
   // TODO: Make responsive for mobile
@@ -83,8 +85,8 @@ export default function RoomCard({
     }
   };
   let path;
-  if(looking_for=="Tenant")path=`/property/${listing_id}`;
-  else path=`/roommate/${userId}`
+  if (looking_for == "Tenant") path = `/property/${listing_id}`;
+  else path = `/roommate/${userId}`;
 
   useEffect(() => {}, [interestType]);
   return (
@@ -112,10 +114,12 @@ export default function RoomCard({
               <CardDescription className="flex flex-row items-center">
                 <div>
                   <div className="flex">
-                <MdLocationOn />
-                {location[0].toUpperCase() + location.substring(1)}
-                </div>
-                <div>Looking for: {looking_for}</div>
+                    <MdLocationOn />
+                    {location[0].toUpperCase() + location.substring(1)}
+                  </div>
+                  <div>
+                    Looking for: {looking_for}, {looking_for_gender}
+                  </div>
                 </div>
               </CardDescription>
             </CardHeader>

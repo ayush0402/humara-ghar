@@ -88,9 +88,7 @@ export default function RoommateCard({
                 <p className="text-sm text-muted-foreground mt-2 lg:text-md">
                   Looking for
                 </p>
-                <p className="text-sm lg:text-md">
-                  {lookingForGender}, {lookingForType}
-                </p>
+                <p className="text-sm lg:text-md">{lookingForGender}, room</p>
               </div>
             </CardContent>
           </div>
