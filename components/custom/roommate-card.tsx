@@ -57,12 +57,12 @@ export default function RoommateCard({
   return (
     <Link
       href={{
-        pathname: `/roommate/${userId}`,
+        pathname: `/user/display/${userId}`,
         query: {
           id: userId,
         },
       }}
-      as={`/roommate/${userId}`}
+      as={`/user/display/${userId}`}
     >
       <Card className="w-full mx-2 my-2 lg:w-[450px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
         <div className="flex flex-row w-full">
