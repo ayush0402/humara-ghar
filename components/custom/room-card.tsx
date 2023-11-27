@@ -37,6 +37,8 @@ type RoomCardProps = {
   bhk: string;
   bathroom: string;
   listing_id: string;
+  looking_for: string;
+  userId: string;
 };
 
 export default function RoomCard({
@@ -48,6 +50,8 @@ export default function RoomCard({
   bhk,
   bathroom,
   listing_id,
+  looking_for,
+  userId,
 }: RoomCardProps) {
   // TODO: Make responsive for mobile
   const [interestType, setInterestType] = useState("");
@@ -78,17 +82,20 @@ export default function RoomCard({
       console.error("Error during fetch:", error);
     }
   };
+  let path;
+  if(looking_for=="Tenant")path=`/property/${listing_id}`;
+  else path=`/roommate/${userId}`
 
   useEffect(() => {}, [interestType]);
   return (
     <Link
       href={{
-        pathname: `/property/${listing_id}`,
+        pathname: path,
         query: {
           id: listing_id,
         },
       }}
-      as={`/property/${listing_id}`}
+      as={path}
     >
       <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
         <div className="flex flex-row w-full">
@@ -103,8 +110,13 @@ export default function RoomCard({
                 {name[0].toUpperCase() + name.substring(1)}
               </CardTitle>
               <CardDescription className="flex flex-row items-center">
+                <div>
+                  <div className="flex">
                 <MdLocationOn />
                 {location[0].toUpperCase() + location.substring(1)}
+                </div>
+                <div>Looking for: {looking_for}</div>
+                </div>
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col w-full pl-4 pb-1 lg:pl-6 lg:text-lg">

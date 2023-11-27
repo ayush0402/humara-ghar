@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { AiOutlinePlus } from "react-icons/ai";
 import UserCard from "@/components/custom/user-card";
+import RoomCard from "@/components/custom/room-card";
 
 const RoommatesPage = async () => {
   // contains listings under room-required table.
@@ -30,26 +31,34 @@ const RoommatesPage = async () => {
         {!room_req ? (
           <div>No roommates found.</div>
         ) : (
-          room_req.map((roommate) => (
-            <UserCard
+          room_req.map((mates) => (
+            <RoommateCard
                // assuming each room has a unique id
-              ImageSrc="https://picsum.photos/200"
-              Id={roommate.created_by}
+               name={mates.creator_name}
+               imageSrc="https://picsum.photos/200"
+               location={mates.location}
+               rentAmount={mates.approx_rent}
+               lookingForGender={mates.looking_for_gender}
+               lookingForType={mates.looking_for_type}
+               matchPercentage={80}
+               userId={mates.created_by}
+               currentUserId={currentUser}
             />
           ))
         )}
         {roommates &&
             roommates.map((mates) => (
-              <RoommateCard
-                name={mates.creator_name}
-                imageSrc="https://picsum.photos/200"
-                location={mates.location}
-                rentAmount={mates.approx_rent}
-                lookingForGender={mates.looking_for_gender}
-                lookingForType={mates.looking_for_type}
-                matchPercentage={80}
-                userId={mates.created_by}
-                currentUserId={currentUser}
+              <RoomCard
+              imageSrc="/bed1.png"
+              name={mates.locality}
+              location={mates.location}
+              rentAmount={mates.approx_rent}
+              area={mates.area}
+              bhk={mates.bhk}
+              bathroom={mates.bathroom}
+              listing_id={mates.listing_id}
+              looking_for="Roommate"
+              userId={mates.created_by}
               />
             ))}
       </div>
