@@ -60,7 +60,7 @@ const DashboardHome = () => {
               <PlusIcon className="h-10 w-10" />
               List a property
               <p className="text-sm text-muted-foreground">
-                Muted description here.
+                have an empty flat & looking for a tenant.
               </p>
             </Button>
           </Link>
