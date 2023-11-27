@@ -33,6 +33,8 @@ type PropertyCardProps = {
   bathroom: string;
   listing_id: string;
   status: string;
+  type:string;
+  userId: string;
 };
 
 export default function PropertyCard({
@@ -45,6 +47,8 @@ export default function PropertyCard({
   bathroom,
   listing_id,
   status,
+  type,
+  userId,
 }: PropertyCardProps) { 
   // TODO: Make responsive for mobile
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,17 +77,20 @@ export default function PropertyCard({
       setIsSubmitting(false);
     }
   };
+  let path;
+  if(type=="property")path=`/property/${listing_id}`;
+  else path=`/roommate/${userId}`
 
   const propertyId = "/property/" + listing_id;
   return (
     <Link
       href={{
-        pathname: `/property/${listing_id}`,
+        pathname: path,
         query: {
           id: listing_id,
         },
       }}
-      as={`/property/${listing_id}`}
+      as={path}
     >
       <Card className="w-full mx-2 my-2 lg:w-[480px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
         <div className="flex flex-row w-full">

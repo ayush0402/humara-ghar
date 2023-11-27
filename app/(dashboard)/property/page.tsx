@@ -1,3 +1,4 @@
+import RoomCard from "@/components/custom/room-card";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
@@ -26,6 +27,11 @@ const page = async () => {
     .select("*")
     .eq("created_by", userInfo && userInfo[0].user_id);
 
+  const { data: roommate_properties } = await supabase
+    .from("roommate_required_listings")
+    .select("*")
+    .eq("created_by", userInfo && userInfo[0].user_id);
+
   //console.log(properties);
 
   return (
@@ -43,8 +49,29 @@ const page = async () => {
               bathroom={property.bathroom}
               listing_id={property.listing_id}
               status={property.status}
+              type="property"
+              userId={userInfo&&userInfo[0].user_id}
             />
           ))}
+          {
+            roommate_properties &&
+            roommate_properties.map((property)=>(
+              <PropertyCard
+              imageSrc="/bed1.png"
+              name={property.locality}
+              location={property.location}
+              rentAmount={property.approx_rent}
+              area={property.area}
+              bhk={property.bhk}
+              bathroom={property.bathroom}
+              listing_id={property.listing_id}
+              status="1"
+              type="roommate_required"
+              userId={userInfo&&userInfo[0].user_id}
+            />
+
+            ))
+          }
       </div>
     </div>
   );

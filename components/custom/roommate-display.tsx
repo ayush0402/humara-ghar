@@ -35,8 +35,10 @@ import {
   HoverCardTrigger,
   HoverCardContent,
 } from "../ui/hover-card";
+import Link from "next/link";
+import { boolean } from "zod";
 
-type PropertyDisplayProps = {
+type RoommateDisplayProps = {
   imageSrc: string;
   location: string;
   rentAmount: string;
@@ -48,13 +50,14 @@ type PropertyDisplayProps = {
   userId: string;
   occupancy: string;
   amenities: string[];
+  currentUser: string | null;
 };
 
 const font = Poppins({
   weight: "600",
   subsets: ["latin"],
 });
-export default async function PropertyDisplay({
+export default async function RoommateDisplay({
   imageSrc,
   location,
   rentAmount,
@@ -66,7 +69,8 @@ export default async function PropertyDisplay({
   userId,
   occupancy,
   amenities,
-}: PropertyDisplayProps) {
+  currentUser,
+}: RoommateDisplayProps) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const { data: info } = await supabase
@@ -74,10 +78,19 @@ export default async function PropertyDisplay({
     .select("*")
     .eq("user_id", userId);
 
+  const { data: room } = await supabase
+    .from("roommate_required_listings")
+    .select("*")
+    .eq("created_by", userId);
+
+  let listingId = room && room[0].listing_id;
+
   const { data: preferences } = await supabase
     .from("user_preferences")
     .select("*")
     .eq("user_id", userId);
+
+  let requests = currentUser === userId;
 
   //console.log(prefrences)
   const pref = [
@@ -206,18 +219,44 @@ export default async function PropertyDisplay({
             <div className={cn("my-2 ml-[10px]", font.className)}>
               {info && info[0].name}
             </div>
-            <div className={cn("my-2 ml-[10px] flex", font.className)}>
-              <div className="">
-                <Button>
-                  <MdChat className="mr-1" />
-                  Chat
-                </Button>
+            <div className={cn("my-2 ml-[10px]", font.className)}>
+              <div className="flex">
+                <div className="">
+                  <Button>
+                    <MdChat className="mr-1" />
+                    Chat
+                  </Button>
+                </div>
+                <div className="mx-2">
+                  <Button>
+                    <Phone className="mr-1 h-[15px] w-[15px]" />
+                    Call
+                  </Button>
+                </div>
               </div>
-              <div className="mx-2">
-                <Button>
-                  <Phone className="mr-1 h-[15px] w-[15px]" />
-                  Call
-                </Button>
+              <div className="flex justify-center my-2">
+                {currentUser === userId ? (
+                  <div
+                    className={cn(
+                      "my-2 ml-[10px] flex justify-center",
+                      font.className
+                    )}
+                  >
+                    <Link
+                      href={{
+                        pathname: `/property/requests/${listingId}`,
+                        query: {
+                          id: listingId,
+                        },
+                      }}
+                      as={`/property/requests/${listingId}`}
+                    >
+                      <Button>Requests</Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
           </div>
