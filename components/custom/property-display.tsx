@@ -19,7 +19,7 @@ import {
   Shirt,
   Tv2Icon,
   WifiIcon,
-} from "lucide-react";
+} from "lucide-react"; 
 import {
   GiBookshelf,
   GiEarthAmerica,

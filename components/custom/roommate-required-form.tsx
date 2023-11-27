@@ -85,7 +85,185 @@ const roommateRequiredFormSchema = z.object({
   }),
   rent: z.string({
     required_error: "Please enter your rent.",
+  }), 
+  locality: z.enum(
+    [
+      "adambakkam",
+      "adyar, sardar patel road",
+      "ajmera bhakti park, bhakti park",
+      "ambattur",
+      "amberpet",
+      "anakaputhur",
+      "andheri east",
+      "andheri west",
+      "anna nagar",
+      "arjun nagar, safdarjung enclave",
+      "arumbakkam",
+      "ashok nagar",
+      "attapur",
+      "auris serenity, kanch pada",
+      "baghajatin",
+      "baguiati",
+      "banaswadi",
+      "bandlaguda jagir",
+      "bandra west",
+      "banjara hills, nh 9",
+      "bansdroni",
+      "baranagar",
+      "beeramguda, ramachandra puram, nh 9",
+      "begumpet",
+      "behala",
+      "birati",
+      "boduppal, nh 2 2",
+      "bolarum, medchal road",
+      "bommanahalli",
+      "btm layout",
+      "c v raman nagar",
+      "chanda nagar",
+      "chandivali",
+      "chembur",
+      "chhattarpur",
+      "chhattarpur enclave",
+      "choolaimedu",
+      "chromepet, gst road",
+      "defence colony",
+      "dum dum",
+      "dum dum metro",
+      "electronic city",
+      "electronic city phase 2, electronic city",
+      "electronics city phase 1, electronic city",
+      "gachibowli",
+      "garia",
+      "garia station, garia",
+      "ghatkopar west",
+      "goregaon west",
+      "gottigere",
+      "hafeezpet, nh 9",
+      "hayathnagar, nh 9",
+      "hebbal",
+      "himayath nagar, nh 7",
+      "horamavu",
+      "iyyappanthangal",
+      "j p nagar",
+      "jvpd scheme",
+      "jadavpur",
+      "janakpuri",
+      "jp nagar phase 7, j p nagar",
+      "jubilee hills",
+      "k r puram",
+      "kaggadasapura, indira nagar",
+      "kaikhali",
+      "kalkaji",
+      "kanakapura road",
+      "kandivali west",
+      "kapra",
+      "kasba",
+      "kelambakkam, old mahabalipuram road",
+      "keshtopur",
+      "khar west",
+      "kodambakkam",
+      "kolathur",
+      "kompally",
+      "kondapur",
+      "koramangala",
+      "korattur, jawaharlal nehru road",
+      "kothapet",
+      "kukatpally, nh 9",
+      "l&t emerald isle, powai",
+      "lb nagar, nh 9",
+      "lajpat nagar",
+      "lajpat nagar 4",
+      "laxmi nagar",
+      "madambakkam",
+      "madhapur",
+      "madipakkam",
+      "mahadevapura",
+      "mahindra world city",
+      "malviya nagar",
+      "mambalam west",
+      "mangadu",
+      "manikonda, outer ring road",
+      "mathikere",
+      "medavakkam",
+      "mehdipatnam",
+      "mehrauli",
+      "miyapur, nh 9",
+      "mugalivakkam",
+      "mulund west",
+      "murugeshpalya, airport road",
+      "mylapore",
+      "nagole",
+      "najafgarh",
+      "nallagandla, serilingampally",
+      "narsingi, outer ring road",
+      "nizampet",
+      "old bowenpally",
+      "old mahabalipuram road",
+      "padmanabha nagar",
+      "padur, old mahabalipuram road",
+      "pallikaranai",
+      "pammal",
+      "paschim vihar",
+      "perambur",
+      "perumbakkam",
+      "perungalathur, chennai bypass road",
+      "pitampura",
+      "porur",
+      "pragathi nagar, kukatpally",
+      "purasawalkam, ph road",
+      "rajajinagar",
+      "rajendra nagar, outer ring road",
+      "rajouri garden",
+      "ramamurthy nagar",
+      "rampally",
+      "rohini sector 24",
+      "safdarjung enclave",
+      "sainikpuri",
+      "saket",
+      "salt lake city",
+      "salt lake city sector 1",
+      "salt lake city sector 2",
+      "salt lake city sector 5",
+      "santacruz west",
+      "santoshpur",
+      "selaiyur",
+      "seven bungalows",
+      "shapoorji pallonji vicinia, chandivali",
+      "sholinganallur",
+      "sodepur",
+      "somajiguda, nh 9",
+      "t nagar",
+      "tambaram, gst road",
+      "thakurpukur",
+      "thiruvanmiyur",
+      "thoraipakkam",
+      "toli chowki",
+      "uppal, nh 2 2",
+      "urapakkam, vandalur r.f, gst road",
+      "uttam nagar",
+      "vadapalani",
+      "valasaravakkam, arcot road",
+      "vanasthalipuram, nh 9",
+      "vasant kunj",
+      "velachery",
+      "vijayanagar",
+      "virugambakkam",
+      "worli",
+      "yelahanka",
+      "yeshwantpur",
+      "whitefield",
+    ],
+    {
+      invalid_type_error: "Select a city",
+      required_error: "Please select a city.",
+    }
+  ),
+  address: z.string({
+    required_error: "Address is required",
   }),
+  area: z.string(),
+  bathroom: z.string(),
+  bhk: z.enum(["1", "2", "3", "4", "5", "6"]),
   location: z.enum(
     [
       "mumbai",
@@ -241,6 +419,357 @@ export default function RoommateRequiredForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <Messages />
           <div className="grid grid-cols-1 md:grid-cols-2  ">
+          <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className=" ">Address</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className=" "
+                      placeholder="Address of your property"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="locality"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Locality</FormLabel>
+                  <div className="relative w-max">
+                    <FormControl>
+                      <select
+                        className={cn(
+                          buttonVariants({ variant: "outline" }),
+                          "w-[200px] appearance-none bg-transparent font-normal"
+                        )}
+                        {...field}
+                      >
+                        <option value="adambakkam">Adambakkam</option>
+                        <option value="adyar, sardar patel road">
+                          Adyar, Sardar Patel Road
+                        </option>
+                        <option value="ajmera bhakti park, bhakti park">
+                          Ajmera Bhakti Park, Bhakti Park
+                        </option>
+                        <option value="ambattur">Ambattur</option>
+                        <option value="amberpet">Amberpet</option>
+                        <option value="anakaputhur">Anakaputhur</option>
+                        <option value="andheri east">Andheri East</option>
+                        <option value="andheri west">Andheri West</option>
+                        <option value="anna nagar">Anna Nagar</option>
+                        <option value="arjun nagar, safdarjung enclave">
+                          Arjun Nagar, Safdarjung Enclave
+                        </option>
+                        <option value="arumbakkam">Arumbakkam</option>
+                        <option value="ashok nagar">Ashok Nagar</option>
+                        <option value="attapur">Attapur</option>
+                        <option value="auris serenity, kanch pada">
+                          Auris Serenity, Kanch Pada
+                        </option>
+                        <option value="baghajatin">Baghajatin</option>
+                        <option value="baguiati">Baguiati</option>
+                        <option value="banaswadi">Banaswadi</option>
+                        <option value="bandlaguda jagir">
+                          Bandlaguda Jagir
+                        </option>
+                        <option value="bandra west">Bandra West</option>
+                        <option value="banjara hills, nh 9">
+                          Banjara Hills, NH 9
+                        </option>
+                        <option value="bansdroni">Bansdroni</option>
+                        <option value="baranagar">Baranagar</option>
+                        <option value="beeramguda, ramachandra puram, nh 9">
+                          Beeramguda, Ramachandra Puram, NH 9
+                        </option>
+                        <option value="begumpet">Begumpet</option>
+                        <option value="behala">Behala</option>
+                        <option value="birati">Birati</option>
+                        <option value="boduppal, nh 2 2">
+                          Boduppal, NH 2 2
+                        </option>
+                        <option value="bolarum, medchal road">
+                          Bolarum, Medchal Road
+                        </option>
+                        <option value="bommanahalli">Bommanahalli</option>
+                        <option value="btm layout">BTM Layout</option>
+                        <option value="c v raman nagar">C V Raman Nagar</option>
+                        <option value="chanda nagar">Chanda Nagar</option>
+                        <option value="chandivali">Chandivali</option>
+                        <option value="chembur">Chembur</option>
+                        <option value="chhattarpur">Chhattarpur</option>
+                        <option value="chhattarpur enclave">
+                          Chhattarpur Enclave
+                        </option>
+                        <option value="choolaimedu">Choolaimedu</option>
+                        <option value="chromepet, gst road">
+                          Chromepet, GST Road
+                        </option>
+                        <option value="defence colony">Defence Colony</option>
+                        <option value="dum dum">Dum Dum</option>
+                        <option value="dum dum metro">Dum Dum Metro</option>
+                        <option value="electronic city">Electronic City</option>
+                        <option value="electronic city phase 2, electronic city">
+                          Electronic City Phase 2, Electronic City
+                        </option>
+                        <option value="electronics city phase 1, electronic city">
+                          Electronics City Phase 1, Electronic City
+                        </option>
+                        <option value="gachibowli">Gachibowli</option>
+                        <option value="garia">Garia</option>
+                        <option value="garia station, garia">
+                          Garia Station, Garia
+                        </option>
+                        <option value="ghatkopar west">Ghatkopar West</option>
+                        <option value="goregaon west">Goregaon West</option>
+                        <option value="gottigere">Gottigere</option>
+                        <option value="hafeezpet, nh 9">Hafeezpet, NH 9</option>
+                        <option value="hayathnagar, nh 9">
+                          Hayathnagar, NH 9
+                        </option>
+                        <option value="hebbal">Hebbal</option>
+                        <option value="himayath nagar, nh 7">
+                          Himayath Nagar, NH 7
+                        </option>
+                        <option value="horamavu">Horamavu</option>
+                        <option value="iyyappanthangal">Iyyappanthangal</option>
+                        <option value="j p nagar">J P Nagar</option>
+                        <option value="jvpd scheme">JVPD Scheme</option>
+                        <option value="jadavpur">Jadavpur</option>
+                        <option value="janakpuri">Janakpuri</option>
+                        <option value="jp nagar phase 7, j p nagar">
+                          JP Nagar Phase 7, J P Nagar
+                        </option>
+                        <option value="jubilee hills">Jubilee Hills</option>
+                        <option value="k r puram">K R Puram</option>
+                        <option value="kaggadasapura, indira nagar">
+                          Kaggadasapura, Indira Nagar
+                        </option>
+                        <option value="kaikhali">Kaikhali</option>
+                        <option value="kalkaji">Kalkaji</option>
+                        <option value="kanakapura road">Kanakapura Road</option>
+                        <option value="kandivali west">Kandivali West</option>
+                        <option value="kapra">Kapra</option>
+                        <option value="kasba">Kasba</option>
+                        <option value="kelambakkam, old mahabalipuram road">
+                          Kelambakkam, Old Mahabalipuram Road
+                        </option>
+                        <option value="keshtopur">Keshtopur</option>
+                        <option value="khar west">Khar West</option>
+                        <option value="kodambakkam">Kodambakkam</option>
+                        <option value="kolathur">Kolathur</option>
+                        <option value="kompally">Kompally</option>
+                        <option value="kondapur">Kondapur</option>
+                        <option value="koramangala">Koramangala</option>
+                        <option value="korattur, jawaharlal nehru road">
+                          Korattur, Jawaharlal Nehru Road
+                        </option>
+                        <option value="kothapet">Kothapet</option>
+                        <option value="kukatpally, nh 9">
+                          Kukatpally, NH 9
+                        </option>
+                        <option value="l&t emerald isle, powai">
+                          L&T Emerald Isle, Powai
+                        </option>
+                        <option value="lb nagar, nh 9">LB Nagar, NH 9</option>
+                        <option value="lajpat nagar">Lajpat Nagar</option>
+                        <option value="lajpat nagar 4">Lajpat Nagar 4</option>
+                        <option value="laxmi nagar">Laxmi Nagar</option>
+                        <option value="madambakkam">Madambakkam</option>
+                        <option value="madhapur">Madhapur</option>
+                        <option value="madipakkam">Madipakkam</option>
+                        <option value="mahadevapura">Mahadevapura</option>
+                        <option value="mahindra world city">
+                          Mahindra World City
+                        </option>
+                        <option value="malviya nagar">Malviya Nagar</option>
+                        <option value="mambalam west">Mambalam West</option>
+                        <option value="mangadu">Mangadu</option>
+                        <option value="manikonda, outer ring road">
+                          Manikonda, Outer Ring Road
+                        </option>
+                        <option value="mathikere">Mathikere</option>
+                        <option value="medavakkam">Medavakkam</option>
+                        <option value="mehdipatnam">Mehdipatnam</option>
+                        <option value="mehrauli">Mehrauli</option>
+                        <option value="miyapur, nh 9">Miyapur, NH 9</option>
+                        <option value="mugalivakkam">Mugalivakkam</option>
+                        <option value="mulund west">Mulund West</option>
+                        <option value="murugeshpalya, airport road">
+                          Murugeshpalya, Airport Road
+                        </option>
+                        <option value="mylapore">Mylapore</option>
+                        <option value="nagole">Nagole</option>
+                        <option value="najafgarh">Najafgarh</option>
+                        <option value="nallagandla, serilingampally">
+                          Nallagandla, Serilingampally
+                        </option>
+                        <option value="narsingi, outer ring road">
+                          Narsingi, Outer Ring Road
+                        </option>
+                        <option value="nizampet">Nizampet</option>
+                        <option value="old bowenpally">Old Bowenpally</option>
+                        <option value="old mahabalipuram road">
+                          Old Mahabalipuram Road
+                        </option>
+                        <option value="padmanabha nagar">
+                          Padmanabha Nagar
+                        </option>
+                        <option value="padur, old mahabalipuram road">
+                          Padur, Old Mahabalipuram Road
+                        </option>
+                        <option value="pallikaranai">Pallikaranai</option>
+                        <option value="pammal">Pammal</option>
+                        <option value="paschim vihar">Paschim Vihar</option>
+                        <option value="perambur">Perambur</option>
+                        <option value="perumbakkam">Perumbakkam</option>
+                        <option value="perungalathur, chennai bypass road">
+                          Perungalathur, Chennai Bypass Road
+                        </option>
+                        <option value="pitampura">Pitampura</option>
+                        <option value="porur">Porur</option>
+                        <option value="pragathi nagar, kukatpally">
+                          Pragathi Nagar, Kukatpally
+                        </option>
+                        <option value="purasawalkam, ph road">
+                          Purasawalkam, PH Road
+                        </option>
+                        <option value="rajajinagar">Rajajinagar</option>
+                        <option value="rajendra nagar, outer ring road">
+                          Rajendra Nagar, Outer Ring Road
+                        </option>
+                        <option value="rajouri garden">Rajouri Garden</option>
+                        <option value="ramamurthy nagar">
+                          Ramamurthy Nagar
+                        </option>
+                        <option value="rampally">Rampally</option>
+                        <option value="rohini sector 24">
+                          Rohini Sector 24
+                        </option>
+                        <option value="safdarjung enclave">
+                          Safdarjung Enclave
+                        </option>
+                        <option value="sainikpuri">Sainikpuri</option>
+                        <option value="saket">Saket</option>
+                        <option value="salt lake city">Salt Lake City</option>
+                        <option value="salt lake city sector 1">
+                          Salt Lake City Sector 1
+                        </option>
+                        <option value="salt lake city sector 2">
+                          Salt Lake City Sector 2
+                        </option>
+                        <option value="salt lake city sector 5">
+                          Salt Lake City Sector 5
+                        </option>
+                        <option value="santacruz west">Santacruz West</option>
+                        <option value="santoshpur">Santoshpur</option>
+                        <option value="selaiyur">Selaiyur</option>
+                        <option value="seven bungalows">Seven Bungalows</option>
+                        <option value="shapoorji pallonji vicinia, chandivali">
+                          Shapoorji Pallonji Vicinia, Chandivali
+                        </option>
+                        <option value="sholinganallur">Sholinganallur</option>
+                        <option value="sodepur">Sodepur</option>
+                        <option value="somajiguda, nh 9">
+                          Somajiguda, NH 9
+                        </option>
+                        <option value="t nagar">T Nagar</option>
+                        <option value="tambaram, gst road">
+                          Tambaram, GST Road
+                        </option>
+                        <option value="thakurpukur">Thakurpukur</option>
+                        <option value="thiruvanmiyur">Thiruvanmiyur</option>
+                        <option value="thoraipakkam">Thoraipakkam</option>
+                        <option value="toli chowki">Toli Chowki</option>
+                        <option value="uppal, nh 2 2">Uppal, NH 2 2</option>
+                        <option value="urapakkam, vandalur r.f, gst road">
+                          Urapakkam, Vandalur R.F, GST Road
+                        </option>
+                        <option value="uttam nagar">Uttam Nagar</option>
+                        <option value="vadapalani">Vadapalani</option>
+                        <option value="valasaravakkam, arcot road">
+                          Valasaravakkam, Arcot Road
+                        </option>
+                        <option value="vanasthalipuram, nh 9">
+                          Vanasthalipuram, NH 9
+                        </option>
+                        <option value="vasant kunj">Vasant Kunj</option>
+                        <option value="velachery">Velachery</option>
+                        <option value="vijayanagar">Vijayanagar</option>
+                        <option value="virugambakkam">Virugambakkam</option>
+                        <option value="worli">Worli</option>
+                        <option value="yelahanka">Yelahanka</option>
+                        <option value="yeshwantpur">Yeshwantpur</option>
+                        <option value="whitefield">Whitefield</option>
+                      </select>
+                    </FormControl>
+                    <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="area"
+              render={({ field }) => (
+                <FormItem className="w-max mt-5">
+                  <FormLabel>Area in sqft</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. 1250" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bhk"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>BHK</FormLabel>
+                  <div className="relative w-max">
+                    <FormControl>
+                      <select
+                        className={cn(
+                          buttonVariants({ variant: "outline" }),
+                          "w-[200px] appearance-none bg-transparent font-normal"
+                        )}
+                        {...field}
+                      >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                      </select>
+                    </FormControl>
+                    <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bathroom"
+              render={({ field }) => (
+                <FormItem className="w-max mt-5">
+                  <FormLabel>Number of Bathrooms</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. 2" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="location"
