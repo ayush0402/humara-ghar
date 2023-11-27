@@ -1,4 +1,3 @@
-"use client";
 import {
   Card,
   CardContent,
@@ -16,7 +15,8 @@ import { Button } from "@/components/ui/button";
 import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 type Preferences = {
   [key: string]: boolean;
@@ -69,7 +69,8 @@ export default async function RoommateCard({
 
   // console.log(currentUserId);
   // console.log(userId);
-  const supabase = createClient();
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
   //chatRoom.concat(chatRoomId);
@@ -105,7 +106,7 @@ export default async function RoommateCard({
   }
 
   matchPercentage = total > 0 ? Math.round((matchCounter / total) * 100) : 0;
-  
+
   return (
     <Link
       href={{
