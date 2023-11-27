@@ -20,7 +20,7 @@ const RoommatesPage = async () => {
   const { data: room_req } = await supabase
     .from("room_required_listings")
     .select("*");
-    const { data: roommates } = await supabase
+  const { data: roommates } = await supabase
     .from("roommate_required_listings")
     .select("*");
   const currentUser = user?.id || "";
@@ -33,22 +33,22 @@ const RoommatesPage = async () => {
         ) : (
           room_req.map((mates) => (
             <RoommateCard
-               // assuming each room has a unique id
-               name={mates.creator_name}
-               imageSrc="https://picsum.photos/200"
-               location={mates.location}
-               rentAmount={mates.approx_rent}
-               lookingForGender={mates.looking_for_gender}
-               lookingForType={mates.looking_for_type}
-               matchPercentage={80}
-               userId={mates.created_by}
-               currentUserId={currentUser}
+              // assuming each room has a unique id
+              name={mates.creator_name}
+              imageSrc="https://picsum.photos/200"
+              location={mates.location}
+              rentAmount={mates.approx_rent}
+              lookingForGender={mates.looking_for_gender}
+              lookingForType={mates.looking_for_type}
+              matchPercentage={80}
+              userId={mates.created_by}
+              currentUserId={currentUser}
             />
           ))
         )}
         {roommates &&
-            roommates.map((mates) => (
-              <RoomCard
+          roommates.map((mates) => (
+            <RoomCard
               imageSrc="/bed1.png"
               name={mates.locality}
               location={mates.location}
@@ -58,9 +58,10 @@ const RoommatesPage = async () => {
               bathroom={mates.bathroom}
               listing_id={mates.listing_id}
               looking_for="Roommate"
+              looking_for_gender={mates.looking_for_gender}
               userId={mates.created_by}
-              />
-            ))}
+            />
+          ))}
       </div>
     </div>
   );
