@@ -132,7 +132,7 @@ const UserDisplayCard = async ({ Id }: UserDisplayProps) => {
           <div className="flex justify-center">
             <div>
               <Avatar className="h-[200px] w-[200px] z-0">
-                <AvatarImage src={publicAvatarImageUrl.publicUrl} />
+                <AvatarImage src={publicAvatarImageUrl.publicUrl} alt="/Male.jpg" />
               </Avatar>
             </div>
           </div>

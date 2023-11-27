@@ -57,7 +57,7 @@ const page = async () => {
           </SelectContent>
         </Select>
       </div> */}
-      <div className="">
+      <div className="flex flex-wrap">
         <div>
           {properties &&
             properties.map((property) => (

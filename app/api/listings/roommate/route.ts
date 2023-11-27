@@ -34,6 +34,11 @@ export async function POST(request: Request) {
         amenities: formData.amenities,
         description: formData.description,
         approx_rent: formData.rent,
+        locality: formData.locality,
+        area: formData.area,
+        bhk: formData.bhk,
+        bathroom: formData.bathroom,
+        address: formData.address,
       },
     ])
     .select();

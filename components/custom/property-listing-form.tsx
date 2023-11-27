@@ -1334,7 +1334,13 @@ export default function PropertyListingForm() {
                       Predicted Price of your property
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      Rs. {estimatedPrice}
+                      <div>
+                        <div>Rs. {estimatedPrice}</div>
+                        <div className="text-xs text-red-700 my-2">
+                          *Disclaimer - our model provides predicted value with
+                          79% accuracy.
+                        </div>
+                      </div>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

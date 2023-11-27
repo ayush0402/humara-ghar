@@ -24,7 +24,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const id = user?.id;
   const id1 = properties && properties[0].created_by;
 
-  return id === id1 ? (
+  return (
     <div className="ml-[10px] flex justify-between">
       <div>
         <PropertyDisplay
@@ -39,37 +39,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           userId={properties && properties[0].created_by}
           occupancy={properties && properties[0].occupancy}
           amenities={properties && properties[0].amenities}
-        />
-      </div>
-      <div>
-        <Link
-          href={{
-            pathname: `/property/requests/${propertyId}`,
-            query: {
-              id: propertyId,
-            },
-          }}
-          as={`/property/requests/${propertyId}`}
-        >
-          <Button>Requests</Button>
-        </Link>
-      </div>
-    </div>
-  ) : (
-    <div className="ml-[10px] flex justify-between">
-      <div>
-        <PropertyDisplay
-          imageSrc="https://picsum.photos/200"
-          location={properties && properties[0].location}
-          locality={properties && properties[0].locality}
-          area={properties && properties[0].area}
-          bhk={properties && properties[0].bhk}
-          bathroom={properties && properties[0].bathroom}
-          rentAmount={properties && properties[0].approx_rent}
-          address={properties && properties[0].address}
-          userId={properties && properties[0].created_by}
-          occupancy={properties && properties[0].occupancy}
-          amenities={properties && properties[0].amenities}
+          requests={id === id1}
+          propertyId={propertyId}
         />
       </div>
     </div>
