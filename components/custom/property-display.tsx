@@ -19,7 +19,7 @@ import {
   Shirt,
   Tv2Icon,
   WifiIcon,
-} from "lucide-react"; 
+} from "lucide-react";
 import {
   GiBookshelf,
   GiEarthAmerica,
@@ -35,6 +35,7 @@ import {
   HoverCardTrigger,
   HoverCardContent,
 } from "../ui/hover-card";
+import Link from "next/link";
 
 type PropertyDisplayProps = {
   imageSrc: string;
@@ -48,6 +49,8 @@ type PropertyDisplayProps = {
   userId: string;
   occupancy: string;
   amenities: string[];
+  requests: boolean;
+  propertyId: string;
 };
 
 const font = Poppins({
@@ -66,6 +69,8 @@ export default async function PropertyDisplay({
   userId,
   occupancy,
   amenities,
+  requests,
+  propertyId,
 }: PropertyDisplayProps) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -220,6 +225,29 @@ export default async function PropertyDisplay({
                 </Button>
               </div>
             </div>
+
+            {requests ? (
+              <div
+                className={cn(
+                  "my-2 ml-[10px] flex justify-center",
+                  font.className
+                )}
+              >
+                <Link
+                  href={{
+                    pathname: `/property/requests/${propertyId}`,
+                    query: {
+                      id: propertyId,
+                    },
+                  }}
+                  as={`/property/requests/${propertyId}`}
+                >
+                  <Button>Requests</Button>
+                </Link>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
           <div className={cn("my-5 mx-2", font.className)}>Preferences:</div>
 
@@ -347,15 +375,14 @@ export default async function PropertyDisplay({
             Pictures:
           </div>
         </div>
-        
-        <div className="my-2">
-          
-          <img
-            src="/bed2.png"
-            alt=""
-            className="h-[500px] w-[800px]"
-          />
-        
+
+        <div className="my-2 carousel w-full flex">
+          <div className="carousel-item w-full">
+            <img src="/bed2.png" alt="" className="h-[500px] w-full" />
+          </div>
+          <div className="carousel-item w-full">
+            <img src="/bed2.png" alt="" className="h-[500px] w-full" />
+          </div>
         </div>
         <div>
           <div

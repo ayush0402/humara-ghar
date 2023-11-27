@@ -19,7 +19,7 @@ import {
   Shirt,
   Tv2Icon,
   WifiIcon,
-} from "lucide-react"; 
+} from "lucide-react";
 import {
   GiBookshelf,
   GiEarthAmerica,
@@ -347,15 +347,14 @@ export default async function PropertyDisplay({
             Pictures:
           </div>
         </div>
-        
-        <div className="my-2">
-          
-          <img
-            src="/bed2.png"
-            alt=""
-            className="h-[500px] w-[800px]"
-          />
-        
+
+        <div className="my-2 carousel w-full flex">
+          <div className="carousel-item w-full">
+            <img src="/bed2.png" alt="" className="h-[500px] w-full" />
+          </div>
+          <div className="carousel-item w-full">
+            <img src="/bed2.png" alt="" className="h-[500px] w-full" />
+          </div>
         </div>
         <div>
           <div
