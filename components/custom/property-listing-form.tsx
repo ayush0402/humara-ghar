@@ -386,7 +386,12 @@ export default function PropertyListingForm() {
     defaultValues,
   });
 
-  const handlePredictPrice = async (data: PropertyListingFormValues) => {
+  const handlePredictPrice = async (
+    area: string,
+    locality: string,
+    bhk: string,
+    bathroom: string
+  ) => {
     try {
       const response = await fetch("http://127.0.0.1:5000/predict_rent_price", {
         method: "POST",
@@ -394,10 +399,10 @@ export default function PropertyListingForm() {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
-          sqft: data.area,
-          location: data.locality,
-          bhk: data.bhk,
-          bath: data.bathroom,
+          sqft: area,
+          location: locality,
+          bhk: bhk,
+          bath: bathroom,
         }),
       });
       if (!response.ok) {
@@ -1309,7 +1314,17 @@ export default function PropertyListingForm() {
             <div>
               <AlertDialog>
                 <AlertDialogTrigger>
-                  <Button onClick={form.handleSubmit(handlePredictPrice)}>
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      handlePredictPrice(
+                        form.getValues().area,
+                        form.getValues().locality,
+                        form.getValues().bhk,
+                        form.getValues().bathroom
+                      )
+                    }
+                  >
                     Predict Price
                   </Button>
                 </AlertDialogTrigger>

@@ -38,12 +38,10 @@ export async function POST(request: Request) {
         amenities: formData.amenities,
         description: formData.description,
         approx_rent: formData.rent,
-        status:"0",
+        status: "0",
       },
     ])
     .select();
-
-    console.log(error);
 
   if (error) {
     console.log(error);
