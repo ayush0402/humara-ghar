@@ -67,7 +67,7 @@ export default function RoommateCard({
       <Card className="w-full mx-2 my-2 lg:w-[450px] cursor-pointer transform transition duration-500 ease-in-out hover:scale-105 hover:shadow-lg">
         <div className="flex flex-row w-full">
           <img
-            className="w-1/5 h-1/5 lg:w-2/5 lg:h-2/5 object-cover"
+            className="w-20 h-20 lg:w-40 lg:h-40 object-cover"
             src={publicAvatarImageUrl.publicUrl}
             alt={name}
           />

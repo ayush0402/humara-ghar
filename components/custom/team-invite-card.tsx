@@ -73,6 +73,7 @@ export default function TeamInviteCard({
               src={publicAvatarImageUrl.publicUrl}
               height="200px"
               width="200px"
+              className="w-20 h-20 lg:w-40 lg:h-40 object-cover"
             />
           </CardTitle>
         </CardHeader>
