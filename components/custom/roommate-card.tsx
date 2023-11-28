@@ -1,4 +1,3 @@
-"use client";
 import {
   Card,
   CardContent,
@@ -16,7 +15,30 @@ import { Button } from "@/components/ui/button";
 import { MdLocationOn, MdChat } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
+
+type Preferences = {
+  [key: string]: boolean;
+  nightowl: boolean;
+  earlybird: boolean;
+  fitness: boolean;
+  studious: boolean;
+  sporty: boolean;
+  wanderer: boolean;
+  partylover: boolean;
+  petlover: boolean;
+  vegan: boolean;
+  nonalcoholic: boolean;
+  musiclover: boolean;
+  nonsmoker: boolean;
+};
+
+type UserPreferencesType = {
+  prefs: Preferences;
+  user_id: string;
+  created_at: string;
+};
 
 type RoommateCardProps = {
   imageSrc: string;
@@ -28,9 +50,10 @@ type RoommateCardProps = {
   matchPercentage: number;
   userId: string;
   currentUserId: string;
+  userPrefs: UserPreferencesType;
 };
 
-export default function RoommateCard({
+export default async function RoommateCard({
   imageSrc,
   name,
   location,
@@ -40,12 +63,14 @@ export default function RoommateCard({
   matchPercentage,
   userId,
   currentUserId,
+  userPrefs,
 }: RoommateCardProps) {
   // TODO: Make responsive for mobile
 
   // console.log(currentUserId);
   // console.log(userId);
-  const supabase = createClient();
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const chatRoomId = "/chat/" + currentUserId + "--" + userId;
 
   //chatRoom.concat(chatRoomId);
@@ -53,6 +78,34 @@ export default function RoommateCard({
   const { data: publicAvatarImageUrl } = supabase.storage
     .from("avatar-images")
     .getPublicUrl(userId);
+
+  // getting roommate preferences
+  const responsePrefs = await supabase
+    .from("user_preferences")
+    .select("*")
+    .eq("user_id", userId)
+    .single();
+
+  if (responsePrefs.error) {
+    console.error(responsePrefs.error);
+    return;
+  }
+
+  const roommatePrefs: UserPreferencesType = responsePrefs.data;
+
+  let matchCounter = 0;
+  let total = 0;
+
+  for (const pref in userPrefs.prefs) {
+    if (userPrefs.prefs[pref] || roommatePrefs.prefs[pref]) {
+      total++;
+      if (userPrefs.prefs[pref] && roommatePrefs.prefs[pref]) {
+        matchCounter++;
+      }
+    }
+  }
+
+  matchPercentage = total > 0 ? Math.round((matchCounter / total) * 100) : 0;
 
   return (
     <Link

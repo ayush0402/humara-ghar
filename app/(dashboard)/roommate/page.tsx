@@ -6,6 +6,26 @@ import { cookies } from "next/headers";
 import { AiOutlinePlus } from "react-icons/ai";
 import UserCard from "@/components/custom/user-card";
 import RoomCard from "@/components/custom/room-card";
+import { boolean } from "zod";
+
+type UserPreferencesType = {
+  prefs: {
+    nightowl: boolean;
+    earlybird: boolean;
+    fitness: boolean;
+    studious: boolean;
+    sporty: boolean;
+    wanderer: boolean;
+    partylover: boolean;
+    petlover: boolean;
+    vegan: boolean;
+    nonalcoholic: boolean;
+    musiclover: boolean;
+    nonsmoker: boolean;
+  };
+  user_id: string;
+  created_at: string;
+};
 
 const RoommatesPage = async () => {
   // contains listings under room-required table.
@@ -25,6 +45,19 @@ const RoommatesPage = async () => {
     .select("*");
   const currentUser = user?.id || "";
 
+  const responsePrefs = await supabase
+    .from("user_preferences")
+    .select("*")
+    .eq("user_id", currentUser)
+    .single();
+
+  if (responsePrefs.error) {
+    console.error(responsePrefs.error);
+    return;
+  }
+
+  const userPrefs: UserPreferencesType = responsePrefs.data;
+
   return (
     <div className="min-h-screen bg-secondary flex flex-wrap">
       <div className="flex flex-wrap">
@@ -43,6 +76,7 @@ const RoommatesPage = async () => {
               matchPercentage={80}
               userId={mates.created_by}
               currentUserId={currentUser}
+              userPrefs={userPrefs}
             />
           ))
         )}
